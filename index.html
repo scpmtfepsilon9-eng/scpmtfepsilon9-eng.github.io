@@ -414,83 +414,176 @@
             margin-bottom: 30px;
         }
 
-        /* ═══════════════ FOUNDER LETTER ═══════════════ */
-        .founder-section {
-            padding: 100px 60px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+       /* ═══════════════ FOUNDER LETTER ═══════════════ */
+.founder-section {
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-        .founder-grid {
-            display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 80px;
-            align-items: start;
-            padding: 60px;
-            background: linear-gradient(135deg, rgba(18, 34, 54, 0.8) 0%, rgba(11, 24, 41, 0.6) 100%);
-            border: 1px solid rgba(201, 168, 76, 0.15);
-            position: relative;
-        }
+/* NEW STACKED LAYOUT */
+.founder-grid.stacked-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 60px;
+    background: linear-gradient(135deg, rgba(18, 34, 54, 0.8) 0%, rgba(11, 24, 41, 0.6) 100%);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    position: relative;
+}
 
-        .founder-grid::before {
-            content: '"';
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 18rem;
-            line-height: 1;
-            color: rgba(201, 168, 76, 0.05);
-            position: absolute;
-            top: -20px; left: 40px;
-        }
+/* Decorative quote mark */
+.founder-grid.stacked-layout::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18rem;
+    line-height: 1;
+    color: rgba(201, 168, 76, 0.05);
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    left: auto;
+    pointer-events: none;
+}
 
-        .founder-letter-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.75rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 30px;
-            display: block;
-        }
+/* PHOTO SECTION ON TOP */
+.founder-sidebar-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
 
-        .founder-letter-body {
-            color: rgba(240, 236, 228, 0.8);
-            font-weight: 300;
-            line-height: 2;
-            font-size: 1.05rem;
-        }
+.founder-photo-wrapper {
+    position: relative;
+    padding: 8px;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.3), rgba(45, 122, 138, 0.3));
+    border-radius: 2px;
+}
 
-        .founder-sidebar {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 20px;
-        }
+/* BORDERED PHOTO STYLE */
+.founder-photo.bordered {
+    width: 280px;
+    height: 350px;
+    object-fit: cover;
+    border: 2px solid rgba(201, 168, 76, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    filter: grayscale(10%);
+    display: block;
+}
 
-        /* FOTOGRAF DEGISTIRME ALANI - BURAYA IMGUR LINKI KOYUN */
-        .founder-photo {
-            width: 100%;
-            aspect-ratio: 3/4;
-            object-fit: cover;
-            border: 1px solid rgba(201, 168, 76, 0.25);
-            filter: grayscale(20%);
-        }
+.founder-credits {
+    text-align: center;
+}
 
-        .founder-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            font-weight: 500;
-            color: var(--white);
-            text-align: right;
-        }
+.founder-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 8px;
+}
 
-        .founder-title-text {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--teal-light);
-            font-weight: 400;
-            text-align: right;
-        }
+.founder-title-text {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    font-weight: 400;
+}
+
+/* LETTER CONTENT BELOW */
+.founder-letter-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.founder-letter-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 30px;
+    display: block;
+    text-align: center;
+}
+
+.founder-letter-body p {
+    color: rgba(240, 236, 228, 0.85);
+    font-weight: 300;
+    line-height: 1.9;
+    font-size: 1.05rem;
+    margin-bottom: 20px;
+    text-align: justify;
+    text-indent: 30px;
+}
+
+/* First paragraph no indent, styled as intro */
+.founder-letter-body p:first-child {
+    text-indent: 0;
+    font-size: 1.15rem;
+    color: var(--cream);
+    font-weight: 400;
+    border-left: 3px solid var(--gold);
+    padding-left: 20px;
+    margin-bottom: 30px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .founder-grid.stacked-layout {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .founder-section {
+        padding: 80px 24px;
+    }
+    
+    .founder-grid.stacked-layout {
+        padding: 30px 20px;
+        gap: 40px;
+    }
+    
+    .founder-photo.bordered {
+        width: 220px;
+        height: 280px;
+    }
+    
+    .founder-name {
+        font-size: 1.3rem;
+    }
+    
+    .founder-letter-body p {
+        font-size: 0.95rem;
+        text-align: left;
+        text-indent: 20px;
+    }
+    
+    .founder-letter-body p:first-child {
+        font-size: 1.05rem;
+    }
+    
+    .founder-grid.stacked-layout::before {
+        font-size: 10rem;
+        top: 10px;
+        right: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .founder-photo.bordered {
+        width: 180px;
+        height: 230px;
+    }
+    
+    .founder-letter-title {
+        font-size: 0.75rem;
+    }
+}
 
         /* ═══════════════ TEAMS ═══════════════ */
         .teams-section { padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
@@ -1161,38 +1254,49 @@
 
             <!-- FOUNDER LETTER -->
             <section class="founder-section fade-up">
-                <div class="section-label">
-                    <div class="section-label-line"></div>
-                    <span class="section-label-text">Konferans Divanılarından Mektup</span>
-                </div>
+    <div class="section-label">
+        <div class="section-label-line"></div>
+        <span class="section-label-text">Konferans Divanılarından Mektup</span>
+    </div>
 
-                <div class="founder-grid">
-                    <div class="founder-left">
-                        <span class="founder-letter-title">Değerli Katılımcılar,</span>
-                        <div class="founder-letter-body">
-                            <p>
-Kocaeli Fen Lisesi Ulusal Forumu bizler için yalnızca bir konferans değil, aynı zamanda uzun soluklu bir hayalin, yoğun emeğin ve güçlü bir vizyonun ürünüdür. Konferansımızı düzenleme fikri ilk olarak geçtiğimiz yılın Haziran ayında doğmuş; o andan itibaren zihnimizi meşgul eden temel soru, bu konferansı en nitelikli ve en sürdürülebilir biçimde nasıl gerçekleştirebileceğimiz olmuştur. Bu doğrultuda yaz aylarından itibaren planlama, içerik geliştirme ve hazırlık çalışmalarına aralıksız şekilde başlamış bulunduk.
-Eylül ayına ulaştığımızda, sistemli ve kararlı çalışmamız sayesinde güçlü bir hazırlık süreci tamamlanmıştı. Okulumuzda daha önce benzer kapsamda bir konferans gerçekleştirilmemiş olmasına rağmen, hazırlığımızın üst düzey seviyede olması sayesinde girişimimiz kısa sürede kabul görmüş; gerekli resmi süreçler titizlikle yürütülerek tamamlandı. Bu noktada bir konferans düzenlerken inandığımız temel ilke bir iş nasıl başlarsa öyle devam eder. Bu anlayış doğrultusunda hedefimiz yalnızca bir konferans düzenlemek değil; okulumuzda kalıcı, kurumsal kimliği olan ve gelecek yıllarda da sürdürülebilecek bir konferans kültürü oluşturmaktır.
-Bu amaçla, konferansın işleyiş modelini en ince ayrıntısına kadar planladık ve okul bünyesinde ulaşabildiğimiz herkese forumun vizyonunu, kapsamını ve hedeflerini anlattık. Süreç boyunca ekip yapılanmamızı oluştururken sürdürülebilirliği temel ilke olarak benimsedik. Her dönemde usta-çırak ilişkisini esas alarak yeni kuşakların hem akademik süreçlere hem de konferansın işleyişine hâkim olmasını sağladık. Böylelikle yalnızca dönemsel bir çalışma değil, okulumuzla birlikte büyüyecek ve yıllar boyunca devam edecek güçlü bir konferans markası oluşturmayı hedefledik.
-“Genç fikirler geleceğin teminatıdır” sloganıyla çıktığımız bu yolda en büyük hedefimiz; biz gençlerin memleket meselelerine duyarsız olmadığını, aksine bu konular üzerinde düşünebildiğini, mantıklı ve saygı çerçevesinde tartışabildiğini ve çözüm önerileri geliştirebildiğini göstermektir. Ulusal forumumuz, farklı bakış açılarını bir araya getirerek ortak aklın gücünü ortaya koymayı amaçlayan akademik bir zemindir.
-Bu amacın hayata geçmesindeki en büyük güç kaynağımız ise siz değerli katılımcılarımızsınız. Gösterdiğiniz ilgi, ortaya koyduğunuz emek ve tartışmalara kattığınız nitelikli katkılar, konferansımızın gerçek anlamını oluşturmaktadır. Tüm hazırlık sürecimiz; sizlerin bu platformdan yeni dostluklar edinmiş, farklı perspektifler kazanmış ve unutulmaz deneyimlerle zenginleşmiş şekilde ayrılmanız içindir.
-Kocaeli Fen Lisesi Ulusal Forumu’nun yalnızca birkaç gün süren bir etkinlik değil; düşünsel gelişiminize katkı sağlayan, kalıcı bağlar kurmanıza vesile olan ve geleceğe dair umutlarınızı güçlendiren bir konferans deneyimi olmasını temenni ediyoruz.</p>
-                        </div>
-                    </div>
+    <div class="founder-grid stacked-layout">
+        <!-- PHOTO SECTION NOW ON TOP -->
+        <div class="founder-sidebar-top">
+            <div class="founder-photo-wrapper">
+                <img src="https://images.unsplash.com/photo-1772648199514-ec62466e5cef?q=80&w=735&auto=format&fit=crop" 
+                     alt="Konferans Divanı" 
+                     class="founder-photo bordered"
+                     id="konferans-divani-foto">
+            </div>
+            <div class="founder-credits">
+                <p class="founder-name">Adil Alpaslan Özer & Artun Burak Kılıç</p>
+                <p class="founder-title-text">KFLUF 2026</p>
+            </div>
+        </div>
 
-                    <div class="founder-sidebar">
-                        <!-- KONFERANS DIVANI FOTOGRAFI - BURAYA IMGUR LINKI KOYUN -->
-                        <img src="https://images.unsplash.com/photo-1772648199514-ec62466e5cef?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-                             alt="Konferans Divanı" 
-                             class="founder-photo"
-                             id="konferans-divani-foto">
-                        <div>
-                            <p class="founder-name">Adil Alpaslan Özer & Artun Burak Kılıç</p>
-                            <p class="founder-title-text">KFLUF 2026</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <!-- LETTER CONTENT BELOW -->
+        <div class="founder-letter-content">
+            <span class="founder-letter-title">Değerli Katılımcılar,</span>
+            <div class="founder-letter-body">
+                <p>Kocaeli Fen Lisesi Ulusal Forumu bizler için yalnızca bir konferans değil, aynı zamanda uzun soluklu bir hayalin, yoğun emeğin ve güçlü bir vizyonun ürünüdür.</p>
+                
+                <p>Konferansımızı düzenleme fikri ilk olarak geçtiğimiz yılın Haziran ayında doğmuş; o andan itibaren zihnimizi meşgul eden temel soru, bu konferansı en nitelikli ve en sürdürülebilir biçimde nasıl gerçekleştirebileceğimiz olmuştur. Bu doğrultuda yaz aylarından itibaren planlama, içerik geliştirme ve hazırlık çalışmalarına aralıksız şekilde başlamış bulunduk.</p>
+                
+                <p>Eylül ayına ulaştığımızda, sistemli ve kararlı çalışmamız sayesinde güçlü bir hazırlık süreci tamamlanmıştı. Okulumuzda daha önce benzer kapsamda bir konferans gerçekleştirilmemiş olmasına rağmen, hazırlığımızın üst düzey seviyede olması sayesinde girişimimiz kısa sürede kabul görmüş; gerekli resmi süreçler titizlikle yürütülerek tamamlandı.</p>
+                
+                <p>Bu noktada bir konferans düzenlerken inandığımız temel ilke bir iş nasıl başlarsa öyle devam eder. Bu anlayış doğrultusunda hedefimiz yalnızca bir konferans düzenlemek değil; okulumuzda kalıcı, kurumsal kimliği olan ve gelecek yıllarda da sürdürülebilecek bir konferans kültürü oluşturmaktır.</p>
+                
+                <p>Bu amaçla, konferansın işleyiş modelini en ince ayrıntısına kadar planladık ve okul bünyesinde ulaşabildiğimiz herkese forumun vizyonunu, kapsamını ve hedeflerini anlattık. Süreç boyunca ekip yapılanmamızı oluştururken sürdürülebilirliği temel ilke olarak benimsedik. Her dönemde usta-çırak ilişkisini esas alarak yeni kuşakların hem akademik süreçlere hem de konferansın işleyişine hâkim olmasını sağladık. Böylelikle yalnızca dönemsel bir çalışma değil, okulumuzla birlikte büyüyecek ve yıllar boyunca devam edecek güçlü bir konferans markası oluşturmayı hedefledik.</p>
+                
+                <p>"Genç fikirler geleceğin teminatıdır" sloganıyla çıktığımız bu yolda en büyük hedefimiz; biz gençlerin memleket meselelerine duyarsız olmadığını, aksine bu konular üzerinde düşünebildiğini, mantıklı ve saygı çerçevesinde tartışabildiğini ve çözüm önerileri geliştirebildiğini göstermektir. Ulusal forumumuz, farklı bakış açılarını bir araya getirerek ortak aklın gücünü ortaya koymayı amaçlayan akademik bir zemindir.</p>
+                
+                <p>Bu amacın hayata geçmesindeki en büyük güç kaynağımız ise siz değerli katılımcılarımızsınız. Gösterdiğiniz ilgi, ortaya koyduğunuz emek ve tartışmalara kattığınız nitelikli katkılar, konferansımızın gerçek anlamını oluşturmaktadır. Tüm hazırlık sürecimiz; sizlerin bu platformdan yeni dostluklar edinmiş, farklı perspektifler kazanmış ve unutulmaz deneyimlerle zenginleşmiş şekilde ayrılmanız içindir.</p>
+                
+                <p>Kocaeli Fen Lisesi Ulusal Forumu'nun yalnızca birkaç gün süren bir etkinlik değil; düşünsel gelişiminize katkı sağlayan, kalıcı bağlar kurmanıza vesile olan ve geleceğe dair umutlarınızı güçlendiren bir konferans deneyimi olmasını temenni ediyoruz.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
             <!-- FORUM NEDIR SECTION -->
             <section class="forum-info-section fade-up">
