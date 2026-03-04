@@ -1316,26 +1316,23 @@
                         <p class="forum-info-text">açıklama</p>
                     </div>
                     <div class="forum-info-card">
-                        <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                        <h3 class="forum-info-title">Kimler Katılabilir?</h3>
-                        <p class="forum-info-text">açıklama</p>
-                    </div>
-                     <div class="forum-info-card">
-                        <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                        <h3 class="forum-info-title">Neden KFLUF?</h3>
-                        <p class="forum-info-text">açıklama gelcek</p>
-                    </div>
-                    </div>
+    <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+    <h3 class="forum-info-title">Kimler Katılabilir?</h3>
+    <p class="forum-info-text">açıklama</p>
+</div>
+<div class="forum-info-card">  <!-- NOW IT'S SEPARATE - CORRECT! -->
+    <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6v6l4 2"/>
+    </svg>
+    <h3 class="forum-info-title">Neden KFLUF?</h3>
+    <p class="forum-info-text">açıklama gelcek</p>
+</div>
                    
                 </div>
             </section>
@@ -1720,7 +1717,7 @@
     let scrollPosition = 0;
     let isNavigatingBack = false;
 
-    // ROUTING
+    // ROUTING - FIXED VERSION
     function handleRoute() {
         const hash = window.location.hash.slice(1) || 'anasayfa';
         
@@ -1729,32 +1726,42 @@
         
         // Show target page
         const target = document.getElementById('page-' + hash);
+        
         if (target) { 
-            target.classList.add('active'); 
+            target.classList.add('active');
             
-            // If going to a detail page, save scroll position and scroll to top
+            // Handle scroll behavior based on page type
             if (hash.startsWith('ekip-') || hash.startsWith('komite-')) {
+                // Going to a detail page - save current scroll position
                 if (!isNavigatingBack) {
                     scrollPosition = window.scrollY;
                 }
+                // Scroll to top of detail page
                 window.scrollTo(0, 0);
             } 
-            // If going to home page (anasayfa) and we have a saved position
-            else if (hash === 'anasayfa' && isNavigatingBack) {
-                setTimeout(() => {
-                    window.scrollTo({ top: scrollPosition, behavior: 'auto' });
-                    isNavigatingBack = false;
-                }, 10);
+            else if (hash === 'anasayfa') {
+                // Going to home page
+                if (isNavigatingBack && scrollPosition > 0) {
+                    // Restore previous position after a brief delay
+                    setTimeout(() => {
+                        window.scrollTo({ top: scrollPosition, behavior: 'auto' });
+                    }, 10);
+                } else {
+                    // Fresh visit to home - scroll to top
+                    window.scrollTo(0, 0);
+                }
+                isNavigatingBack = false;
             }
         }
         else { 
+            // Fallback to home if hash not found
             document.getElementById('page-anasayfa').classList.add('active'); 
+            window.scrollTo(0, 0);
         }
     }
 
     function navigateTo(id) { 
         isNavigatingBack = false;
-        scrollPosition = window.scrollY;
         window.location.hash = id; 
     }
 
@@ -1763,7 +1770,7 @@
         window.location.hash = 'anasayfa';
     }
 
-    // Handle nav link clicks - prevent default hash jump, handle manually
+    // Handle nav link clicks
     function handleNavClick(e, sectionId) {
         e.preventDefault();
         isNavigatingBack = true;
@@ -1771,7 +1778,7 @@
         setTimeout(() => {
             const el = document.getElementById(sectionId);
             if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        }, 150);
     }
 
     window.addEventListener('hashchange', handleRoute);
@@ -1784,7 +1791,7 @@
         document.getElementById('hamburger').classList.toggle('active');
     }
 
-    // SCROLL TO SECTION (for buttons, not nav links)
+    // SCROLL TO SECTION
     function scrollToId(id) {
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -1799,15 +1806,19 @@
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-    // SVG STROKE for back button
-    document.querySelectorAll('.back-btn svg').forEach(svg => {
-        svg.setAttribute('fill', 'none');
-        svg.setAttribute('stroke', 'currentColor');
-        svg.setAttribute('stroke-width', '1.5');
-        svg.setAttribute('stroke-linecap', 'round');
-        svg.setAttribute('stroke-linejoin', 'round');
+    
+    // Observe elements after DOM loads
+    window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        
+        // SVG STROKE for back button
+        document.querySelectorAll('.back-btn svg').forEach(svg => {
+            svg.setAttribute('fill', 'none');
+            svg.setAttribute('stroke', 'currentColor');
+            svg.setAttribute('stroke-width', '1.5');
+            svg.setAttribute('stroke-linecap', 'round');
+            svg.setAttribute('stroke-linejoin', 'round');
+        });
     });
 </script>
 </body>
