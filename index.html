@@ -466,6 +466,7 @@
             gap: 20px;
         }
 
+        /* FOTOGRAF DEGISTIRME ALANI - BURAYA IMGUR LINKI KOYUN */
         .founder-photo {
             width: 100%;
             aspect-ratio: 3/4;
@@ -814,6 +815,7 @@
 
         .leader-card { text-align: left; }
 
+        /* FOTOGRAF DEGISTIRME ALANI - EKIP BASKANLARI ICIN */
         .leader-photo {
             width: 160px; height: 200px;
             object-fit: cover;
@@ -885,7 +887,7 @@
             font-weight: 300;
         }
 
-        /* Members Grid */
+        /* Members List (without photos) */
         .members-section { margin-bottom: 60px; }
 
         .members-title {
@@ -896,39 +898,114 @@
             margin-bottom: 40px;
         }
 
-        .members-grid {
+        .members-list {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
 
-        .member-card {
+        .member-item {
+            padding: 16px 20px;
+            background: rgba(18, 34, 54, 0.6);
             border: 1px solid rgba(201, 168, 76, 0.1);
-            overflow: hidden;
-            transition: border-color 0.3s;
-            cursor: pointer;
+            color: rgba(240, 236, 228, 0.9);
+            font-size: 0.95rem;
+            font-weight: 300;
+            transition: all 0.3s;
         }
 
-        .member-card:hover { border-color: rgba(201, 168, 76, 0.35); }
-
-        .member-photo {
-            width: 100%; aspect-ratio: 3/4;
-            background: var(--navy-mid);
-            overflow: hidden;
+        .member-item:hover {
+            border-color: rgba(201, 168, 76, 0.3);
+            background: rgba(18, 34, 54, 0.8);
         }
 
-        .member-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); }
+        /* ═══════════════ LOCKED OVERLAY ═══════════════ */
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 24, 41, 0.92);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
 
-        .member-info {
-            padding: 14px;
+        .locked-icon {
+            width: 60px;
+            height: 60px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .locked-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .locked-date {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--teal-light);
+        }
+
+        .committees-section,
+        .apply-section-wrapper {
+            position: relative;
+        }
+
+        /* ═══════════════ FORUM NEDIR SECTION ═══════════════ */
+        .forum-info-section {
+            padding: 80px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .forum-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .forum-info-card {
+            padding: 40px 30px;
+            border: 1px solid rgba(201, 168, 76, 0.12);
+            background: rgba(18, 34, 54, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .forum-info-card:hover {
+            border-color: rgba(201, 168, 76, 0.3);
             background: rgba(18, 34, 54, 0.6);
         }
 
-        .member-name {
-            font-size: 0.8rem;
-            color: var(--cream);
-            font-weight: 400;
-            text-align: center;
+        .forum-info-icon {
+            width: 40px;
+            height: 40px;
+            color: var(--teal-light);
+            margin-bottom: 20px;
+        }
+
+        .forum-info-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--white);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .forum-info-text {
+            color: rgba(240, 236, 228, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            font-weight: 300;
         }
 
         /* ═══════════════ ANIMATIONS ═══════════════ */
@@ -948,10 +1025,11 @@
         /* ═══════════════ RESPONSIVE ═══════════════ */
         @media (max-width: 1024px) {
             .teams-grid { grid-template-columns: repeat(2, 1fr); }
-            .members-grid { grid-template-columns: repeat(4, 1fr); }
+            .members-list { grid-template-columns: 1fr; }
             .founder-grid { grid-template-columns: 1fr; }
             .founder-sidebar { align-items: flex-start; flex-direction: row; }
             .founder-photo { width: 160px; height: 200px; flex-shrink: 0; }
+            .forum-info-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
@@ -959,7 +1037,7 @@
             .nav-links { display: none; }
             .hamburger { display: flex; }
 
-            section, .founder-section, .teams-section, .committees-section, .apply-section, .detail-page {
+            section, .founder-section, .teams-section, .committees-section, .apply-section, .detail-page, .forum-info-section {
                 padding-left: 24px;
                 padding-right: 24px;
             }
@@ -972,7 +1050,6 @@
             .apply-grid { grid-template-columns: 1fr; }
             .footer { grid-template-columns: 1fr; }
             .footer-social { align-items: flex-start; }
-            .members-grid { grid-template-columns: repeat(2, 1fr); }
             .founder-sidebar { flex-direction: column; }
             .founder-photo { width: 140px; height: 175px; }
 
@@ -983,9 +1060,10 @@
 
         @media (max-width: 480px) {
             .teams-grid { grid-template-columns: 1fr; }
-            .members-grid { grid-template-columns: repeat(2, 1fr); }
+            .members-list { grid-template-columns: 1fr; }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -993,7 +1071,6 @@
     <nav class="navbar" id="navbar">
         <a href="#anasayfa" class="nav-logo">
             <img src="/mnt/user-data/uploads/1771615923066_image.png" alt="KFLUF Logo" class="nav-logo-img" onerror="this.style.display='none'">
-            <!-- Fallback inline logo if image doesn't render in browser -->
             <svg class="nav-logo-img" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="display:none" id="fallback-logo">
                 <circle cx="50" cy="50" r="10" fill="#c9a84c"/>
                 <ellipse cx="50" cy="50" rx="40" ry="13" fill="none" stroke="#2d7a8a" stroke-width="2.5"/>
@@ -1007,7 +1084,7 @@
         <ul class="nav-links">
             <li><a href="#anasayfa">Ana Sayfa</a></li>
             <li><a href="#anasayfa" onclick="scrollToId('teams-section')">Ekipler</a></li>
-            <li><a href="#anasayfa" onclick="scrollToId('committees-section')">Komiteler</a></li>
+            <li><a href="#anasayfa" onclick="scrollToId('committees-section')">Komisyonlar</a></li>
             <li><a href="#anasayfa" onclick="scrollToId('apply-section-wrapper')">Başvuru</a></li>
         </ul>
 
@@ -1021,7 +1098,7 @@
         <ul>
             <li><a href="#anasayfa" onclick="toggleDrawer()">Ana Sayfa</a></li>
             <li><a href="#anasayfa" onclick="scrollToId('teams-section');toggleDrawer()">Ekipler</a></li>
-            <li><a href="#anasayfa" onclick="scrollToId('committees-section');toggleDrawer()">Komiteler</a></li>
+            <li><a href="#anasayfa" onclick="scrollToId('committees-section');toggleDrawer()">Komisyonlar</a></li>
             <li><a href="#anasayfa" onclick="scrollToId('apply-section-wrapper');toggleDrawer()">Başvuru</a></li>
         </ul>
     </div>
@@ -1043,21 +1120,16 @@
                 </div>
 
                 <div class="hero-content">
-                    <!-- BANNER (Image 2 inspired design) -->
+                    <!-- BANNER -->
                     <div class="hero-banner">
                         <div class="hero-banner-inner">
-                            <!-- Atom logo (image 1 style) -->
                             <svg class="hero-banner-logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Outer decorative ring -->
                                 <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
-                                <!-- Nucleus -->
                                 <circle cx="60" cy="60" r="10" fill="#c9a84c"/>
                                 <circle cx="60" cy="60" r="6" fill="#e8d49a"/>
-                                <!-- Orbits -->
                                 <ellipse cx="60" cy="60" rx="50" ry="17" fill="none" stroke="#2d7a8a" stroke-width="2" transform="rotate(0 60 60)"/>
                                 <ellipse cx="60" cy="60" rx="50" ry="17" fill="none" stroke="#2d7a8a" stroke-width="2" transform="rotate(60 60 60)"/>
                                 <ellipse cx="60" cy="60" rx="50" ry="17" fill="none" stroke="#2d7a8a" stroke-width="2" transform="rotate(120 60 60)"/>
-                                <!-- Electrons -->
                                 <circle cx="109" cy="41" r="4.5" fill="#c9a84c"/>
                                 <circle cx="12" cy="80" r="3.5" fill="#c9a84c"/>
                                 <circle cx="60" cy="10" r="3" fill="#4a9db0"/>
@@ -1073,7 +1145,7 @@
 
                     <span class="hero-eyebrow">15 — 16 — 17 Mayıs 2026</span>
                     <span class="hero-date">Genç Fikirler, Geleceğin Teminatıdır.</span>
-                    <p class="hero-hashtag">#KFLUF26</p>
+                    <p class="hero-hashtag">#DegistikveGelistik</p>
 
                     <div class="hero-cta">
                         <button class="btn-primary" onclick="scrollToId('apply-section-wrapper')">
@@ -1098,19 +1170,58 @@
                     <div class="founder-left">
                         <span class="founder-letter-title">Değerli Delegeler,</span>
                         <div class="founder-letter-body">
-                            <p>Mektup ö...</p>
+                            <p>Değerli Katılımcılar,
+Kocaeli Fen Lisesi Ulusal Forumu bizler için yalnızca bir konferans değil, aynı zamanda uzun soluklu bir hayalin, yoğun emeğin ve güçlü bir vizyonun ürünüdür. Konferansımızı düzenleme fikri ilk olarak geçtiğimiz yılın Haziran ayında doğmuş; o andan itibaren zihnimizi meşgul eden temel soru, bu konferansı en nitelikli ve en sürdürülebilir biçimde nasıl gerçekleştirebileceğimiz olmuştur. Bu doğrultuda yaz aylarından itibaren planlama, içerik geliştirme ve hazırlık çalışmalarına aralıksız şekilde başlamış bulunduk.
+Eylül ayına ulaştığımızda, sistemli ve kararlı çalışmamız sayesinde güçlü bir hazırlık süreci tamamlanmıştı. Okulumuzda daha önce benzer kapsamda bir konferans gerçekleştirilmemiş olmasına rağmen, hazırlığımızın üst düzey seviyede olması sayesinde girişimimiz kısa sürede kabul görmüş; gerekli resmi süreçler titizlikle yürütülerek tamamlandı. Bu noktada bir konferans düzenlerken inandığımız temel ilke bir iş nasıl başlarsa öyle devam eder. Bu anlayış doğrultusunda hedefimiz yalnızca bir konferans düzenlemek değil; okulumuzda kalıcı, kurumsal kimliği olan ve gelecek yıllarda da sürdürülebilecek bir konferans kültürü oluşturmaktır.
+Bu amaçla, konferansın işleyiş modelini en ince ayrıntısına kadar planladık ve okul bünyesinde ulaşabildiğimiz herkese forumun vizyonunu, kapsamını ve hedeflerini anlattık. Süreç boyunca ekip yapılanmamızı oluştururken sürdürülebilirliği temel ilke olarak benimsedik. Her dönemde usta-çırak ilişkisini esas alarak yeni kuşakların hem akademik süreçlere hem de konferansın işleyişine hâkim olmasını sağladık. Böylelikle yalnızca dönemsel bir çalışma değil, okulumuzla birlikte büyüyecek ve yıllar boyunca devam edecek güçlü bir konferans markası oluşturmayı hedefledik.
+“Genç fikirler geleceğin teminatıdır” sloganıyla çıktığımız bu yolda en büyük hedefimiz; biz gençlerin memleket meselelerine duyarsız olmadığını, aksine bu konular üzerinde düşünebildiğini, mantıklı ve saygı çerçevesinde tartışabildiğini ve çözüm önerileri geliştirebildiğini göstermektir. Ulusal forumumuz, farklı bakış açılarını bir araya getirerek ortak aklın gücünü ortaya koymayı amaçlayan akademik bir zemindir.
+Bu amacın hayata geçmesindeki en büyük güç kaynağımız ise siz değerli katılımcılarımızsınız. Gösterdiğiniz ilgi, ortaya koyduğunuz emek ve tartışmalara kattığınız nitelikli katkılar, konferansımızın gerçek anlamını oluşturmaktadır. Tüm hazırlık sürecimiz; sizlerin bu platformdan yeni dostluklar edinmiş, farklı perspektifler kazanmış ve unutulmaz deneyimlerle zenginleşmiş şekilde ayrılmanız içindir.
+Kocaeli Fen Lisesi Ulusal Forumu’nun yalnızca birkaç gün süren bir etkinlik değil; düşünsel gelişiminize katkı sağlayan, kalıcı bağlar kurmanıza vesile olan ve geleceğe dair umutlarınızı güçlendiren bir konferans deneyimi olmasını temenni ediyoruz.</p>
                         </div>
                     </div>
 
                     <div class="founder-sidebar">
-                        <div class="leader-photo">
-                            <img src="https://ui-avatars.com/api/?name=Adil+Alpaslan+Ozer&background=122236&color=c9a84c&size=200" alt="Adil Alpaslan Özer">
-                        </div>
+                        <!-- KONFERANS DIVANI FOTOGRAFI - BURAYA IMGUR LINKI KOYUN -->
+                        <img src="https://ui-avatars.com/api/?name=Konferans+Divani&background=122236&color=c9a84c&size=300" 
+                             alt="Konferans Divanı" 
+                             class="founder-photo"
+                             id="konferans-divani-foto">
                         <div>
                             <p class="founder-name">Adil Alpaslan Özer</p>
-                            <p class="founder-title-text">Konferans Divanı</p>
+                            <p class="founder-title-text">KFLUF 2026</p>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <!-- FORUM NEDIR SECTION -->
+            <section class="forum-info-section fade-up">
+                <div class="section-label">
+                    <div class="section-label-line"></div>
+                    <span class="section-label-text">Forum Nedir?</span>
+                </div>
+                <h2 class="section-title">Ulusal Forum Hakkında</h2>
+
+                <div class="forum-info-grid">
+                    <div class="forum-info-card">
+                        <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                        <h3 class="forum-info-title">Ulusal Forum Nedir?</h3>
+                        <p class="forum-info-text">açıklama</p>
+                    </div>
+                    <div class="forum-info-card">
+                        <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <h3 class="forum-info-title">Kimler Katılabilir?</h3>
+                        <p class="forum-info-text">açıklama</p>
+                    </div>
+                   
                 </div>
             </section>
 
@@ -1127,14 +1238,21 @@
                         <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                             <rect x="3" y="3" width="18" height="14" rx="1"/><path d="M8 21h8M12 17v4"/>
                         </svg>
-                        <h3 class="team-name">Basın ve Teknik</h3>
+                        <h3 class="team-name">Basın Ekibi</h3>
                         <span class="team-arrow">Keşfet →</span>
                     </div>
-                    <div class="team-card" onclick="navigateTo('ekip-admin')">
+                    <div class="team-card" onclick="navigateTo('ekip-teknik')">
+                        <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M9 2v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"/>
+                        </svg>
+                        <h3 class="team-name">Teknik Ekip</h3>
+                        <span class="team-arrow">Keşfet →</span>
+                    </div>
+                    <div class="team-card" onclick="navigateTo('ekip-organizasyon')">
                         <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
                         </svg>
-                        <h3 class="team-name">Adminler</h3>
+                        <h3 class="team-name">Organizasyon Ekibi</h3>
                         <span class="team-arrow">Keşfet →</span>
                     </div>
                     <div class="team-card" onclick="navigateTo('ekip-halkla-iliskiler')">
@@ -1148,13 +1266,13 @@
                         <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                             <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                         </svg>
-                        <h3 class="team-name">Finans</h3>
+                        <h3 class="team-name">Finans Ekibi</h3>
                         <span class="team-arrow">Keşfet →</span>
                     </div>
                 </div>
             </section>
 
-            <!-- COMMITTEES -->
+            <!-- COMMISSIONS (KOMISYONLAR) -->
             <section class="committees-section fade-up" id="committees-section">
                 <div class="section-label">
                     <div class="section-label-line"></div>
@@ -1163,28 +1281,39 @@
                 <h2 class="section-title">Komisyon Yapısı</h2>
 
                 <div class="committees-grid">
-                    <div class="committee-card" onclick="navigateTo('komite-aile')">
+                    <div class="committee-card">
                         <span class="committee-number">01</span>
                         <h3 class="committee-name">Aile ve Sosyal Hizmetler Komisyonu</h3>
                     </div>
-                    <div class="committee-card" onclick="navigateTo('komite-saglik')">
+                    <div class="committee-card">
                         <span class="committee-number">02</span>
                         <h3 class="committee-name">Sağlık Komisyonu</h3>
                     </div>
-                    <div class="committee-card" onclick="navigateTo('komite-ulasim')">
+                    <div class="committee-card">
                         <span class="committee-number">03</span>
                         <h3 class="committee-name">Ulaştırma Komisyonu</h3>
                     </div>
                 </div>
                 <div class="committees-grid-bottom">
-                    <div class="committee-card" onclick="navigateTo('komite-ekonomi')">
+                    <div class="committee-card">
                         <span class="committee-number">04</span>
                         <h3 class="committee-name">Ekonomi Komisyonu</h3>
                     </div>
-                    <div class="committee-card" onclick="navigateTo('komite-egitim')">
+                    <div class="committee-card">
                         <span class="committee-number">05</span>
                         <h3 class="committee-name">Eğitim Komisyonu</h3>
                     </div>
+                </div>
+
+                <!-- LOCKED OVERLAY -->
+                <div class="locked-overlay">
+                    <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <circle cx="12" cy="16" r="1"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    <p class="locked-text">Komisyonlar 10 Mart tarihinde açılacaktır</p>
+                    <p class="locked-date">KFLUF 2026</p>
                 </div>
             </section>
 
@@ -1198,8 +1327,7 @@
                     <h2 class="section-title">Foruma Katıl</h2>
 
                     <div class="apply-grid">
-                        
-                        <a href="https://forms.google.com/" target="_blank" class="apply-card">
+                        <a href="https://forms.google.com" target="_blank" class="apply-card">
                             <span class="apply-card-tag">Bireysel</span>
                             <p class="apply-card-title">Tek Delege Olarak Başvur</p>
                             <span class="apply-card-arrow">
@@ -1208,6 +1336,17 @@
                             </span>
                         </a>
                     </div>
+                </div>
+
+                <!-- LOCKED OVERLAY -->
+                <div class="locked-overlay">
+                    <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <circle cx="12" cy="16" r="1"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    <p class="locked-text">Başvurular 8 Nisan tarihinde başlayacaktır</p>
+                    <p class="locked-date">KFLUF 2026</p>
                 </div>
             </div>
 
@@ -1226,7 +1365,7 @@
                             <span class="footer-logo-name">KFLUF</span>
                         </div>
                         <p class="footer-tagline">Kocaeli Fen Lisesi Ulusal Forumu</p>
-                        <p class="footer-hashtag">#KFLUF26</p>
+                        <p class="footer-hashtag">#DegistikveGelistik</p>
                     </div>
                     <div class="footer-social">
                         <a href="https://instagram.com/kflulusalformu" target="_blank" class="social-link">
@@ -1246,55 +1385,123 @@
         </div>
 
         <!-- ═══════ TEAM DETAIL PAGES ═══════ -->
-        <!-- Template function generates these -->
-
+        
+        <!-- BASIN EKIBI -->
         <div id="page-ekip-basin" class="page-section">
             <div class="detail-page">
-                <a href="#anasayfa" class="back-btn" onclick="navigateTo('anasayfa')">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
                     <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Geri Dön
                 </a>
-                <h1 class="detail-title">Basın ve Teknik Ekibi</h1>
+                <h1 class="detail-title">Basın Ekibi</h1>
                 <div class="detail-title-line"></div>
                 <div class="detail-leaders">
                     <div class="leader-card">
-                        <div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Basın+Baskani&background=122236&color=c9a84c&size=200" alt="Başkan"></div>
+                        <!-- BASIN BASKANI FOTOGRAFI - BURAYA IMGUR LINKI KOYUN -->
+                        <div class="leader-photo">
+                            <img src="https://ui-avatars.com/api/?name=Erva+Koc&background=122236&color=c9a84c&size=200" 
+                                 alt="Erva Koç"
+                                 class="baskan-foto">
+                        </div>
                         <span class="leader-role">Ekip Başkanı</span>
-                        <p class="leader-name">İsim Soyisim</p>
+                        <p class="leader-name">Erva Koç</p>
                     </div>
                 </div>
                 <div class="members-section">
                     <h3 class="members-title">Ekip Üyeleri</h3>
-                    <div class="members-grid" id="basin-members"></div>
+                    <div class="members-list">
+                        <div class="member-item">Ebrar Ateş</div>
+                        <div class="member-item">Zeynep Yaren Tanak</div>
+                        <div class="member-item">Ece Yıldırım</div>
+                        <div class="member-item">Eslem Naz Bekler</div>
+                        <div class="member-item">Şevval Akkuzu</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id="page-ekip-admin" class="page-section">
+        <!-- TEKNIK EKIP -->
+        <div id="page-ekip-teknik" class="page-section">
             <div class="detail-page">
-                <a href="#anasayfa" class="back-btn" onclick="navigateTo('anasayfa')">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
                     <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Geri Dön
                 </a>
-                <h1 class="detail-title">Admin Ekibi</h1>
+                <h1 class="detail-title">Teknik Ekip</h1>
                 <div class="detail-title-line"></div>
                 <div class="detail-leaders">
                     <div class="leader-card">
-                        <div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Admin+Baskani&background=122236&color=c9a84c&size=200" alt="Başkan"></div>
+                        <!-- TEKNIK BASKANI FOTOGRAFI - BURAYA IMGUR LINKI KOYUN -->
+                        <div class="leader-photo">
+                            <img src="https://ui-avatars.com/api/?name=Ahmet+Yavuz+Alan&background=122236&color=c9a84c&size=200" 
+                                 alt="Ahmet Yavuz Alan"
+                                 class="baskan-foto">
+                        </div>
                         <span class="leader-role">Ekip Başkanı</span>
-                        <p class="leader-name">İsim Soyisim</p>
+                        <p class="leader-name">Ahmet Yavuz Alan</p>
                     </div>
                 </div>
                 <div class="members-section">
                     <h3 class="members-title">Ekip Üyeleri</h3>
-                    <div class="members-grid" id="admin-members"></div>
+                    <div class="members-list">
+                        <div class="member-item">Oğuz Kağan Şahin</div>
+                        <div class="member-item">Uğur Aldıoğlu</div>
+                        <div class="member-item">Göktuğ Onaylı</div>
+                        <div class="member-item">Eda Ağlamış</div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- ORGANIZASYON EKIBI -->
+        <div id="page-ekip-organizasyon" class="page-section">
+            <div class="detail-page">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Organizasyon Ekibi</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <!-- ORGANIZASYON BASKANI FOTOGRAFI - BURAYA IMGUR LINKI KOYUN -->
+                        <div class="leader-photo">
+                            <img src="https://ui-avatars.com/api/?name=Berkay+Karakaya&background=122236&color=c9a84c&size=200" 
+                                 alt="Berkay Karakaya"
+                                 class="baskan-foto">
+                        </div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Berkay Karakaya</p>
+                    </div>
+                </div>
+                <div class="members-section">
+                    <h3 class="members-title">Ekip Üyeleri</h3>
+                    <div class="members-list">
+                        <div class="member-item">Mehmet Akif Turan</div>
+                        <div class="member-item">Alper Burak Yazıcı</div>
+                        <div class="member-item">Yusuf Eren Şentürk</div>
+                        <div class="member-item">Ural Bulut Şanbaklı</div>
+                        <div class="member-item">Süleyman Yiğit Apaydın</div>
+                        <div class="member-item">Beril Karaköse</div>
+                        <div class="member-item">Reyhan İnançı</div>
+                        <div class="member-item">Caner Ayenden</div>
+                        <div class="member-item">Beyza Yılmaz</div>
+                        <div class="member-item">Erhan Çetin Yıkan</div>
+                        <div class="member-item">Yiğit Belat</div>
+                        <div class="member-item">Zeynep Umay Çardak</div>
+                        <div class="member-item">Rıdvan Çelik</div>
+                        <div class="member-item">Alp Kerem Okyay</div>
+                        <div class="member-item">Ayça Çalışkan</div>
+                        <div class="member-item">Defne Taluç</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HALKLA ILISKILER EKIBI -->
         <div id="page-ekip-halkla-iliskiler" class="page-section">
             <div class="detail-page">
-                <a href="#anasayfa" class="back-btn" onclick="navigateTo('anasayfa')">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
                     <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Geri Dön
                 </a>
@@ -1302,21 +1509,49 @@
                 <div class="detail-title-line"></div>
                 <div class="detail-leaders">
                     <div class="leader-card">
-                        <div class="leader-photo"><img src="https://ui-avatars.com/api/?name=HR+Baskani&background=122236&color=c9a84c&size=200" alt="Başkan"></div>
+                        <!-- HALKLA ILISKILER BASKANI 1 FOTOGRAFI - BURAYA IMGUR LINKI KOYUN -->
+                        <div class="leader-photo">
+                            <img src="https://ui-avatars.com/api/?name=Ceren+Bilgin&background=122236&color=c9a84c&size=200" 
+                                 alt="Ceren Bilgin"
+                                 class="baskan-foto">
+                        </div>
                         <span class="leader-role">Ekip Başkanı</span>
-                        <p class="leader-name">İsim Soyisim</p>
+                        <p class="leader-name">Ceren Bilgin</p>
+                    </div>
+                    <div class="leader-card">
+                        <!-- HALKLA ILISKILER BASKANI 2 FOTOGRAFI - BURAYA IMGUR LINKI KOYUN -->
+                        <div class="leader-photo">
+                            <img src="https://ui-avatars.com/api/?name=Sudenaz+Saka&background=122236&color=c9a84c&size=200" 
+                                 alt="Sudenaz Saka"
+                                 class="baskan-foto">
+                        </div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Sudenaz Saka</p>
                     </div>
                 </div>
                 <div class="members-section">
                     <h3 class="members-title">Ekip Üyeleri</h3>
-                    <div class="members-grid" id="hr-members"></div>
+                    <div class="members-list">
+                        <div class="member-item">Şevval Ayşe Şafak</div>
+                        <div class="member-item">Muhammet Sağlam</div>
+                        <div class="member-item">Elif Güden</div>
+                        <div class="member-item">Yağmur Kuş</div>
+                        <div class="member-item">Ceylin Torkkolesi</div>
+                        <div class="member-item">Ceylin Dilek Akbaş</div>
+                        <div class="member-item">Halim Mert Tiryaki</div>
+                        <div class="member-item">İpek Öngün</div>
+                        <div class="member-item">İklim Emir Sarı</div>
+                        <div class="member-item">Büğlem Hira Uçunoğlu</div>
+                        <div class="member-item">Yağmur Karaca</div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- FINANS EKIBI -->
         <div id="page-ekip-finans" class="page-section">
             <div class="detail-page">
-                <a href="#anasayfa" class="back-btn" onclick="navigateTo('anasayfa')">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
                     <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Geri Dön
                 </a>
@@ -1324,102 +1559,87 @@
                 <div class="detail-title-line"></div>
                 <div class="detail-leaders">
                     <div class="leader-card">
-                        <div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Finans+Baskani&background=122236&color=c9a84c&size=200" alt="Başkan"></div>
+                        <!-- FINANS BASKANI 1 FOTOGRAFI - BURAYA IMGUR LINKI KOYUN -->
+                        <div class="leader-photo">
+                            <img src="https://ui-avatars.com/api/?name=Mevlana+Enes+Gokce&background=122236&color=c9a84c&size=200" 
+                                 alt="Mevlana Enes Gökce"
+                                 class="baskan-foto">
+                        </div>
                         <span class="leader-role">Ekip Başkanı</span>
-                        <p class="leader-name">İsim Soyisim</p>
+                        <p class="leader-name">Mevlana Enes Gökce</p>
+                    </div>
+                    <div class="leader-card">
+                        <!-- FINANS BASKANI 2 FOTOGRAFI - BURAYA IMGUR LINKI KOYUN -->
+                        <div class="leader-photo">
+                            <img src="https://ui-avatars.com/api/?name=Zeynep+Bilge+Karakus&background=122236&color=c9a84c&size=200" 
+                                 alt="Zeynep Bilge Karakuş"
+                                 class="baskan-foto">
+                        </div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Zeynep Bilge Karakuş</p>
                     </div>
                 </div>
                 <div class="members-section">
                     <h3 class="members-title">Ekip Üyeleri</h3>
-                    <div class="members-grid" id="finans-members"></div>
+                    <div class="members-list">
+                        <div class="member-item">Elif Şahin</div>
+                        <div class="member-item">Kübra Kılıç</div>
+                        <div class="member-item">Muhammet Ali Sabit</div>
+                        <div class="member-item">Mustafa Eren Keskek</div>
+                        <div class="member-item">Görkem Kasap</div>
+                        <div class="member-item">Nihan Demircan</div>
+                        <div class="member-item">Ahmet Eren Yıldız</div>
+                        <div class="member-item">Nil Kuriş</div>
+                        <div class="member-item">Berkay Gümüş</div>
+                        <div class="member-item">Metehan Savaş</div>
+                        <div class="member-item">Eymen Çınar Büke</div>
+                        <div class="member-item">Can Ekar</div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- COMMITTEE PAGES -->
-        <div id="page-komite-aile" class="page-section">
-            <div class="detail-page">
-                <a href="#anasayfa" class="back-btn" onclick="navigateTo('anasayfa')"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Geri Dön</a>
-                <h1 class="detail-title">Aile ve Sosyal Hizmetler Komitesi</h1>
-                <div class="detail-title-line"></div>
-                <div class="detail-leaders">
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Chair&background=122236&color=c9a84c&size=200" alt="Chair"></div><span class="leader-role">Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Co-Chair&background=122236&color=c9a84c&size=200" alt="Co-Chair"></div><span class="leader-role">Co-Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                </div>
-                <div class="detail-box"><h3 class="detail-box-title">Ana Gündem Maddeleri</h3><ul><li>Gündem maddesi 1</li><li>Gündem maddesi 2</li><li>Gündem maddesi 3</li><li>Gündem maddesi 4</li></ul></div>
-                <div class="detail-box"><h3 class="detail-box-title">Komite Hakkında</h3><p>Komite açıklaması buraya gelecek...</p></div>
-            </div>
-        </div>
-
-        <div id="page-komite-saglik" class="page-section">
-            <div class="detail-page">
-                <a href="#anasayfa" class="back-btn" onclick="navigateTo('anasayfa')"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Geri Dön</a>
-                <h1 class="detail-title">Sağlık Komitesi</h1>
-                <div class="detail-title-line"></div>
-                <div class="detail-leaders">
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Chair&background=122236&color=c9a84c&size=200" alt="Chair"></div><span class="leader-role">Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Co+Chair&background=122236&color=c9a84c&size=200" alt="Co-Chair"></div><span class="leader-role">Co-Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                </div>
-                <div class="detail-box"><h3 class="detail-box-title">Ana Gündem Maddeleri</h3><ul><li>Gündem maddesi 1</li><li>Gündem maddesi 2</li><li>Gündem maddesi 3</li><li>Gündem maddesi 4</li></ul></div>
-                <div class="detail-box"><h3 class="detail-box-title">Komite Hakkında</h3><p>Komite açıklaması buraya gelecek...</p></div>
-            </div>
-        </div>
-
-        <div id="page-komite-ulasim" class="page-section">
-            <div class="detail-page">
-                <a href="#anasayfa" class="back-btn" onclick="navigateTo('anasayfa')"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Geri Dön</a>
-                <h1 class="detail-title">Ulaştırma Komitesi</h1>
-                <div class="detail-title-line"></div>
-                <div class="detail-leaders">
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Chair&background=122236&color=c9a84c&size=200" alt="Chair"></div><span class="leader-role">Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Co+Chair&background=122236&color=c9a84c&size=200" alt="Co-Chair"></div><span class="leader-role">Co-Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                </div>
-                <div class="detail-box"><h3 class="detail-box-title">Ana Gündem Maddeleri</h3><ul><li>Gündem maddesi 1</li><li>Gündem maddesi 2</li><li>Gündem maddesi 3</li><li>Gündem maddesi 4</li></ul></div>
-                <div class="detail-box"><h3 class="detail-box-title">Komite Hakkında</h3><p>Komite açıklaması buraya gelecek...</p></div>
-            </div>
-        </div>
-
-        <div id="page-komite-ekonomi" class="page-section">
-            <div class="detail-page">
-                <a href="#anasayfa" class="back-btn" onclick="navigateTo('anasayfa')"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Geri Dön</a>
-                <h1 class="detail-title">Ekonomi Komitesi</h1>
-                <div class="detail-title-line"></div>
-                <div class="detail-leaders">
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Chair&background=122236&color=c9a84c&size=200" alt="Chair"></div><span class="leader-role">Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Co+Chair&background=122236&color=c9a84c&size=200" alt="Co-Chair"></div><span class="leader-role">Co-Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                </div>
-                <div class="detail-box"><h3 class="detail-box-title">Ana Gündem Maddeleri</h3><ul><li>Gündem maddesi 1</li><li>Gündem maddesi 2</li><li>Gündem maddesi 3</li><li>Gündem maddesi 4</li></ul></div>
-                <div class="detail-box"><h3 class="detail-box-title">Komite Hakkında</h3><p>Komite açıklaması buraya gelecek...</p></div>
-            </div>
-        </div>
-
-        <div id="page-komite-egitim" class="page-section">
-            <div class="detail-page">
-                <a href="#anasayfa" class="back-btn" onclick="navigateTo('anasayfa')"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Geri Dön</a>
-                <h1 class="detail-title">Eğitim Komitesi</h1>
-                <div class="detail-title-line"></div>
-                <div class="detail-leaders">
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Chair&background=122236&color=c9a84c&size=200" alt="Chair"></div><span class="leader-role">Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                    <div class="leader-card"><div class="leader-photo"><img src="https://ui-avatars.com/api/?name=Co+Chair&background=122236&color=c9a84c&size=200" alt="Co-Chair"></div><span class="leader-role">Co-Chair</span><p class="leader-name">İsim Soyisim</p></div>
-                </div>
-                <div class="detail-box"><h3 class="detail-box-title">Ana Gündem Maddeleri</h3><ul><li>Gündem maddesi 1</li><li>Gündem maddesi 2</li><li>Gündem maddesi 3</li><li>Gündem maddesi 4</li></ul></div>
-                <div class="detail-box"><h3 class="detail-box-title">Komite Hakkında</h3><p>Komite açıklaması buraya gelecek...</p></div>
             </div>
         </div>
 
     </div><!-- /shell -->
 
     <script>
+        // Scroll position memory
+        let scrollPosition = 0;
+
         // ROUTING
         function handleRoute() {
             const hash = window.location.hash.slice(1) || 'anasayfa';
+            
+            // Save scroll position if going to a detail page
+            if (hash.startsWith('ekip-') || hash.startsWith('komite-')) {
+                scrollPosition = window.scrollY;
+            }
+            
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
             const target = document.getElementById('page-' + hash);
-            if (target) { target.classList.add('active'); window.scrollTo(0, 0); }
-            else { document.getElementById('page-anasayfa').classList.add('active'); }
+            if (target) { 
+                target.classList.add('active'); 
+                // Only scroll to top for detail pages, restore position for main page
+                if (hash.startsWith('ekip-') || hash.startsWith('komite-')) {
+                    window.scrollTo(0, 0);
+                }
+            }
+            else { 
+                document.getElementById('page-anasayfa').classList.add('active'); 
+            }
         }
 
-        function navigateTo(id) { window.location.hash = id; }
+        function navigateTo(id) { 
+            scrollPosition = window.scrollY;
+            window.location.hash = id; 
+        }
+
+        function navigateBack() {
+            window.location.hash = 'anasayfa';
+            setTimeout(() => {
+                window.scrollTo({ top: scrollPosition, behavior: 'auto' });
+            }, 10);
+        }
+
         window.addEventListener('hashchange', handleRoute);
         window.addEventListener('DOMContentLoaded', handleRoute);
 
@@ -1448,28 +1668,6 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-        // GENERATE MEMBER CARDS
-        function generateMembers(containerId, count) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            for (let i = 1; i <= count; i++) {
-                container.innerHTML += `
-                    <div class="member-card">
-                        <div class="member-photo">
-                            <img src="https://ui-avatars.com/api/?name=Uye+${i}&background=122236&color=4a9db0&size=140" alt="Üye ${i}">
-                        </div>
-                        <div class="member-info"><p class="member-name">Üye ${i}</p></div>
-                    </div>`;
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            generateMembers('basin-members', 10);
-            generateMembers('admin-members', 10);
-            generateMembers('hr-members', 10);
-            generateMembers('finans-members', 10);
-        });
 
         // SVG STROKE for back button
         document.querySelectorAll('.back-btn svg').forEach(svg => {
