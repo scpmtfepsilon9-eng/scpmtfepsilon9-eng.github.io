@@ -1174,12 +1174,12 @@
             <span class="nav-logo-text">KFLUF</span>
         </a>
 
-        <ul class="nav-links">
-            <li><a href="#anasayfa">Ana Sayfa</a></li>
-            <li><a href="#anasayfa" onclick="scrollToId('teams-section')">Ekipler</a></li>
-            <li><a href="#anasayfa" onclick="scrollToId('committees-section')">Komisyonlar</a></li>
-            <li><a href="#anasayfa" onclick="scrollToId('apply-section-wrapper')">Başvuru</a></li>
-        </ul>
+<ul class="nav-links">
+    <li><a href="#anasayfa" onclick="isNavigatingBack=true;">Ana Sayfa</a></li>
+    <li><a href="#anasayfa" onclick="handleNavClick(event, 'teams-section')">Ekipler</a></li>
+    <li><a href="#anasayfa" onclick="handleNavClick(event, 'committees-section')">Komisyonlar</a></li>
+    <li><a href="#anasayfa" onclick="handleNavClick(event, 'apply-section-wrapper')">Başvuru</a></li>
+</ul>
 
         <div class="hamburger" id="hamburger" onclick="toggleDrawer()">
             <span></span><span></span><span></span>
@@ -1187,14 +1187,14 @@
     </nav>
 
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
-    <div class="mobile-drawer" id="mobileDrawer">
-        <ul>
-            <li><a href="#anasayfa" onclick="toggleDrawer()">Ana Sayfa</a></li>
-            <li><a href="#anasayfa" onclick="scrollToId('teams-section');toggleDrawer()">Ekipler</a></li>
-            <li><a href="#anasayfa" onclick="scrollToId('committees-section');toggleDrawer()">Komisyonlar</a></li>
-            <li><a href="#anasayfa" onclick="scrollToId('apply-section-wrapper');toggleDrawer()">Başvuru</a></li>
-        </ul>
-    </div>
+   <div class="mobile-drawer" id="mobileDrawer">
+    <ul>
+        <li><a href="#anasayfa" onclick="toggleDrawer(); isNavigatingBack=true;">Ana Sayfa</a></li>
+        <li><a href="#anasayfa" onclick="handleNavClick(event, 'teams-section'); toggleDrawer();">Ekipler</a></li>
+        <li><a href="#anasayfa" onclick="handleNavClick(event, 'committees-section'); toggleDrawer();">Komisyonlar</a></li>
+        <li><a href="#anasayfa" onclick="handleNavClick(event, 'apply-section-wrapper'); toggleDrawer();">Başvuru</a></li>
+    </ul>
+</div>
 
     <!-- SHELL -->
     <div class="shell">
@@ -1715,83 +1715,100 @@
         </div>
 
     </div><!-- /shell -->
+<script>
+    // Scroll position memory
+    let scrollPosition = 0;
+    let isNavigatingBack = false;
 
-    <script>
-        // Scroll position memory
-        let scrollPosition = 0;
-
-        // ROUTING
-        function handleRoute() {
-            const hash = window.location.hash.slice(1) || 'anasayfa';
+    // ROUTING
+    function handleRoute() {
+        const hash = window.location.hash.slice(1) || 'anasayfa';
+        
+        // Hide all pages
+        document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+        
+        // Show target page
+        const target = document.getElementById('page-' + hash);
+        if (target) { 
+            target.classList.add('active'); 
             
-            // Save scroll position if going to a detail page
+            // If going to a detail page, save scroll position and scroll to top
             if (hash.startsWith('ekip-') || hash.startsWith('komite-')) {
-                scrollPosition = window.scrollY;
-            }
-            
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById('page-' + hash);
-            if (target) { 
-                target.classList.add('active'); 
-                // Only scroll to top for detail pages, restore position for main page
-                if (hash.startsWith('ekip-') || hash.startsWith('komite-')) {
-                    window.scrollTo(0, 0);
+                if (!isNavigatingBack) {
+                    scrollPosition = window.scrollY;
                 }
+                window.scrollTo(0, 0);
+            } 
+            // If going to home page (anasayfa) and we have a saved position
+            else if (hash === 'anasayfa' && isNavigatingBack) {
+                setTimeout(() => {
+                    window.scrollTo({ top: scrollPosition, behavior: 'auto' });
+                    isNavigatingBack = false;
+                }, 10);
             }
-            else { 
-                document.getElementById('page-anasayfa').classList.add('active'); 
-            }
         }
-
-        function navigateTo(id) { 
-            scrollPosition = window.scrollY;
-            window.location.hash = id; 
+        else { 
+            document.getElementById('page-anasayfa').classList.add('active'); 
         }
+    }
 
-        function navigateBack() {
-            window.location.hash = 'anasayfa';
-            setTimeout(() => {
-                window.scrollTo({ top: scrollPosition, behavior: 'auto' });
-            }, 10);
-        }
+    function navigateTo(id) { 
+        isNavigatingBack = false;
+        scrollPosition = window.scrollY;
+        window.location.hash = id; 
+    }
 
-        window.addEventListener('hashchange', handleRoute);
-        window.addEventListener('DOMContentLoaded', handleRoute);
+    function navigateBack() {
+        isNavigatingBack = true;
+        window.location.hash = 'anasayfa';
+    }
 
-        // DRAWER
-        function toggleDrawer() {
-            document.getElementById('mobileDrawer').classList.toggle('active');
-            document.getElementById('drawerOverlay').classList.toggle('active');
-            document.getElementById('hamburger').classList.toggle('active');
-        }
+    // Handle nav link clicks - prevent default hash jump, handle manually
+    function handleNavClick(e, sectionId) {
+        e.preventDefault();
+        isNavigatingBack = true;
+        window.location.hash = 'anasayfa';
+        setTimeout(() => {
+            const el = document.getElementById(sectionId);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    }
 
-        // SCROLL TO SECTION
-        function scrollToId(id) {
-            setTimeout(() => {
-                const el = document.getElementById(id);
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }, 50);
-        }
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('DOMContentLoaded', handleRoute);
 
-        // NAVBAR SCROLL
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
-        });
+    // DRAWER
+    function toggleDrawer() {
+        document.getElementById('mobileDrawer').classList.toggle('active');
+        document.getElementById('drawerOverlay').classList.toggle('active');
+        document.getElementById('hamburger').classList.toggle('active');
+    }
 
-        // FADE UP ANIMATION
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    // SCROLL TO SECTION (for buttons, not nav links)
+    function scrollToId(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
 
-        // SVG STROKE for back button
-        document.querySelectorAll('.back-btn svg').forEach(svg => {
-            svg.setAttribute('fill', 'none');
-            svg.setAttribute('stroke', 'currentColor');
-            svg.setAttribute('stroke-width', '1.5');
-            svg.setAttribute('stroke-linecap', 'round');
-            svg.setAttribute('stroke-linejoin', 'round');
-        });
-    </script>
+    // NAVBAR SCROLL
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // FADE UP ANIMATION
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // SVG STROKE for back button
+    document.querySelectorAll('.back-btn svg').forEach(svg => {
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '1.5');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+    });
+</script>
 </body>
 </html>
