@@ -904,13 +904,17 @@
             gap: 60px;
             margin-bottom: 80px;
             flex-wrap: wrap;
+            justify-content: center; /* YENI: Ortalama */
         }
 
-        .leader-card { text-align: left; }
+        .leader-card { 
+            text-align: center; /* YENI: Ortalama */
+        }
 
         /* FOTOGRAF DEGISTIRME ALANI - EKIP BASKANLARI ICIN */
         .leader-photo {
-            width: 160px; height: 200px;
+            width: 220px; /* YENI: 160'dan 220'ye çıkarıldı */
+            height: 275px; /* YENI: 200'den 275'e çıkarıldı */
             object-fit: cover;
             border: 1px solid rgba(201, 168, 76, 0.25);
             margin-bottom: 16px;
@@ -919,15 +923,14 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            transform: scale(1.05)
-            
+            margin-left: auto; /* YENI: Ortalama için */
+            margin-right: auto; /* YENI: Ortalama için */
         }
 
         .leader-photo img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover;
-            transform: scale(2);
         }
 
         .leader-role {
@@ -1056,6 +1059,28 @@
             color: var(--teal-light);
         }
 
+        /* KOMISYON KARTI KILIT STILI */
+        .committee-card {
+            position: relative;
+        }
+        
+        .committee-lock-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 24, 41, 0.92);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+        
+        .committee-lock-overlay.hidden {
+            display: none;
+        }
+
         .committees-section,
         .apply-section-wrapper {
             position: relative;
@@ -1156,6 +1181,10 @@
             .hero-banner-kfluf { font-size: 2.8rem; }
 
             .detail-page { padding: 80px 24px 60px; }
+            
+            /* Mobil için lider fotoğrafları ayarı */
+            .detail-leaders { gap: 30px; }
+            .leader-photo { width: 180px; height: 225px; }
         }
 
         @media (max-width: 480px) {
@@ -1261,7 +1290,7 @@
             <section class="founder-section fade-up">
     <div class="section-label">
         <div class="section-label-line"></div>
-        <span class="section-label-text">Konferans Divanılarından Mektup</span>
+        <span class="section-label-text">Konferans Divanlarından Mektup</span>
     </div>
 
     <div class="founder-grid stacked-layout">
@@ -1335,7 +1364,7 @@ Bu yönüyle hem akademik hem de entelektüel gelişim sağlayan bir organizasyo
         <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
     </svg>
     <h3 class="forum-info-title">Kimler Katılabilir?</h3>
-    <p class="forum-info-text">Etkinliğimize Hazırlık okuyanlar, 9., 10., 11. ve 12.sınıflarda öğrenim gören lise öğrencilerine katılımımız açıktır.</p>
+    <p class="forum-info-text">Etkinliğimize Hazırlık, 9., 10., 11. ve 12.sınıf öğrencileri katılabilir.</p>
 </div>
 <div class="forum-info-card">  <!-- NOW IT'S SEPARATE - CORRECT! -->
     <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
@@ -1343,7 +1372,7 @@ Bu yönüyle hem akademik hem de entelektüel gelişim sağlayan bir organizasyo
         <path d="M12 6v6l4 2"/>
     </svg>
     <h3 class="forum-info-title">Neden KFLUF?</h3>
-    <p class="forum-info-text">Kocaeli Fen Lisesi Ulusal Forumu olarak Konferans kültürünü gerçekten bilen ve her sene bir öncekinden daha iyisini yapmaya çalışan bir ekibiz. Oturumlarımızda gündemlerimizi özenle seçiyor, sağlam bir araştırma altyapısıyla ilerliyor ve disiplinli bir moderasyon anlayışı benimsiyoruz. Tartışmalarımız yüzeysel değil; çözüm üretmeye odaklı, delegelere farklı bakış açıları kazandıran ve ufuk açan türden. Ancak KFLUF yalnızca yoğun akademik oturumlardan ibaret değil. Planlı sosyal etkinliklerimiz ve samimi ortamımız sayesinde delegeler hem kendini geliştiriyor hem de gerçekten büyük bir zevk alıyor. Biz ekip olarak dengeyi en önemli nokta olarak görüyor ve denge için çabalıyoruz. KFLUF’u tercih etmek; kendine yatırım yapmak, güçlü dostluklar kurmak ve nitelikli bir konferans deneyimi yaşamak demektir. Çünkü biz ciddiyeti sıcak bir atmosferle, disiplini samimiyetle buluşturuyoruz</p>
+    <p class="forum-info-text">Kocaeli Fen Lisesi Ulusal Forumu olarak Konferans kültürünü gerçekten bilen ve her sene bir öncekinden daha iyisini yapmaya çalışan bir ekibiz. Oturumlarımızda gündemlerimizi özenle seçiyor, sağlam bir araştırma altyapısıyla ilerliyor ve disiplinli bir moderasyon anlayışı benimsiyoruz. Tartışmalarımız yüzeysel değil; çözüm üretmeye odaklı, delegelere farklı bakış açıları kazandıran ve ufuk açan türden. Ancak KFLUF yalnızca yoğun akademik oturumlardan ibaret değil. Planlı sosyal etkinliklerimiz ve samimi ortamımız sayesinde delegeler hem kendini geliştiriyor hem de gerçekten büyük bir zevk alıyor. Biz ekip olarak dengeyi en önemli nokta olarak görüyor ve denge için çabalıyoruz. KFLUF'u tercih etmek; kendine yatırım yapmak, güçlü dostluklar kurmak ve nitelikli bir konferans deneyimi yaşamak demektir. Çünkü biz ciddiyeti sıcak bir atmosferle, disiplini samimiyetle buluşturuyoruz</p>
 </div>
                    
                 </div>
@@ -1405,39 +1434,73 @@ Bu yönüyle hem akademik hem de entelektüel gelişim sağlayan bir organizasyo
                 <h2 class="section-title">Komisyon Yapısı</h2>
 
                 <div class="committees-grid">
-                    <div class="committee-card">
+                    <div class="committee-card" onclick="navigateTo('komisyon-aile-sosyal')" data-unlock-date="2026-03-11">
                         <span class="committee-number">01</span>
                         <h3 class="committee-name">Aile ve Sosyal Hizmetler Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-aile">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">11 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
                     </div>
-                    <div class="committee-card">
+                    <div class="committee-card" onclick="navigateTo('komisyon-saglik')" data-unlock-date="2026-03-10">
                         <span class="committee-number">02</span>
                         <h3 class="committee-name">Sağlık Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-saglik">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">10 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
                     </div>
-                    <div class="committee-card">
+                    <div class="committee-card" onclick="navigateTo('komisyon-ulasim-altyapi')" data-unlock-date="2026-03-09">
                         <span class="committee-number">03</span>
-                        <h3 class="committee-name">Ulaştırma Komisyonu</h3>
+                        <h3 class="committee-name">Ulaştırma ve Altyapı Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-ulasim">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">9 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
                     </div>
                 </div>
                 <div class="committees-grid-bottom">
-                    <div class="committee-card">
+                    <div class="committee-card" onclick="navigateTo('komisyon-ekonomi')" data-unlock-date="2026-03-12">
                         <span class="committee-number">04</span>
                         <h3 class="committee-name">Ekonomi Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-ekonomi">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">12 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
                     </div>
-                    <div class="committee-card">
+                    <div class="committee-card" onclick="navigateTo('komisyon-egitim')" data-unlock-date="2026-03-13">
                         <span class="committee-number">05</span>
                         <h3 class="committee-name">Eğitim Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-egitim">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">13 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
                     </div>
-                </div>
-
-                <!-- LOCKED OVERLAY -->
-                <div class="locked-overlay">
-                    <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                        <circle cx="12" cy="16" r="1"/>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                    </svg>
-                    <p class="locked-text">Komisyonlar 10 Mart tarihinde duyurulacaktır.</p>
-                    <p class="locked-date">KFLUF 2026</p>
                 </div>
             </section>
 
@@ -1723,6 +1786,187 @@ Bu yönüyle hem akademik hem de entelektüel gelişim sağlayan bir organizasyo
             </div>
         </div>
 
+        <!-- ═══════ KOMISYON SAYFALARI ═══════ -->
+
+        <div id="page-komisyon-dss" class="page-section">
+            <div class="detail-page">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">KOmisyon/h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo">
+                            <img src="" alt="Başkan Fotoğrafı" class="baskan-foto" style="display:none;">
+                        </div>
+                        <span class="leader-role">Komisyon Başkanı</span>
+                        <p class="leader-name">[Başkan İsmi]</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo">
+                            <img src="" alt="Başkan Yardımcısı Fotoğrafı" class="baskan-foto" style="display:none;">
+                        </div>
+                        <span class="leader-role">Başkan Yardımcısı</span>
+                        <p class="leader-name">[Başkan Yardımcısı İsmi]</p>
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>[Komisyon açıklamasını buraya ekleyin]</p>
+                </div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Gündem Maddeleri</h3>
+                    <ul>
+                        <li>[Gündem maddesi 1]</li>
+                        <li>[Gündem maddesi 2]</li>
+                        <li>[Gündem maddesi 3]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ULASTIRMA VE ALTYAPI KOMISYONU -->
+        <div id="page-komisyon-ulasim-altyapi" class="page-section">
+            <div class="detail-page">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Ulaştırma ve Altyapı Komisyonu</h1>
+                <div class="detail-title-line"></div>
+            
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>Ulaştırma ve altyapı, modern toplumların ekonomik gelişimi, toplumsal refahı ve günlük yaşamın sürdürülebilirliği açısından kritik öneme sahip alanlardan biridir. Gelişmiş ve güvenilir ulaşım sistemleri; insanların iş, eğitim ve sosyal hayatlarına erişimini kolaylaştırırken, güçlü iletişim ve altyapı ağları ise toplumun bilgiye erişimini ve kriz anlarında koordinasyonunu mümkün kılmaktadır. Türkiye gibi büyük nüfusa ve hızla büyüyen şehirleşmeye sahip ülkelerde ise bu alanlarda ortaya çıkan sorunlar yalnızca teknik meseleler olmaktan çıkarak sosyal, ekonomik ve çevresel boyutları olan kapsamlı tartışma konularına dönüşmektedir. Ulaştırma ve Altyapı Komisyonu, Türkiye’de ulaşım sistemleri ve iletişim altyapısı alanında karşılaşılan temel sorunları ele almayı ve bu sorunlara yönelik sürdürülebilir çözüm önerileri geliştirmeyi amaçlamaktadır.
+Günümüzde internet ve iletişim sistemleri yalnızca bireysel iletişim aracı değil; aynı zamanda ekonomi, eğitim, sağlık ve kamu hizmetlerinin işleyişi için vazgeçilmez bir altyapı haline gelmiştir. Ancak Türkiye’de özellikle afet anlarında şebeke yoğunluğu ve altyapı yetersizliği nedeniyle iletişim sistemlerinin zaman zaman kesintiye uğradığı görülmektedir. Bu durum arama-kurtarma faaliyetlerinin koordinasyonunu zorlaştırmakta ve yardım çalışmalarının etkinliğini azaltmaktadır. Bunun yanı sıra internet hızının gelişmiş ülkelerle kıyaslandığında daha düşük olması ve yeni nesil teknolojilere geçişin yavaş ilerlemesi, dijital dönüşüm sürecini de etkilemektedir. Özellikle 5G gibi modern iletişim teknolojilerine geçiş sürecinin hızlandırılması ve internet altyapısının güçlendirilmesi önemli bir noktadır.
+Trafik cezalarının gelir dağılımına göre yapılmaması da ulaşım konusundaki tartışma alanlarından biridir. Düşük ve orta gelirli bireyler için ağır bir ekonomik yük oluşturabilen bu cezalar, yüksek gelir grubundaki bireyler için aynı derecede caydırıcı olmayabilmektedir. Bu durum trafik kurallarına uyum konusunda eşitsizlik yaratabileceği gibi, kamuoyunda adalet tartışmalarına da yol açmaktadır. 
+Günümüzde birçok şehir çevre dostu ve sürdürülebilir ulaşım modellerini teşvik etmek amacıyla bisiklet kullanımını artırmaya yönelik politikalar geliştirmektedir. Ancak Türkiye’de bisiklet yollarının sayısının sınırlı olması ve mevcut yolların zaman zaman yayalar veya motosikletler tarafından işgal edilmesi bisikletli bireyler için güvenlik sorunları yaratmaktadır. Bu durum bisiklet kullanımını azaltmaktadır. 
+Büyükşehirlerde nüfus artışı ve yoğun trafik nedeniyle toplu taşıma araçları günlük yaşamın vazgeçilmez bir parçası haline gelmiştir. Buna rağmen bazı şehirlerde toplu taşıma araçlarının sayısının yetersiz olması, sefer sıklıklarının bazı hatlarda düşük kalması ve araçların aşırı yoğun kullanılması yolcular için ciddi zorluklar yaratmaktadır. Bunun yanı sıra toplu taşıma araçlarında klima kullanımının yeterince denetlenmemesi gibi hizmet kalitesini etkileyen sorunlar da vatandaşların rahatsız olduğu durumlardır.
+Toplu ulaşım sistemlerinde uygulanan indirimli ve ücretsiz seyahat kartları da ulaşımdaki tartışma konularındandır.. Öğrenciler, yaşlılar ve bazı sosyal gruplar için sağlanan bu uygulamalar sosyal devlet anlayışının önemli bir parçası olmakla birlikte, finansal sürdürülebilirlik ve ulaşım sisteminin dengesi açısından farklı görüşlerin ortaya çıkmasına neden olabilmektedir. 
+Son yıllarda bazı taksi şoförlerinin kısa mesafe yolcu almaması, belirli saatlerde hizmet vermekten kaçınması veya yabancı turistlere öncelik tanıması gibi sorunlar kamuoyunda geniş yer bulmaktadır. Bu durum hem vatandaşların ulaşım hakkını olumsuz etkilemekte hem de şehir içi ulaşım sisteminin güvenilirliğini zedeleyebilmektedir.
+Trafik kültürü ve trafik bilinci de Türkiye’de ulaşım politikaları açısından önemli bir konudur. Trafik kurallarının yeterince bilinmemesi veya önemsenmemesi, trafik kazalarının artmasına ve şehir içi ulaşımın düzensiz hale gelmesine neden olabilmektedir. Okullarda verilen trafik eğitimi ve kamu spotları bu konuda önemli adımlar olsa da toplum genelinde daha güçlü bir trafik bilincinin oluşturulması gerektiği görülmektedir
+ Türkiye’de afet anlarında yaşanan iletişim kesintilerinin önüne geçebilmek için mobil şebeke ve internet altyapısının güçlendirilmesi adına kamu ve özel sektör arasında nasıl bir iş birliği modeli oluşturulmalıdır?
+Trafik cezalarının gelir düzeyine göre düzenlenmesi uygulaması Türkiye’de hayata geçirilmeli midir? Eğer uygulanacaksa bu sistemin adil ve sürdürülebilir şekilde işlemesi nasıl sağlanabilir?
+Büyükşehirlerde toplu taşıma, bisiklet yolları ve taksi hizmetleri arasındaki dengeyi sağlayarak hem çevre dostu hem de erişilebilir bir şehir içi ulaşım sistemi oluşturmak için hangi düzenlemeler yapılmalıdır?
+</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAGLIK KOMISYONU -->
+        <div id="page-komisyon-saglik" class="page-section">
+            <div class="detail-page">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Sağlık Komisyonu</h1>
+                <div class="detail-title-line"></div>
+            
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>Ruh Sağlığı Politikaları ve Hukuki Altyapının Güçlendirilmesi
+Türkiye’de ruh sağlığı hizmetlerinin yetkinliği; hâlâ yürürlüğe girmemiş çağdaş, bütüncül ve hak temelli bir Ruh Sağlığı Yasası eksikliği, fiziksel sağlık hizmetlerine kıyasla bütçe ve öncelik dengesizliği, veri analizi ve toplumla paylaşım noktasındaki şeffaflık eksiklikleri ile karar alma süreçlerinde alanında uzman mesleklerle çok disiplinli katılımın sınırlı olması gibi faktörlerle engellenmektedir. Söz konusu hususlarla ilgili problem tespitleri yapılmalı ve gerekli düzenlemelere gidilerek toplum düzeninin temelini oluşturan psikoloji ve ruh sağlığı alanı yetkinliğe kavuşturulmalıdır.
+
+Türkiye’de Artan Obezite Oranlarının Halk Sağlığı Krizine Dönüşmesinin Önlenmesi
+Çocuklar ve ergenler arasında artan obezite oranları hem bireysel hem de toplumsal sağlık açısından önemli bir risk oluşturmaktadır. Bu durumun önlenmesi için koruyucu ve önleyici politikaların geliştirilmesi, ailelerin sağlıklı beslenme ve yaşam tarzı konusunda bilinçlendirilmesi, okullarda müfredat, kantin politikaları ve fiziksel aktivite programlarının yeniden düzenlenmesi gerekmektedir. Bu iyileştirmeler, bireylerin sağlıklı alışkanlıklar kazanmasını ve obezitenin toplum sağlığı krizine dönüşmesinin önlenmesini sağlayacaktır.
+
+Pandemi ve Benzeri Küresel Sağlık Krizlerinde Etkin Yönetim Mekanizmaları
+Küresel sağlık krizlerinin yönetiminde bağımsız, bilim temelli ve hızlı karar alma süreçleri kritik öneme sahiptir. Etkili kriz yönetimi için kurumlar arası yetki ve sorumlulukların netleştirilmesi, en verimli yolların geliştirilmesi gerekmektedir. Söz konusu krizlerde uluslararası iş birliği ve yardımlaşma planları hazırlanmalı buna paralel olarak ise ulusal egemenlik ve küresel dayanışma arasında da bir denge sağlanmalıdır. Bu sayede kriz anlarında etkin müdahale, kaynakların doğru kullanımı ve halk sıhhatinin korunması en sağlıklı yoluna kavuşabilir.
+
+
+Ruh sağlığı politikaları ve hukuki altyapı nasıl güçlendirilebilir?
+Türkiye’de artan obezite oranlarının halk sağlığı problemine dönüşmesi nasıl önlenebilir?
+Küresel sağlık krizlerinde etkin yönetim mekanizmaları hangi yönde planlanmalıdır?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AILE VE SOSYAL HIZMETLER KOMISYONU -->
+        <div id="page-komisyon-aile-sosyal" class="page-section">
+            <div class="detail-page">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Aile ve Sosyal Hizmetler Komisyonu</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>Çocuk istismarı; fiziksel, psikolojik ve cinsel istismar gibi farklı biçimlerde ortaya çıkabilen ve çocukların sağlıklı gelişimini ciddi bir şekilde etkileyen önemli bir toplumsal sorundur. Bu durum yalnızca bireysel değil, aynı zamanda sosyal ve kurumsal sorumluluk gerektiren bir mesele olarak karşımıza çıkmaktadır. Çocukların güvenli bir ortamda büyüyebilmesi için istismar vakalarının erken tespit edilmesi, farkındalığın artırılması ve mağdur çocukların psikolojik, sosyal ve hukuki açıdan etkin şekilde desteklenmesi büyük önem taşımaktadır.
+ Bu sorun doğrultusunda ilk gündem maddemiz "Çocuk istismarının önlenmesi, istismar vakalarının erken tespiti ve mağdur çocukların korunması için alınacak sosyal, hukuki ve kurumsal önlemler" olarak belirlenmiştir. 
+Sosyal medya platformlarının yaygınlaşmasıyla birlikte şiddet, zorbalık ve suç içerikli paylaşımlar da daha görünür hale gelmiştir. Bu tür içeriklerin özellikle çocuklar ve gençler üzerinde olumsuz etkiler yaratabileceği ve bazı durumlarda suçu normalleştirebileceği tartışılmaktadır. Bu nedenle çocukların dijital ortamda karşılaşabilecekleri zararlı içeriklerden korunması için ailelerin, eğitim kurumlarının, sosyal medya platformlarının ve ilgili kurumların birlikte hareket etmesi; dijital farkındalık çalışmalarının ve koruyucu önlemlerin güçlendirilmesi büyük önem taşımaktadır. 
+Bu sorun doğrultusunda ikici gündem maddemiz  "Sosyal medyada yaygınlaşan suç içerikli paylaşımlar çocukları suça özendirme konusunda ne kadar etkilidir ve çocukları bu olumsuz etkilerden korumak için alınacak önlemler" olarak belirlenmiştir.
+1.) Çocuk istismarının erken tespiti için okullar, sağlık kuruluşları ve sosyal hizmet kurumları arasında nasıl bir iş birliği mekanizması kurulmalıdır ve bu sistemin etkili işlemesi için hangi somut adımlar atılmalıdır?
+2.) Sosyal medyada suç ve şiddet içeriklerinin çocukları olumsuz etkilemesini önlemek için aileler, eğitim kurumları ve sosyal medya platformları hangi ortak sorumlulukları üstlenmeli ve bu sorumluluklar nasıl uygulanabilir hale getirilebilir?
+3.) İstismar mağduru çocukların korunması ve yeniden topluma kazandırılması için psikolojik, sosyal ve hukuki destek mekanizmaları nasıl güçlendirilmeli ve bu süreçte devlet kurumları ile sivil toplum kuruluşlarının rolü nasıl artırılmalıdır?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- EKONOMI KOMISYONU -->
+        <div id="page-komisyon-ekonomi" class="page-section">
+            <div class="detail-page">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Ekonomi Komisyonu</h1>
+                <div class="detail-title-line"></div>
+                
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>Rekabet hukukunun temel sorunlarından biri, çoğu zaman önleyici bir mekanizma olarak değil, ihlal gerçekleştikten sonra devreye giren bir denetim aracı olarak işlemesidir. Bu durum piyasalarda tekelleşme eğilimlerinin erken aşamada tespit edilmesini zorlaştırmaktadır. Özellikle piyasa yapısını sürekli olarak izleyebilecek güçlü ve şeffaf denetim mekanizmalarının yeterince gelişmemiş olması, rekabet ihlallerinin ancak belirli bir büyüklüğe ulaştıktan sonra fark edilmesine neden olmaktadır. Sektörel raporlamalarda veri güvenliğinin tam olarak sağlanamaması da piyasa analizlerinin sağlıklı biçimde yapılmasını engelleyen önemli bir faktör olarak ortaya çıkmaktadır. Bunun yanında denetim kurullarının seçilme süreçlerinin yeterince şeffaf olmaması ve denetim faaliyetlerinin etkin biçimde denetlenmemesi, kurumsal güvenilirliği zayıflatabilmektedir. Ayrıca şirket devralmaları ve birleşmelerinin piyasa rekabeti üzerindeki etkilerinin her zaman yeterli kapsamda değerlendirilmemesi, bazı sektörlerde yoğunlaşmanın artmasına ve rekabet ortamının zayıflamasına yol açabilmektedir. Bu nedenle rekabet hukukunun daha etkin işlemesi için erken uyarı sistemlerinin geliştirilmesi, veri güvenliğinin güçlendirilmesi ve birleşme-devralma süreçlerinin daha kapsamlı analiz edilmesi büyük önem taşımaktadır.
+Türkiye ekonomisinin 1980’li yıllardan itibaren karşı karşıya kaldığı en önemli yapısal sorunlardan biri yüksek ve süreklilik gösteren enflasyon problemidir. Enflasyonun kalıcı hale gelmesinde para politikası kurumlarının yeterince bağımsız çalışamaması önemli bir etken olarak görülmektedir. Merkez bankasının bağımsızlığının tam olarak sağlanamaması, para politikalarının uzun vadeli ekonomik istikrar yerine kısa vadeli hedeflere göre şekillenmesine yol açabilmektedir. Bunun yanı sıra kamu harcamaları ile kamu gelirleri arasında sürdürülebilir bir denge kurulamaması da enflasyonist baskıları artıran faktörlerden biri olarak ortaya çıkmaktadır. Yüksek enflasyon özellikle asgari ücretle çalışanlar ve sabit gelirli vatandaşlar üzerinde ciddi bir ekonomik baskı oluşturmakta, satın alma gücünün hızla düşmesine ve toplumsal sınıf farklılıklarının daha belirgin hale gelmesine neden olmaktadır. Ayrıca enflasyon oranlarının belirlenmesi sürecinde kurumların doğru ve güvenilir veri üretme konusunda zaman zaman yetersiz kalması, ekonomik göstergelere olan toplumsal güveni de zedeleyebilmektedir. Bu nedenle enflasyonla mücadelede kurumsal bağımsızlığın güçlendirilmesi, kamu maliyesinde disiplin sağlanması ve ekonomik verilerin şeffaf şekilde paylaşılması kritik öneme sahiptir.
+Rekabet hukukunun çoğu zaman ihlal gerçekleştikten sonra devreye giren bir mekanizma olarak işlemesi piyasalarda hangi sorunların ortaya çıkmasına neden olmaktadır?
+Metne göre yüksek ve kalıcı enflasyonun oluşmasında para politikası kurumlarının bağımsızlığının yetersiz olması ekonomiyi nasıl etkilemektedir?
+Rekabet hukukunun daha etkin işlemesi ve enflasyonla mücadelede başarı sağlanabilmesi için metinde hangi kurumsal ve yapısal önlemler önerilmektedir?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- EGITIM KOMISYONU -->
+        <div id="page-komisyon-egitim" class="page-section">
+            <div class="detail-page">
+                <a href="#anasayfa" class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Eğitim Komisyonu</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo">
+                            <img src="" alt="Başkan Fotoğrafı" class="baskan-foto" style="display:none;">
+                        </div>
+                        <span class="leader-role">Komisyon Başkanı</span>
+                        <p class="leader-name">[Başkan İsmi]</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo">
+                            <img src="" alt="Başkan Yardımcısı Fotoğrafı" class="baskan-foto" style="display:none;">
+                        </div>
+                        <span class="leader-role">Başkan Yardımcısı</span>
+                        <p class="leader-name">[Başkan Yardımcısı İsmi]</p>
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>[Komisyon açıklamasını buraya ekleyin]</p>
+                </div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Gündem Maddeleri</h3>
+                    <ul>
+                        <li>[Gündem maddesi 1]</li>
+                        <li>[Gündem maddesi 2]</li>
+                        <li>[Gündem maddesi 3]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </div><!-- /shell -->
 <script>
     // Scroll position memory
@@ -1742,7 +1986,7 @@ Bu yönüyle hem akademik hem de entelektüel gelişim sağlayan bir organizasyo
         if (target) { 
             target.classList.add('active');
             
-            if (hash.startsWith('ekip-') || hash.startsWith('komite-')) {
+            if (hash.startsWith('ekip-') || hash.startsWith('komisyon-')) {
                 // Going TO a detail page - scrollPosition already saved in navigateTo()
                 // Just scroll to top of detail page
                 window.scrollTo(0, 0);
@@ -1768,6 +2012,16 @@ Bu yönüyle hem akademik hem de entelektüel gelişim sağlayan bir organizasyo
     }
 
     function navigateTo(id) { 
+        // Komisyon kartı kontrolü - kilitli mi?
+        const card = document.querySelector(`[onclick="navigateTo('${id}')"]`);
+        if (card && card.classList.contains('committee-card')) {
+            const lockOverlay = card.querySelector('.committee-lock-overlay');
+            if (lockOverlay && !lockOverlay.classList.contains('hidden')) {
+                // Kilitli, navigation'ı engelle
+                return;
+            }
+        }
+        
         isNavigatingBack = false;
         // Save scroll position BEFORE changing page
         scrollPosition = window.scrollY;
@@ -1817,6 +2071,27 @@ Bu yönüyle hem akademik hem de entelektüel gelişim sağlayan bir organizasyo
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     
+    // KOMISYON KILIT KONTROLU
+    function checkCommitteeLocks() {
+        const today = new Date('2026-03-11'); // Bugünün tarihi (sistem tarihi)
+        
+        document.querySelectorAll('.committee-card').forEach(card => {
+            const unlockDate = card.getAttribute('data-unlock-date');
+            if (unlockDate) {
+                const unlock = new Date(unlockDate);
+                const lockOverlay = card.querySelector('.committee-lock-overlay');
+                
+                if (today >= unlock) {
+                    // Açık - kilidi gizle
+                    if (lockOverlay) lockOverlay.classList.add('hidden');
+                } else {
+                    // Kapalı - kilidi göster
+                    if (lockOverlay) lockOverlay.classList.remove('hidden');
+                }
+            }
+        });
+    }
+    
     window.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         
@@ -1828,6 +2103,9 @@ Bu yönüyle hem akademik hem de entelektüel gelişim sağlayan bir organizasyo
             svg.setAttribute('stroke-linecap', 'round');
             svg.setAttribute('stroke-linejoin', 'round');
         });
+        
+        // Komisyon kilitlerini kontrol et
+        checkCommitteeLocks();
     });
 </script>
 </body>
