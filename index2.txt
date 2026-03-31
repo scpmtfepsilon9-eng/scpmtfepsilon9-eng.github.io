@@ -1,0 +1,2836 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KFLUF — Kocaeli Fen Lisesi Ulusal Forumu</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/sitelogo.png">
+    <style>
+        :root {
+            --navy: #0b1829;
+            --navy-mid: #122236;
+            --teal: #2d7a8a;
+            --teal-light: #4a9db0;
+            --gold: #c9a84c;
+            --gold-pale: #e8d49a;
+            --cream: #f0ece4;
+            --white: #fafaf8;
+            --glass: rgba(11, 24, 41, 0.6);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background-color: var(--navy);
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        /* ═══════════════ NAVIGATION ═══════════════ */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            padding: 0 60px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            background: transparent;
+            transition: background 0.4s ease, border-color 0.4s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(11, 24, 41, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom-color: rgba(201, 168, 76, 0.15);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .nav-logo-img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+
+        .nav-logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(240, 236, 228, 0.75);
+            text-decoration: none;
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            width: 26px; height: 1.5px;
+            background: var(--gold);
+            transition: all 0.3s;
+            display: block;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .drawer-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 998;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s;
+        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0; right: -320px;
+            width: 300px; height: 100vh;
+            background: var(--navy-mid);
+            border-left: 1px solid rgba(201, 168, 76, 0.2);
+            z-index: 999;
+            padding: 90px 40px 40px;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+        .mobile-drawer.active { right: 0; }
+        .mobile-drawer ul { list-style: none; }
+        .mobile-drawer li { margin-bottom: 28px; }
+        .mobile-drawer a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.82rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            transition: all 0.3s;
+            display: block;
+        }
+        .mobile-drawer a:hover { color: var(--gold); opacity: 1; }
+
+        /* ═══════════════ PAGE SECTIONS ═══════════════ */
+        .shell { position: relative; }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+
+        /* ═══════════════ HERO ═══════════════ */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 60% at 50% 40%, rgba(45, 122, 138, 0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 20% 80%, rgba(201, 168, 76, 0.08) 0%, transparent 60%),
+                linear-gradient(160deg, #0b1829 0%, #0d2035 40%, #071520 100%);
+        }
+
+        .hero-grid {
+            position: absolute; inset: 0;
+            background-image: 
+                linear-gradient(rgba(201, 168, 76, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201, 168, 76, 0.04) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
+        }
+
+        .hero-arcs {
+            position: absolute; inset: 0;
+            overflow: hidden;
+        }
+        .hero-arc {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 168, 76, 0.08);
+        }
+        .hero-arc:nth-child(1) { width: 700px; height: 700px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .hero-arc:nth-child(2) { width: 1000px; height: 1000px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .hero-arc:nth-child(3) { width: 1300px; height: 1300px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-color: rgba(201, 168, 76, 0.04); }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 120px 40px 80px;
+            max-width: 900px;
+        }
+
+        .hero-banner {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto 60px;
+            position: relative;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.5), rgba(45, 122, 138, 0.3), rgba(201, 168, 76, 0.2));
+            z-index: -1;
+        }
+
+        .hero-banner-inner {
+            background: rgba(11, 24, 41, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 40px 60px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            border: 1px solid rgba(201, 168, 76, 0.25);
+        }
+
+        .hero-banner-logo {
+            width: 90px; height: 90px;
+            flex-shrink: 0;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(45, 122, 138, 0.6));
+        }
+
+        .hero-banner-text { text-align: left; }
+
+        .hero-banner-kfluf {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.8rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 6px;
+            line-height: 1;
+            display: block;
+        }
+
+        .hero-banner-divider {
+            width: 100%; height: 1px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            margin: 8px 0;
+        }
+
+        .hero-banner-subtitle {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: rgba(240, 236, 228, 0.7);
+            text-transform: uppercase;
+            display: block;
+            line-height: 1.8;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            font-weight: 400;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--gold-pale);
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .hero-hashtag {
+            font-size: 0.78rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(201, 168, 76, 0.5);
+            font-weight: 300;
+        }
+
+        .hero-cta { margin-top: 50px; }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 16px 52px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.72rem;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-family: 'Jost', sans-serif;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gold);
+            transform: translateX(-105%);
+            transition: transform 0.4s ease;
+        }
+
+        .btn-primary span { position: relative; z-index: 1; }
+        .btn-primary:hover::before { transform: translateX(0); }
+        .btn-primary:hover { color: var(--navy); }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px; left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.4;
+            animation: fadeFloat 2.5s ease-in-out infinite;
+        }
+        .scroll-indicator-line {
+            width: 1px; height: 50px;
+            background: linear-gradient(to bottom, transparent, var(--gold));
+        }
+        @keyframes fadeFloat {
+            0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 0.6; transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* ═══════════════ SECTIONS — COMMON ═══════════════ */
+        section {
+            padding: 120px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .section-label-line {
+            flex: 1; height: 1px;
+            background: linear-gradient(90deg, rgba(201, 168, 76, 0.4), transparent);
+        }
+
+        .section-label-text {
+            font-size: 0.68rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 30px;
+        }
+
+        /* ═══════════════ FOUNDER LETTER ═══════════════ */
+        .founder-section {
+            padding: 100px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .founder-grid.stacked-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(18, 34, 54, 0.8) 0%, rgba(11, 24, 41, 0.6) 100%);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            position: relative;
+        }
+
+        .founder-grid.stacked-layout::before {
+            content: '"';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18rem;
+            line-height: 1;
+            color: rgba(201, 168, 76, 0.05);
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            left: auto;
+            pointer-events: none;
+        }
+
+        .founder-sidebar-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .founder-photo-wrapper {
+            position: relative;
+            padding: 8px;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.3), rgba(45, 122, 138, 0.3));
+            border-radius: 2px;
+        }
+
+        .founder-photo.bordered {
+            width: 280px;
+            height: 350px;
+            object-fit: cover;
+            border: 2px solid rgba(201, 168, 76, 0.4);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            filter: grayscale(10%);
+            display: block;
+        }
+
+        .founder-credits { text-align: center; }
+
+        .founder-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .founder-title-text {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            font-weight: 400;
+        }
+
+        .founder-letter-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .founder-letter-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+            display: block;
+            text-align: center;
+        }
+
+        .founder-letter-body p {
+            color: rgba(240, 236, 228, 0.85);
+            font-weight: 300;
+            line-height: 1.9;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+            text-indent: 30px;
+        }
+
+        .founder-letter-body p:first-child {
+            text-indent: 0;
+            font-size: 1.15rem;
+            color: var(--cream);
+            font-weight: 400;
+            border-left: 3px solid var(--gold);
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* ═══════════════ TEAMS ═══════════════ */
+        .teams-section { padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
+
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: rgba(201, 168, 76, 0.1);
+            border: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .team-card {
+            background: var(--navy);
+            padding: 45px 30px;
+            cursor: pointer;
+            transition: background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+
+        .team-card:hover { background: var(--navy-mid); }
+        .team-card:hover::after { width: 100%; }
+
+        .team-icon {
+            width: 44px; height: 44px;
+            margin-bottom: 28px;
+            color: var(--teal-light);
+            opacity: 0.8;
+        }
+
+        .team-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .team-arrow {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .team-card:hover .team-arrow { opacity: 1; }
+
+        /* ═══════════════ COMMITTEES ═══════════════ */
+        .committees-section { padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
+
+        .committees-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .committees-grid-bottom {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: calc(66.66% - 12px);
+        }
+
+        .committee-card {
+            padding: 40px 35px;
+            border: 1px solid rgba(201, 168, 76, 0.12);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            background: linear-gradient(135deg, rgba(18, 34, 54, 0.5) 0%, transparent 100%);
+        }
+
+        .committee-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 2px; height: 0;
+            background: var(--gold);
+            transition: height 0.4s ease;
+        }
+
+        .committee-card:hover { border-color: rgba(201, 168, 76, 0.3); background: rgba(18, 34, 54, 0.8); }
+        .committee-card:hover::before { height: 100%; }
+
+        .committee-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            color: rgba(201, 168, 76, 0.4);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .committee-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--white);
+            line-height: 1.3;
+        }
+
+        /* ═══════════════ APPLY SECTION ═══════════════ */
+        .apply-section-wrapper {
+            background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .apply-section { padding: 120px 60px; max-width: 1200px; margin: 0 auto; }
+
+        .apply-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: rgba(201, 168, 76, 0.15);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            margin-top: 60px;
+        }
+
+        .apply-card {
+            background: var(--navy);
+            padding: 60px 50px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apply-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(201, 168, 76, 0.04);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .apply-card:hover { background: var(--navy-mid); }
+        .apply-card:hover::after { opacity: 1; }
+
+        .apply-card-tag {
+            font-size: 0.65rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .apply-card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .apply-card-arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .apply-card-arrow-line {
+            width: 30px; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .apply-card:hover .apply-card-arrow-line { width: 50px; }
+
+        /* ═══════════════ FOOTER ═══════════════ */
+        .footer {
+            padding: 80px 60px 50px;
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 60px;
+            align-items: start;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .footer-logo-img {
+            width: 38px; height: 38px;
+            object-fit: contain;
+            opacity: 0.8;
+        }
+
+        .footer-logo-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .footer-tagline {
+            font-size: 0.78rem;
+            color: rgba(240, 236, 228, 0.4);
+            letter-spacing: 1px;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
+
+        .footer-hashtag {
+            font-size: 0.75rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            opacity: 0.6;
+        }
+
+        .footer-social {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-end;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(240, 236, 228, 0.5);
+            text-decoration: none;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .social-link:hover { color: var(--gold); }
+
+        .social-icon {
+            width: 18px; height: 18px;
+            fill: currentColor;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 30px 60px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: rgba(240, 236, 228, 0.2);
+        }
+
+        /* ═══════════════ DETAIL PAGES ═══════════════ */
+        .detail-page {
+            padding: 100px 60px 80px;
+            min-height: 100vh;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            color: rgba(201, 168, 76, 0.7);
+            text-decoration: none;
+            font-size: 0.68rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 70px;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .back-btn:hover { color: var(--gold); }
+        .back-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .detail-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .detail-title-line {
+            width: 60px; height: 2px;
+            background: var(--gold);
+            margin-bottom: 70px;
+        }
+
+        .detail-leaders {
+            display: flex;
+            gap: 60px;
+            margin-bottom: 80px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .leader-card { text-align: center; }
+
+        .leader-photo {
+            width: 220px;
+            height: 275px;
+            object-fit: cover;
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            margin-bottom: 16px;
+            background: var(--navy-mid);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .leader-photo img { 
+            width: 100%; 
+            transform: scale(2.3);
+            height: 100%; 
+            object-fit: cover;
+        }
+
+        .leader-role {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .leader-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: var(--white);
+        }
+
+        .detail-box {
+            border: 1px solid rgba(201, 168, 76, 0.12);
+            padding: 50px;
+            margin-bottom: 30px;
+            background: rgba(18, 34, 54, 0.4);
+        }
+
+        .detail-box-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--gold-pale);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .detail-box ul { list-style: none; }
+
+        .detail-box li {
+            color: rgba(240, 236, 228, 0.8);
+            padding: 12px 0;
+            padding-left: 24px;
+            position: relative;
+            font-size: 1rem;
+            font-weight: 300;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .detail-box li::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 50%;
+            transform: translateY(-50%);
+            width: 6px; height: 1px;
+            background: var(--gold);
+        }
+
+        .detail-box p {
+            color: rgba(240, 236, 228, 0.8);
+            line-height: 2;
+            font-weight: 300;
+        }
+
+        .members-section { margin-bottom: 60px; }
+
+        .members-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--white);
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .members-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .member-item {
+            padding: 16px 20px;
+            background: rgba(18, 34, 54, 0.6);
+            border: 1px solid rgba(201, 168, 76, 0.1);
+            color: rgba(240, 236, 228, 0.9);
+            font-size: 0.95rem;
+            font-weight: 300;
+            transition: all 0.3s;
+        }
+
+        .member-item:hover {
+            border-color: rgba(201, 168, 76, 0.3);
+            background: rgba(18, 34, 54, 0.8);
+        }
+
+        /* ═══════════════ LOCKED OVERLAY ═══════════════ */
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 24, 41, 0.92);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        .locked-icon {
+            width: 60px; height: 60px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .locked-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .locked-date {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--teal-light);
+        }
+
+        .committee-lock-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 24, 41, 0.92);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+        
+        .committee-lock-overlay.hidden { display: none; }
+
+        .committees-section,
+        .apply-section-wrapper { position: relative; }
+
+        /* ═══════════════ FORUM NEDIR SECTION ═══════════════ */
+        .forum-info-section {
+            padding: 80px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .forum-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .forum-info-card {
+            padding: 40px 30px;
+            border: 1px solid rgba(201, 168, 76, 0.12);
+            background: rgba(18, 34, 54, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .forum-info-card:hover {
+            border-color: rgba(201, 168, 76, 0.3);
+            background: rgba(18, 34, 54, 0.6);
+        }
+
+        .forum-info-icon {
+            width: 40px; height: 40px;
+            color: var(--teal-light);
+            margin-bottom: 20px;
+        }
+
+        .forum-info-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--white);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .forum-info-text {
+            color: rgba(240, 236, 228, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ═══════════════ PROGRAM PAGE ═══════════════ */
+        .program-page {
+            padding: 100px 60px 80px;
+            min-height: 100vh;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .program-intro {
+            color: rgba(240, 236, 228, 0.7);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 70px;
+            max-width: 700px;
+            font-weight: 300;
+        }
+
+        .program-days-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 70px;
+        }
+
+        .program-day-block {
+            position: relative;
+        }
+
+        .program-day-header {
+            display: flex;
+            align-items: flex-end;
+            gap: 24px;
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        .program-day-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1;
+            opacity: 0.35;
+            flex-shrink: 0;
+        }
+
+        .program-day-meta {
+            padding-bottom: 6px;
+        }
+
+        .program-day-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--white);
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .program-day-date {
+            font-size: 0.72rem;
+            color: var(--teal-light);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Timeline */
+        .program-timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .program-timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 14px;
+            bottom: 14px;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--gold), rgba(45, 122, 138, 0.6), var(--gold));
+            opacity: 0.3;
+        }
+
+        .program-item {
+            position: relative;
+            padding: 20px 28px;
+            margin-bottom: 12px;
+            background: rgba(18, 34, 54, 0.4);
+            border: 1px solid rgba(201, 168, 76, 0.1);
+            border-left: 3px solid var(--teal);
+            transition: all 0.3s ease;
+        }
+
+        .program-item:hover {
+            background: rgba(18, 34, 54, 0.65);
+            border-color: rgba(201, 168, 76, 0.25);
+            transform: translateX(8px);
+        }
+
+        .program-item.highlight {
+            border-left-color: var(--gold);
+            background: rgba(201, 168, 76, 0.07);
+        }
+
+        .program-item.break-item {
+            border-left-color: rgba(74, 157, 176, 0.3);
+            background: rgba(45, 122, 138, 0.05);
+            padding: 14px 28px;
+        }
+
+        .program-item.lunch-item {
+            border-left-color: rgba(201, 168, 76, 0.4);
+            background: rgba(201, 168, 76, 0.05);
+            padding: 16px 28px;
+        }
+
+        .program-item::before {
+            content: '';
+            position: absolute;
+            left: -44px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--navy);
+            border: 2px solid var(--teal);
+            transition: all 0.3s ease;
+        }
+
+        .program-item.highlight::before {
+            border-color: var(--gold);
+            background: var(--gold);
+            width: 14px;
+            height: 14px;
+            left: -46px;
+            box-shadow: 0 0 16px rgba(201, 168, 76, 0.5);
+        }
+
+        .program-item.break-item::before {
+            width: 6px;
+            height: 6px;
+            left: -42px;
+            border-color: rgba(74, 157, 176, 0.5);
+        }
+
+        .program-item-inner {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .program-time {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+            min-width: 120px;
+        }
+
+        .program-item.break-item .program-time {
+            color: var(--teal-light);
+            font-size: 0.95rem;
+        }
+
+        .program-event-title {
+            font-size: 1rem;
+            color: var(--white);
+            font-weight: 400;
+        }
+
+        .program-item.break-item .program-event-title {
+            font-size: 0.9rem;
+            color: rgba(240, 236, 228, 0.55);
+            font-weight: 300;
+        }
+
+        .program-item.lunch-item .program-event-title {
+            color: rgba(240, 236, 228, 0.75);
+        }
+
+        .program-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid;
+            flex-shrink: 0;
+        }
+
+        .program-badge.komisyon {
+            color: var(--teal-light);
+            border-color: rgba(74, 157, 176, 0.3);
+            background: rgba(74, 157, 176, 0.08);
+        }
+
+        .program-badge.meclis {
+            color: var(--gold);
+            border-color: rgba(201, 168, 76, 0.3);
+            background: rgba(201, 168, 76, 0.08);
+        }
+
+        .program-badge.seremoni {
+            color: var(--gold-pale);
+            border-color: rgba(232, 212, 154, 0.3);
+            background: rgba(232, 212, 154, 0.08);
+        }
+
+        /* Quick-jump strip */
+        .program-day-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 50px;
+            border: 1px solid rgba(201, 168, 76, 0.15);
+        }
+
+        .program-tab {
+            flex: 1;
+            padding: 18px 20px;
+            background: transparent;
+            border: none;
+            border-right: 1px solid rgba(201, 168, 76, 0.15);
+            color: rgba(240, 236, 228, 0.5);
+            font-family: 'Jost', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .program-tab:last-child { border-right: none; }
+
+        .program-tab:hover {
+            color: var(--gold);
+            background: rgba(201, 168, 76, 0.06);
+        }
+
+        .program-tab.active {
+            color: var(--gold);
+            background: rgba(201, 168, 76, 0.08);
+        }
+
+        /* ═══════════════ SSS PAGE ═══════════════ */
+        .sss-page {
+            padding: 100px 60px 80px;
+            min-height: 100vh;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .sss-intro {
+            color: rgba(240, 236, 228, 0.7);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 60px;
+            max-width: 700px;
+            font-weight: 300;
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 60px;
+        }
+
+        .faq-item {
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            background: rgba(18, 34, 54, 0.4);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover { border-color: rgba(201, 168, 76, 0.28); }
+
+        .faq-item.active {
+            border-color: rgba(201, 168, 76, 0.4);
+            background: rgba(18, 34, 54, 0.65);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 26px 35px;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover { color: var(--gold-pale); }
+
+        .faq-icon {
+            width: 22px; height: 22px;
+            color: var(--gold);
+            flex-shrink: 0;
+            margin-left: 20px;
+            transition: transform 0.4s ease;
+        }
+
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s ease;
+        }
+
+        .faq-answer-content {
+            padding: 0 35px 28px;
+            color: rgba(240, 236, 228, 0.8);
+            font-size: 0.98rem;
+            line-height: 1.95;
+            font-weight: 300;
+        }
+
+        .faq-item.active .faq-answer { max-height: 600px; }
+
+        /* Category labels */
+        .faq-category {
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            display: block;
+            margin-bottom: 12px;
+            margin-top: 40px;
+        }
+
+        .faq-category:first-child { margin-top: 0; }
+
+        /* Program CTA card */
+        .sss-program-cta {
+            padding: 45px 50px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            background: linear-gradient(135deg, rgba(18, 34, 54, 0.7) 0%, rgba(11, 24, 41, 0.5) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sss-program-cta::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--gold), var(--teal));
+        }
+
+        .sss-program-cta:hover {
+            border-color: rgba(201, 168, 76, 0.4);
+            background: rgba(18, 34, 54, 0.85);
+            transform: translateY(-2px);
+        }
+
+        .sss-program-cta-text h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: var(--gold-pale);
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .sss-program-cta-text p {
+            color: rgba(240, 236, 228, 0.55);
+            font-size: 0.9rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .sss-program-cta-arrow {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--gold);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+            transition: gap 0.3s ease;
+        }
+
+        .sss-program-cta:hover .sss-program-cta-arrow { gap: 22px; }
+
+        .sss-arrow-line {
+            width: 30px; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .sss-program-cta:hover .sss-arrow-line { width: 46px; }
+
+        /* ═══════════════ ANIMATIONS ═══════════════ */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* ═══════════════ RESPONSIVE ═══════════════ */
+        @media (max-width: 1024px) {
+            .teams-grid { grid-template-columns: repeat(2, 1fr); }
+            .members-list { grid-template-columns: 1fr; }
+            .forum-info-grid { grid-template-columns: 1fr; }
+            .founder-grid.stacked-layout { padding: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 0 24px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            section, .founder-section, .teams-section, .committees-section,
+            .apply-section, .detail-page, .forum-info-section,
+            .program-page, .sss-page {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .hero-banner-inner { flex-direction: column; align-items: center; text-align: center; padding: 30px; }
+            .hero-banner-text { text-align: center; }
+            .hero-banner-kfluf { font-size: 2.8rem; }
+
+            .committees-grid { grid-template-columns: 1fr; }
+            .committees-grid-bottom { grid-template-columns: 1fr; max-width: 100%; }
+            .apply-grid { grid-template-columns: 1fr; }
+            .footer { grid-template-columns: 1fr; }
+            .footer-social { align-items: flex-start; }
+
+            .detail-page { padding: 80px 24px 60px; }
+            .detail-leaders { gap: 30px; }
+            .leader-photo { width: 180px; height: 225px; }
+
+            .founder-section { padding: 80px 24px; }
+            .founder-grid.stacked-layout { padding: 30px 20px; gap: 40px; }
+            .founder-photo.bordered { width: 220px; height: 280px; }
+            .founder-name { font-size: 1.3rem; }
+            .founder-letter-body p { font-size: 0.95rem; text-align: left; text-indent: 20px; }
+            .founder-letter-body p:first-child { font-size: 1.05rem; }
+            .founder-grid.stacked-layout::before { font-size: 10rem; top: 10px; right: 20px; }
+
+            /* Program mobile */
+            .program-day-number { font-size: 3.5rem; }
+            .program-day-name { font-size: 1.5rem; }
+            .program-timeline { padding-left: 36px; }
+            .program-item::before { left: -30px; }
+            .program-item.highlight::before { left: -32px; }
+            .program-item.break-item::before { left: -28px; }
+            .program-item-inner { gap: 10px; }
+            .program-time { min-width: 100px; font-size: 1rem; }
+            .program-day-tabs { flex-direction: column; }
+            .program-tab { border-right: none; border-bottom: 1px solid rgba(201, 168, 76, 0.15); }
+            .program-tab:last-child { border-bottom: none; }
+
+            /* SSS mobile */
+            .faq-question { padding: 20px 24px; font-size: 1.05rem; }
+            .faq-answer-content { padding: 0 24px 20px; }
+            .sss-program-cta { flex-direction: column; padding: 32px 28px; }
+            .sss-program-cta-arrow { width: 100%; justify-content: flex-start; }
+        }
+
+        @media (max-width: 480px) {
+            .teams-grid { grid-template-columns: 1fr; }
+            .members-list { grid-template-columns: 1fr; }
+            .founder-photo.bordered { width: 180px; height: 230px; }
+            .program-item { padding: 16px 18px; }
+            .program-time { font-size: 0.9rem; min-width: 90px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <a href="#anasayfa" class="nav-logo" onclick="isNavigatingBack=true;">
+            <img src="images/sitelogo.png" alt="KFLUF Logo" class="nav-logo-img" onerror="this.style.display='none'">
+            <span class="nav-logo-text">KFLUF</span>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#anasayfa" onclick="isNavigatingBack=true;">Ana Sayfa</a></li>
+
+
+            <li><a href="#anasayfa" onclick="handleNavClick(event, 'teams-section')">Ekipler</a></li>
+            <li><a href="#anasayfa" onclick="handleNavClick(event, 'committees-section')">Komisyonlar</a></li>
+        
+           
+            <li><a href="#program" onclick="handlePageNav(event, 'program')">Program</a></li>
+            <li><a href="#sss" onclick="handlePageNav(event, 'sss')">SSS</a></li>
+        </ul>
+
+        <div class="hamburger" id="hamburger" onclick="toggleDrawer()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <ul>
+            <li><a href="#anasayfa" onclick="toggleDrawer(); isNavigatingBack=true;">Ana Sayfa</a></li>
+            <li><a href="#anasayfa" onclick="handleNavClick(event, 'teams-section'); toggleDrawer();">Ekipler</a></li>
+            <li><a href="#anasayfa" onclick="handleNavClick(event, 'committees-section'); toggleDrawer();">Komisyonlar</a></li>
+            <li><a href="#program" onclick="handlePageNav(event, 'program'); toggleDrawer();">Program</a></li>
+            <li><a href="#sss" onclick="handlePageNav(event, 'sss'); toggleDrawer();">SSS</a></li>
+        </ul>
+    </div>
+
+    <!-- SHELL -->
+    <div class="shell">
+
+        <!-- ═══════ ANA SAYFA ═══════ -->
+        <div id="page-anasayfa" class="page-section active">
+
+            <!-- HERO -->
+            <section class="hero" style="padding:0; max-width:none; margin:0;">
+                <div class="hero-bg"></div>
+                <div class="hero-grid"></div>
+                <div class="hero-arcs">
+                    <div class="hero-arc"></div>
+                    <div class="hero-arc"></div>
+                    <div class="hero-arc"></div>
+                </div>
+
+                <div class="hero-content">
+                    <div class="hero-banner">
+                        <div class="hero-banner-inner">
+                            <svg class="hero-banner-logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+                                <circle cx="60" cy="60" r="10" fill="#c9a84c"/>
+                                <circle cx="60" cy="60" r="6" fill="#e8d49a"/>
+                                <ellipse cx="60" cy="60" rx="50" ry="17" fill="none" stroke="#2d7a8a" stroke-width="2" transform="rotate(0 60 60)"/>
+                                <ellipse cx="60" cy="60" rx="50" ry="17" fill="none" stroke="#2d7a8a" stroke-width="2" transform="rotate(60 60 60)"/>
+                                <ellipse cx="60" cy="60" rx="50" ry="17" fill="none" stroke="#2d7a8a" stroke-width="2" transform="rotate(120 60 60)"/>
+                            </svg>
+                            <div class="hero-banner-text">
+                                <span class="hero-banner-kfluf">KFLUF</span>
+                                <div class="hero-banner-divider"></div>
+                                <span class="hero-banner-subtitle">Kocaeli Fen Lisesi<br>Ulusal Forumu</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="hero-eyebrow">15 — 16 — 17 Mayıs 2026</span>
+                    <span class="hero-date">Genç Fikirler, Geleceğin Teminatıdır.</span>
+                    <p class="hero-hashtag">#DeğiştikveGeliştik</p>
+
+                    <div class="hero-cta">
+                        <button class="btn-primary" onclick="scrollToId('apply-section-wrapper')">
+                            <span>Başvuru Yap</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator">
+                    <div class="scroll-indicator-line"></div>
+                </div>
+            </section>
+
+            <!-- FOUNDER LETTER -->
+            <section class="founder-section fade-up">
+                <div class="section-label">
+                    <div class="section-label-line"></div>
+                    <span class="section-label-text">Konferans Divanından Mektup</span>
+                </div>
+
+                <div class="founder-grid stacked-layout">
+                    <div class="founder-sidebar-top">
+                        <div class="founder-photo-wrapper">
+                            <img src="images/konferansdivani.png" alt="Konferans Divanı" class="founder-photo bordered">
+                        </div>
+                        <div class="founder-credits">
+                            <p class="founder-name">Adil Alpaslan Özer & Artun Burak Kılıç</p>
+                            <p class="founder-title-text">KFLUF 2026</p>
+                        </div>
+                    </div>
+
+                    <div class="founder-letter-content">
+                        <span class="founder-letter-title">Değerli Katılımcılar,</span>
+                        <div class="founder-letter-body">
+                            <p>Kocaeli Fen Lisesi Ulusal Forumu bizler için yalnızca bir konferans değil, aynı zamanda uzun soluklu bir hayalin, yoğun emeğin ve güçlü bir vizyonun ürünüdür.</p>
+                            <p>Konferansımızı düzenleme fikri ilk olarak geçtiğimiz yılın Haziran ayında doğmuş; o andan itibaren zihnimizi meşgul eden temel soru, bu konferansı en nitelikli ve en sürdürülebilir biçimde nasıl gerçekleştirebileceğimiz olmuştur. Bu doğrultuda yaz aylarından itibaren planlama, içerik geliştirme ve hazırlık çalışmalarına aralıksız şekilde başlamış bulunduk.</p>
+                            <p>Eylül ayına ulaştığımızda, sistemli ve kararlı çalışmamız sayesinde güçlü bir hazırlık süreci tamamlanmıştı. Okulumuzda daha önce benzer kapsamda bir konferans gerçekleştirilmemiş olmasına rağmen, hazırlığımızın üst düzey seviyede olması sayesinde girişimimiz kısa sürede kabul görmüş; gerekli resmi süreçler titizlikle yürütülerek tamamlandı.</p>
+                            <p>Bu noktada bir konferans düzenlerken inandığımız temel ilke bir iş nasıl başlarsa öyle devam eder. Bu anlayış doğrultusunda hedefimiz yalnızca bir konferans düzenlemek değil; okulumuzda kalıcı, kurumsal kimliği olan ve gelecek yıllarda da sürdürülebilecek bir konferans kültürü oluşturmaktır.</p>
+                            <p>Bu amaçla, konferansın işleyiş modelini en ince ayrıntısına kadar planladık ve okul bünyesinde ulaşabildiğimiz herkese forumun vizyonunu, kapsamını ve hedeflerini anlattık. Süreç boyunca ekip yapılanmamızı oluştururken sürdürülebilirliği temel ilke olarak benimsedik. Her dönemde usta-çırak ilişkisini esas alarak yeni kuşakların hem akademik süreçlere hem de konferansın işleyişine hâkim olmasını sağladık.</p>
+                            <p>"Genç fikirler geleceğin teminatıdır" sloganıyla çıktığımız bu yolda en büyük hedefimiz; biz gençlerin memleket meselelerine duyarsız olmadığını, aksine bu konular üzerinde düşünebildiğini, mantıklı ve saygı çerçevesinde tartışabildiğini ve çözüm önerileri geliştirebildiğini göstermektir.</p>
+                            <p>Bu amacın hayata geçmesindeki en büyük güç kaynağımız ise siz değerli katılımcılarımızsınız. Tüm hazırlık sürecimiz; sizlerin bu platformdan yeni dostluklar edinmiş, farklı perspektifler kazanmış ve unutulmaz deneyimlerle zenginleşmiş şekilde ayrılmanız içindir.</p>
+                            <p>Kocaeli Fen Lisesi Ulusal Forumu'nun yalnızca birkaç gün süren bir etkinlik değil; düşünsel gelişiminize katkı sağlayan, kalıcı bağlar kurmanıza vesile olan ve geleceğe dair umutlarınızı güçlendiren bir konferans deneyimi olmasını temenni ediyoruz.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FORUM NEDIR SECTION -->
+            <section class="forum-info-section fade-up" id="forum-info-section">
+                <div class="section-label">
+                    <div class="section-label-line"></div>
+                    <span class="section-label-text">Forum Nedir?</span>
+                </div>
+                <h2 class="section-title">Ulusal Forum Hakkında</h2>
+
+                <div class="forum-info-grid">
+                    <div class="forum-info-card">
+                        <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                        </svg>
+                        <h3 class="forum-info-title">Ulusal Forum Nedir?</h3>
+                        <p class="forum-info-text">Ulusal Forum; lise öğrencilerinin ülke gündemindeki ekonomik, sosyal, teknolojik ve siyasal konuları tartıştığı, çözüm önerileri geliştirdiği ve karar taslakları hazırladığı akademik bir simülasyon etkinliğidir. Katılımcılar sadece dinleyici değildir, aktif tartışmacıdır. Belirli komitelerde görev alarak güncel sorunlar üzerine politika üretirler ve tartışma sonunda yazılı karar metinleri ortaya çıkar.</p>
+                    </div>
+                    <div class="forum-info-card">
+                        <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <h3 class="forum-info-title">Kimler Katılabilir?</h3>
+                        <p class="forum-info-text">Etkinliğimize Hazırlık, 9., 10., 11. ve 12. sınıf öğrencileri katılabilir.</p>
+                    </div>
+                    <div class="forum-info-card">
+                        <svg class="forum-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                        <h3 class="forum-info-title">Neden KFLUF?</h3>
+                        <p class="forum-info-text">Konferans kültürünü gerçekten bilen ve her sene bir öncekinden daha iyisini yapmaya çalışan bir ekibiz. Oturumlarımızda gündemlerimizi özenle seçiyor, sağlam bir araştırma altyapısıyla ilerliyoruz. KFLUF'u tercih etmek; kendine yatırım yapmak, güçlü dostluklar kurmak ve nitelikli bir konferans deneyimi yaşamak demektir.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEAMS -->
+            <section class="teams-section fade-up" id="teams-section">
+                <div class="section-label">
+                    <div class="section-label-line"></div>
+                    <span class="section-label-text">Organizasyon Ekipleri</span>
+                </div>
+                <h2 class="section-title">Ekiplerimiz</h2>
+
+                <div class="teams-grid">
+                    <div class="team-card" onclick="navigateTo('ekip-merkezkurulu')">
+                        <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="1" y1="22" x2="23" y2="22" stroke-width="0.7"/>
+                            <rect x="1" y="15" width="5" height="7"/>
+                            <rect x="18" y="15" width="5" height="7"/>
+                            <rect x="6" y="12" width="12" height="10"/>
+                            <line x1="8.5" y1="12" x2="8.5" y2="22"/>
+                            <line x1="11" y1="12" x2="11" y2="22"/>
+                            <line x1="13" y1="12" x2="13" y2="22"/>
+                            <line x1="15.5" y1="12" x2="15.5" y2="22"/>
+                        </svg>
+                        <h3 class="team-name">Merkez Kurulu Üyeleri</h3>
+                        <span class="team-arrow">Keşfet →</span>
+                    </div>
+                    <div class="team-card" onclick="navigateTo('ekip-basin')">
+                        <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <rect x="3" y="3" width="18" height="14" rx="1"/><path d="M8 21h8M12 17v4"/>
+                        </svg>
+                        <h3 class="team-name">Basın Ekibi</h3>
+                        <span class="team-arrow">Keşfet →</span>
+                    </div>
+                    <div class="team-card" onclick="navigateTo('ekip-teknik')">
+                        <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>
+                            <path d="M15 2v2M15 20v2M9 2v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"/>
+                        </svg>
+                        <h3 class="team-name">Teknik Ekip</h3>
+                        <span class="team-arrow">Keşfet →</span>
+                    </div>
+                    <div class="team-card" onclick="navigateTo('ekip-organizasyon')">
+                        <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <h3 class="team-name">Organizasyon Ekibi</h3>
+                        <span class="team-arrow">Keşfet →</span>
+                    </div>
+                    <div class="team-card" onclick="navigateTo('ekip-halkla-iliskiler')">
+                        <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        <h3 class="team-name">Halkla İlişkiler</h3>
+                        <span class="team-arrow">Keşfet →</span>
+                    </div>
+                    <div class="team-card" onclick="navigateTo('ekip-finans')">
+                        <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                        <h3 class="team-name">Finans Ekibi</h3>
+                        <span class="team-arrow">Keşfet →</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMMITTEES -->
+            <section class="committees-section fade-up" id="committees-section">
+                <div class="section-label">
+                    <div class="section-label-line"></div>
+                    <span class="section-label-text">Komisyonlar</span>
+                </div>
+                <h2 class="section-title">Komisyon Yapısı</h2>
+
+                <div class="committees-grid">
+                    <div class="committee-card" onclick="navigateTo('komisyon-aile-sosyal')" data-unlock-date="2026-03-11">
+                        <span class="committee-number">01</span>
+                        <h3 class="committee-name">Aile ve Sosyal Hizmetler Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-aile">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">11 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
+                    </div>
+                    <div class="committee-card" onclick="navigateTo('komisyon-saglik')" data-unlock-date="2026-03-10">
+                        <span class="committee-number">02</span>
+                        <h3 class="committee-name">Sağlık Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-saglik">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">10 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
+                    </div>
+                    <div class="committee-card" onclick="navigateTo('komisyon-ulasim-altyapi')" data-unlock-date="2026-03-09">
+                        <span class="committee-number">03</span>
+                        <h3 class="committee-name">Ulaştırma ve Altyapı Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-ulasim">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">9 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="committees-grid-bottom">
+                    <div class="committee-card" onclick="navigateTo('komisyon-ekonomi')" data-unlock-date="2026-03-12">
+                        <span class="committee-number">04</span>
+                        <h3 class="committee-name">Ekonomi Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-ekonomi">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">12 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
+                    </div>
+                    <div class="committee-card" onclick="navigateTo('komisyon-egitim')" data-unlock-date="2026-03-13">
+                        <span class="committee-number">05</span>
+                        <h3 class="committee-name">Eğitim Komisyonu</h3>
+                        <div class="committee-lock-overlay" id="lock-egitim">
+                            <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <circle cx="12" cy="16" r="1"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <p class="locked-text">13 Mart'ta Açılacaktır</p>
+                            <p class="locked-date">KFLUF 2026</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- APPLY -->
+            <div class="apply-section-wrapper fade-up" id="apply-section-wrapper">
+                <div class="apply-section">
+                    <div class="section-label">
+                        <div class="section-label-line"></div>
+                        <span class="section-label-text">Başvuru</span>
+                    </div>
+                    <h2 class="section-title">Foruma Katıl</h2>
+
+                    <div class="apply-grid">
+                        <a href="https://forms.google.com" target="_blank" class="apply-card">
+                            <span class="apply-card-tag">Bireysel</span>
+                            <p class="apply-card-title">Tek Delege Olarak Başvur</p>
+                            <span class="apply-card-arrow">
+                                <span class="apply-card-arrow-line"></span>
+                                Başvur
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="locked-overlay">
+                    <svg class="locked-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <circle cx="12" cy="16" r="1"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    <p class="locked-text">Başvurular 1 Nisan tarihinde başlayacaktır.</p>
+                    <p class="locked-date">KFLUF 2026</p>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer>
+                <div class="footer">
+                    <div>
+                        <div class="footer-logo-row">
+                            <img src="images/sitelogo.png" alt="KFLUF" class="footer-logo-img" onerror="this.style.display='none'">
+                            <span class="footer-logo-name">KFLUF</span>
+                        </div>
+                        <p class="footer-tagline">Kocaeli Fen Lisesi Ulusal Forumu</p>
+                        <p class="footer-hashtag">#DegistikveGelistik</p>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/kflulusalforumu" target="_blank" class="social-link">
+                            <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            @kflulusalforumu
+                        </a>
+                        <a href="https://tiktok.com/@kflulusalforumu" target="_blank" class="social-link">
+                            <svg class="social-icon" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.41a8.16 8.16 0 004.77 1.52V7.49a4.85 4.85 0 01-1-.1z"/></svg>
+                            @kflulusalforumu
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    © 2026 KFLUF — Kocaeli Fen Lisesi Ulusal Forumu. Tüm hakları saklıdır.
+                </div>
+            </footer>
+        </div><!-- /page-anasayfa -->
+
+        <!-- ═══════ PROGRAM SAYFASI ═══════ -->
+        <div id="page-program" class="page-section">
+            <div class="program-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+
+                <h1 class="detail-title">Konferans Programı</h1>
+                <div class="detail-title-line"></div>
+
+                <p class="program-intro">
+                    KFLUF 2026, 15–17 Mayıs tarihleri arasında üç gün boyunca gerçekleşecektir. Aşağıda konferansımızın günlük oturum programını bulabilirsiniz. İlk iki gün komisyon oturumlarına, son gün ise meclis oturumlarına ayrılmıştır.
+                </p>
+
+                <!-- Hızlı gün sekmeleri -->
+                <div class="program-day-tabs">
+                    <button class="program-tab active" onclick="scrollToDay('gun1', this)">15 Mayıs — Cuma</button>
+                    <button class="program-tab" onclick="scrollToDay('gun2', this)">16 Mayıs — Cumartesi</button>
+                    <button class="program-tab" onclick="scrollToDay('gun3', this)">17 Mayıs — Pazar</button>
+                </div>
+
+                <div class="program-days-wrapper">
+
+                    <!-- GÜN 1 -->
+                    <div class="program-day-block" id="gun1">
+                        <div class="program-day-header">
+                            <div class="program-day-number">01</div>
+                            <div class="program-day-meta">
+                                <div class="program-day-name">15 Mayıs 2026, Cuma</div>
+                                <div class="program-day-date">Açılış &amp; Komisyon Oturumları</div>
+                            </div>
+                        </div>
+
+                        <div class="program-timeline">
+                            <div class="program-item highlight">
+                                <div class="program-item-inner">
+                                    <span class="program-time">11:30</span>
+                                    <span class="program-event-title">Ön Kayıt</span>
+                                    <span class="program-badge seremoni">Kayıt</span>
+                                </div>
+                            </div>
+                            <div class="program-item highlight">
+                                <div class="program-item-inner">
+                                    <span class="program-time">11:40 – 12:40</span>
+                                    <span class="program-event-title">Açılış Seremonisi</span>
+                                    <span class="program-badge seremoni">Seremoni</span>
+                                </div>
+                            </div>
+                            <div class="program-item lunch-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">12:40 – 14:00</span>
+                                    <span class="program-event-title">Öğlen Arası</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">14:00 – 15:00</span>
+                                    <span class="program-event-title">1. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">15:00 – 15:15</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">15:15 – 16:15</span>
+                                    <span class="program-event-title">2. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">16:15 – 16:30</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">16:30 – 17:30</span>
+                                    <span class="program-event-title">3. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GÜN 2 -->
+                    <div class="program-day-block" id="gun2">
+                        <div class="program-day-header">
+                            <div class="program-day-number">02</div>
+                            <div class="program-day-meta">
+                                <div class="program-day-name">16 Mayıs 2026, Cumartesi</div>
+                                <div class="program-day-date">Yoğun Komisyon Oturumları</div>
+                            </div>
+                        </div>
+
+                        <div class="program-timeline">
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">09:45 – 10:45</span>
+                                    <span class="program-event-title">4. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">10:45 – 11:00</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">11:00 – 12:00</span>
+                                    <span class="program-event-title">5. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">12:00 – 12:15</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">12:15 – 13:15</span>
+                                    <span class="program-event-title">6. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                            <div class="program-item lunch-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">13:15 – 14:15</span>
+                                    <span class="program-event-title">Öğlen Arası</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">14:15 – 15:15</span>
+                                    <span class="program-event-title">7. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">15:15 – 15:30</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">15:30 – 16:30</span>
+                                    <span class="program-event-title">8. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">16:30 – 16:45</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">16:45 – 17:45</span>
+                                    <span class="program-event-title">9. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GÜN 3 -->
+                    <div class="program-day-block" id="gun3">
+                        <div class="program-day-header">
+                            <div class="program-day-number">03</div>
+                            <div class="program-day-meta">
+                                <div class="program-day-name">17 Mayıs 2026, Pazar</div>
+                                <div class="program-day-date">Meclis Oturumları &amp; Kapanış</div>
+                            </div>
+                        </div>
+
+                        <div class="program-timeline">
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">10:00 – 11:00</span>
+                                    <span class="program-event-title">1. Meclis Oturumu</span>
+                                    <span class="program-badge meclis">Meclis</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">11:00 – 11:15</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">11:15 – 12:30</span>
+                                    <span class="program-event-title">2. Meclis Oturumu</span>
+                                    <span class="program-badge meclis">Meclis</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">12:30 – 12:45</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">12:45 – 13:45</span>
+                                    <span class="program-event-title">3. Meclis Oturumu</span>
+                                    <span class="program-badge meclis">Meclis</span>
+                                </div>
+                            </div>
+                            <div class="program-item lunch-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">13:45 – 14:45</span>
+                                    <span class="program-event-title">Öğlen Arası</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">14:45 – 15:45</span>
+                                    <span class="program-event-title">4. Meclis Oturumu</span>
+                                    <span class="program-badge meclis">Meclis</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">15:45 – 16:00</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">16:00 – 17:00</span>
+                                    <span class="program-event-title">5. Meclis Oturumu</span>
+                                    <span class="program-badge meclis">Meclis</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">17:00 – 17:15</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item highlight">
+                                <div class="program-item-inner">
+                                    <span class="program-time">17:15 – 18:15</span>
+                                    <span class="program-event-title">Kapanış Seremonisi</span>
+                                    <span class="program-badge seremoni">Seremoni</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /program-days-wrapper -->
+            </div><!-- /program-page -->
+        </div><!-- /page-program -->
+
+
+        <div id="page-sss" class="page-section">
+            <div class="sss-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+
+                <h1 class="detail-title">Sıkça Sorulan Sorular</h1>
+                <div class="detail-title-line"></div>
+
+                <p class="sss-intro">
+                    KFLUF 2026 hakkında merak ettiklerinizi aşağıda bulabilirsiniz. Cevabını bulamadığınız bir sorunuz varsa sosyal medya hesaplarımızdan bize ulaşabilirsiniz.
+                </p>
+
+              
+                <div class="sss-program-cta" onclick="navigateTo('program')" style="margin-bottom:50px;">
+                    <div class="sss-program-cta-text">
+                        <h3>Konferans Programına Göz Atın</h3>
+                        <p>15–17 Mayıs 2026 tarihlerindeki tüm oturum ve etkinliklerin saatlerini görüntüleyin.</p>
+                    </div>
+                    <div class="sss-program-cta-arrow">
+                        <span class="sss-arrow-line"></span>
+                        Programa Git
+                    </div>
+                </div>
+
+                <!-- SSS İÇERİĞİ -->
+                <div class="faq-container">
+
+                    <span class="faq-category">Genel Bilgiler</span>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            Konferans nerede ve ne zaman düzenlenecek?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                               Konferansımız 15-15-17 Mayıs tarihlerinde Kocaeli Fen Lisesinde düzenlenecektir.
+                            </div>
+                        </div>
+                    </div>
+
+                
+
+                    <span class="faq-category">Katılım &amp; Başvuru</span>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            Kimler başvurabilir?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Konferansımıza Hazırlık, 9., 10., 11., 12. Sınıfta okuyan öğrenciler katılabilir.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            Başvuru ücreti var mı?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                               Konferans katkı payı bedeli 800 TL dir.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            Başvuru nasıl ve ne zaman yapılır?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Başvurularımız 1-24 Nisan tarihleri arasında açık olacak, başvuru yapmak isteyenler bu site üzerinden başvuru yapabilecektir.
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <span class="faq-category">Akademik Süreç</span>
+
+
+                  
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            Katılımcılara sertifika verilecek mi?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                               Tüm katılımcılara katılım belgesi verilecektir.
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="faq-category">Lojistik</span>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            Konaklama imkânı var mı?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Konaklama bulunmamaktadır.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            Yemek dahil mi?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                               Öğle yemeği desteği bulunmaktadır.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            Kıyafet kuralı var mı?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                               Kıyafet prosedürü
+Erkekler: 
+kumaş pantolon;
+gömlek;
+ceket;
+yelek ( zorunlu değildir);
+kravat veya papyon;
+kundura veya köseli ayakkabı.  
+
+Kadınlar için : 
+kumaş pantolon;
+gömlek;
+yelek ( zorunlu değildir);
+ceket;
+topuklu, rugan veya babet ayakkabı.
+                            </div>
+                        </div
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            İletişim için nereye ulaşabilirim?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                İletişim için sosyal medya hesaplarımıza veya kocaelifenlisesiulusalforumu@gmail.com üzerinden ulaşabilirsiniz.
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /faq-container -->
+
+            </div><!-- /sss-page -->
+        </div><!-- /page-sss -->
+
+        <!-- ═══════ TEAM DETAIL PAGES ═══════ -->
+
+        <!-- BASIN EKİBİ -->
+        <div id="page-ekip-basin" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Basın Ekibi</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/basinbaskan.png" alt="Erva Koç" class="baskan-foto"></div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Erva Koç</p>
+                    </div>
+                </div>
+                <div class="members-section">
+                    <h3 class="members-title">Ekip Üyeleri</h3>
+                    <div class="members-list">
+                        <div class="member-item">Ebrar Ateş</div>
+                        <div class="member-item">Zeynep Yaren Tanak</div>
+                        <div class="member-item">Ece Yıldırım</div>
+                        <div class="member-item">Eslem Naz Bekler</div>
+                        <div class="member-item">Şevval Akkuzu</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MERKEZ KURULU -->
+        <div id="page-ekip-merkezkurulu" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Merkez Kurul Üyeleri</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/orhan.png" alt="Orhan Turan" class="baskan-foto"></div>
+                        <span class="leader-role">Merkez Kurulu Üyesi</span>
+                        <p class="leader-name">Orhan Turan</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/merkezkurulubaskani.png" alt="Zeynep Sarımehmetoğlu" class="baskan-foto"></div>
+                        <span class="leader-role">Merkez Kurulu Başkanı</span>
+                        <p class="leader-name">Zeynep Sarımehmetoğlu</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/bilge.png" alt="Bilge Yıldızeli" class="baskan-foto"></div>
+                        <span class="leader-role">Merkez Kurulu Üyesi</span>
+                        <p class="leader-name">Bilge Yıldızeli</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEKNİK EKİP -->
+        <div id="page-ekip-teknik" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Teknik Ekip</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/teknikbaskan.png" alt="Ahmet Yavuz Alan" class="baskan-foto"></div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Ahmet Yavuz Alan</p>
+                    </div>
+                </div>
+                <div class="members-section">
+                    <h3 class="members-title">Ekip Üyeleri</h3>
+                    <div class="members-list">
+                        <div class="member-item">Oğuz Kağan Şahin</div>
+                        <div class="member-item">Uğur Aldıoğlu</div>
+                        <div class="member-item">Göktuğ Onaylı</div>
+                        <div class="member-item">Eda Ağlamış</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ORGANİZASYON EKİBİ -->
+        <div id="page-ekip-organizasyon" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Organizasyon Ekibi</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/organizasyonbaskan.png" alt="Berkay Karakaya" class="baskan-foto"></div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Berkay Karakaya</p>
+                    </div>
+                </div>
+                <div class="members-section">
+                    <h3 class="members-title">Ekip Üyeleri</h3>
+                    <div class="members-list">
+                        <div class="member-item">Mehmet Akif Turan</div>
+                        <div class="member-item">Alper Burak Yazıcı</div>
+                        <div class="member-item">Yusuf Eren Şentürk</div>
+                        <div class="member-item">Ural Bulut Şanbaklı</div>
+                        <div class="member-item">Süleyman Yiğit Apaydın</div>
+                        <div class="member-item">Beril Karaköse</div>
+                        <div class="member-item">Reyhan İnançlı</div>
+                        <div class="member-item">Caner Ayerden</div>
+                        <div class="member-item">Beyza Yılmaz</div>
+                        <div class="member-item">Erhan Çetin Özkan</div>
+                        <div class="member-item">Yiğit Belat</div>
+                        <div class="member-item">Zeynep Umay Çardak</div>
+                        <div class="member-item">Rıdvan Çelik</div>
+                        <div class="member-item">Alp Kerem Okyay</div>
+                        <div class="member-item">Ayça Çalışkan</div>
+                        <div class="member-item">Defne Taluç</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HALKLA İLİŞKİLER -->
+        <div id="page-ekip-halkla-iliskiler" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Halkla İlişkiler Ekibi</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/prbaskan1.png" alt="Ceren Bilgin" class="baskan-foto"></div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Ceren Bilgin</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/prbaskan2.png" alt="Sudenaz Saka" class="baskan-foto"></div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Sudenaz Saka</p>
+                    </div>
+                </div>
+                <div class="members-section">
+                    <h3 class="members-title">Ekip Üyeleri</h3>
+                    <div class="members-list">
+                        <div class="member-item">Şevval Ayşe Şafak</div>
+                        <div class="member-item">Muhammet Sağlam</div>
+                        <div class="member-item">Elif Güden</div>
+                        <div class="member-item">Yağmur Kuş</div>
+                        <div class="member-item">Ceylin Türkkölesi</div>
+                        <div class="member-item">Ceylin Dilek Akbaş</div>
+                        <div class="member-item">Halim Mert Tiryaki</div>
+                        <div class="member-item">İpek Orgun</div>
+                        <div class="member-item">İlkim Emir Sarı</div>
+                        <div class="member-item">Buğlem Hira Üçüncünoğlu</div>
+                        <div class="member-item">Yağmur Karaca</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FİNANS EKİBİ -->
+        <div id="page-ekip-finans" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Finans Ekibi</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/finansbaskan1.png" alt="Mevlana Enes Gökce" class="baskan-foto"></div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Mevlana Enes Gökce</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/finansbaskan2.png" alt="Zeynep Bilge Karakuş" class="baskan-foto"></div>
+                        <span class="leader-role">Ekip Başkanı</span>
+                        <p class="leader-name">Zeynep Bilge Karakuş</p>
+                    </div>
+                </div>
+                <div class="members-section">
+                    <h3 class="members-title">Ekip Üyeleri</h3>
+                    <div class="members-list">
+                        <div class="member-item">Elif Şahin</div>
+                        <div class="member-item">Kübra Kılıç</div>
+                        <div class="member-item">Muhammed Ali Sabit</div>
+                        <div class="member-item">Mustafa Eren Keşkek</div>
+                        <div class="member-item">Görkem Kasap</div>
+                        <div class="member-item">Nihan Demircan</div>
+                        <div class="member-item">Ahmet Eren Yıldız</div>
+                        <div class="member-item">Nil Kuriş</div>
+                        <div class="member-item">Berkay Gümüş</div>
+                        <div class="member-item">Metehan Savaş</div>
+                        <div class="member-item">Eymen Çınar Böke</div>
+                        <div class="member-item">Can Eker</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ KOMİSYON SAYFALARI ═══════ -->
+
+        <div id="page-komisyon-ulasim-altyapi" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Ulaştırma ve Altyapı Komisyonu</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/ulastirmabaskani.png" alt="Efe Keskin" class="baskan-foto"></div>
+                        <span class="leader-role">Komisyon Başkanı</span>
+                        <p class="leader-name">Efe Keskin</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/ulastirmabaskany.jpeg" alt="Zümranur Kuş" class="baskan-foto"></div>
+                        <span class="leader-role">Komisyon Başkan Yardımcısı</span>
+                        <p class="leader-name">Zümranur Kuş</p>
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>Ulaştırma ve altyapı, modern toplumların ekonomik gelişimi, toplumsal refahı ve günlük yaşamın sürdürülebilirliği açısından kritik öneme sahip alanlardan biridir. Gelişmiş ve güvenilir ulaşım sistemleri; insanların iş, eğitim ve sosyal hayatlarına erişimini kolaylaştırırken, güçlü iletişim ve altyapı ağları ise toplumun bilgiye erişimini ve kriz anlarında koordinasyonunu mümkün kılmaktadır. Türkiye gibi büyük nüfusa ve hızla büyüyen şehirleşmeye sahip ülkelerde ise bu alanlarda ortaya çıkan sorunlar yalnızca teknik meseleler olmaktan çıkarak sosyal, ekonomik ve çevresel boyutları olan kapsamlı tartışma konularına dönüşmektedir. Ulaştırma ve Altyapı Komisyonu, Türkiye’de ulaşım sistemleri ve iletişim altyapısı alanında karşılaşılan temel sorunları ele almayı ve bu sorunlara yönelik sürdürülebilir çözüm önerileri geliştirmeyi amaçlamaktadır. Günümüzde internet ve iletişim sistemleri yalnızca bireysel iletişim aracı değil; aynı zamanda ekonomi, eğitim, sağlık ve kamu hizmetlerinin işleyişi için vazgeçilmez bir altyapı haline gelmiştir. Ancak Türkiye’de özellikle afet anlarında şebeke yoğunluğu ve altyapı yetersizliği nedeniyle iletişim sistemlerinin zaman zaman kesintiye uğradığı görülmektedir. Bu durum arama-kurtarma faaliyetlerinin koordinasyonunu zorlaştırmakta ve yardım çalışmalarının etkinliğini azaltmaktadır. Bunun yanı sıra internet hızının gelişmiş ülkelerle kıyaslandığında daha düşük olması ve yeni nesil teknolojilere geçişin yavaş ilerlemesi, dijital dönüşüm sürecini de etkilemektedir. Özellikle 5G gibi modern iletişim teknolojilerine geçiş sürecinin hızlandırılması ve internet altyapısının güçlendirilmesi önemli bir noktadır. Trafik cezalarının gelir dağılımına göre yapılmaması da ulaşım konusundaki tartışma alanlarından biridir. Düşük ve orta gelirli bireyler için ağır bir ekonomik yük oluşturabilen bu cezalar, yüksek gelir grubundaki bireyler için aynı derecede caydırıcı olmayabilmektedir. Bu durum trafik kurallarına uyum konusunda eşitsizlik yaratabileceği gibi, kamuoyunda adalet tartışmalarına da yol açmaktadır. Günümüzde birçok şehir çevre dostu ve sürdürülebilir ulaşım modellerini teşvik etmek amacıyla bisiklet kullanımını artırmaya yönelik politikalar geliştirmektedir. Ancak Türkiye’de bisiklet yollarının sayısının sınırlı olması ve mevcut yolların zaman zaman yayalar veya motosikletler tarafından işgal edilmesi bisikletli bireyler için güvenlik sorunları yaratmaktadır. Bu durum bisiklet kullanımını azaltmaktadır. Büyükşehirlerde nüfus artışı ve yoğun trafik nedeniyle toplu taşıma araçları günlük yaşamın vazgeçilmez bir parçası haline gelmiştir. Buna rağmen bazı şehirlerde toplu taşıma araçlarının sayısının yetersiz olması, sefer sıklıklarının bazı hatlarda düşük kalması ve araçların aşırı yoğun kullanılması yolcular için ciddi zorluklar yaratmaktadır. Bunun yanı sıra toplu taşıma araçlarında klima kullanımının yeterince denetlenmemesi gibi hizmet kalitesini etkileyen sorunlar da vatandaşların rahatsız olduğu durumlardır. Toplu ulaşım sistemlerinde uygulanan indirimli ve ücretsiz seyahat kartları da ulaşımdaki tartışma konularındandır.. Öğrenciler, yaşlılar ve bazı sosyal gruplar için sağlanan bu uygulamalar sosyal devlet anlayışının önemli bir parçası olmakla birlikte, finansal sürdürülebilirlik ve ulaşım sisteminin dengesi açısından farklı görüşlerin ortaya çıkmasına neden olabilmektedir. Son yıllarda bazı taksi şoförlerinin kısa mesafe yolcu almaması, belirli saatlerde hizmet vermekten kaçınması veya yabancı turistlere öncelik tanıması gibi sorunlar kamuoyunda geniş yer bulmaktadır. Bu durum hem vatandaşların ulaşım hakkını olumsuz etkilemekte hem de şehir içi ulaşım sisteminin güvenilirliğini zedeleyebilmektedir. Trafik kültürü ve trafik bilinci de Türkiye’de ulaşım politikaları açısından önemli bir konudur. Trafik kurallarının yeterince bilinmemesi veya önemsenmemesi, trafik kazalarının artmasına ve şehir içi ulaşımın düzensiz hale gelmesine neden olabilmektedir. Okullarda verilen trafik eğitimi ve kamu spotları bu konuda önemli adımlar olsa da toplum genelinde daha güçlü bir trafik bilincinin oluşturulması gerektiği görülmektedir Türkiye’de afet anlarında yaşanan iletişim kesintilerinin önüne geçebilmek için mobil şebeke ve internet altyapısının güçlendirilmesi adına kamu ve özel sektör arasında nasıl bir iş birliği modeli oluşturulmalıdır? Trafik cezalarının gelir düzeyine göre düzenlenmesi uygulaması Türkiye’de hayata geçirilmeli midir? Eğer uygulanacaksa bu sistemin adil ve sürdürülebilir şekilde işlemesi nasıl sağlanabilir? Büyükşehirlerde toplu taşıma, bisiklet yolları ve taksi hizmetleri arasındaki dengeyi sağlayarak hem çevre dostu hem de erişilebilir bir şehir içi ulaşım sistemi oluşturmak için hangi düzenlemeler yapılmalıdır? </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-komisyon-saglik" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Sağlık Komisyonu</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/saglikbaskani.png" alt="Toprak Umut Usanmaz" class="baskan-foto"></div>
+                        <span class="leader-role">Komisyon Başkanı</span>
+                        <p class="leader-name">Toprak Umut Usanmaz</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/saglikbaskany.png" alt="Elif Özcan" class="baskan-foto"></div>
+                        <span class="leader-role">Başkan Yardımcısı</span>
+                        <p class="leader-name">Elif Özcan</p>
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>Ruh Sağlığı Politikaları ve Hukuki Altyapının Güçlendirilmesi Türkiye’de ruh sağlığı hizmetlerinin yetkinliği; hâlâ yürürlüğe girmemiş çağdaş, bütüncül ve hak temelli bir Ruh Sağlığı Yasası eksikliği, fiziksel sağlık hizmetlerine kıyasla bütçe ve öncelik dengesizliği, veri analizi ve toplumla paylaşım noktasındaki şeffaflık eksiklikleri ile karar alma süreçlerinde alanında uzman mesleklerle çok disiplinli katılımın sınırlı olması gibi faktörlerle engellenmektedir. Söz konusu hususlarla ilgili problem tespitleri yapılmalı ve gerekli düzenlemelere gidilerek toplum düzeninin temelini oluşturan psikoloji ve ruh sağlığı alanı yetkinliğe kavuşturulmalıdır. Türkiye’de Artan Obezite Oranlarının Halk Sağlığı Krizine Dönüşmesinin Önlenmesi Çocuklar ve ergenler arasında artan obezite oranları hem bireysel hem de toplumsal sağlık açısından önemli bir risk oluşturmaktadır. Bu durumun önlenmesi için koruyucu ve önleyici politikaların geliştirilmesi, ailelerin sağlıklı beslenme ve yaşam tarzı konusunda bilinçlendirilmesi, okullarda müfredat, kantin politikaları ve fiziksel aktivite programlarının yeniden düzenlenmesi gerekmektedir. Bu iyileştirmeler, bireylerin sağlıklı alışkanlıklar kazanmasını ve obezitenin toplum sağlığı krizine dönüşmesinin önlenmesini sağlayacaktır. Pandemi ve Benzeri Küresel Sağlık Krizlerinde Etkin Yönetim Mekanizmaları Küresel sağlık krizlerinin yönetiminde bağımsız, bilim temelli ve hızlı karar alma süreçleri kritik öneme sahiptir. Etkili kriz yönetimi için kurumlar arası yetki ve sorumlulukların netleştirilmesi, en verimli yolların geliştirilmesi gerekmektedir. Söz konusu krizlerde uluslararası iş birliği ve yardımlaşma planları hazırlanmalı buna paralel olarak ise ulusal egemenlik ve küresel dayanışma arasında da bir denge sağlanmalıdır. Bu sayede kriz anlarında etkin müdahale, kaynakların doğru kullanımı ve halk sıhhatinin korunması en sağlıklı yoluna kavuşabilir. Ruh sağlığı politikaları ve hukuki altyapı nasıl güçlendirilebilir? Türkiye’de artan obezite oranlarının halk sağlığı problemine dönüşmesi nasıl önlenebilir? Küresel sağlık krizlerinde etkin yönetim mekanizmaları hangi yönde planlanmalıdır?</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-komisyon-aile-sosyal" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Aile ve Sosyal Hizmetler Komisyonu</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/ailebaskani.png" alt="Ecrin Ela Aydın" class="baskan-foto"></div>
+                        <span class="leader-role">Komisyon Başkanı</span>
+                        <p class="leader-name">Ecrin Ela Aydın</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/ailebaskany.png" alt="Elif Ece Uzun" class="baskan-foto"></div>
+                        <span class="leader-role">Başkan Yardımcısı</span>
+                        <p class="leader-name">Elif Ece Uzun</p>
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>Çocuk istismarı; fiziksel, psikolojik ve cinsel istismar gibi farklı biçimlerde ortaya çıkabilen ve çocukların sağlıklı gelişimini ciddi bir şekilde etkileyen önemli bir toplumsal sorundur. Bu durum yalnızca bireysel değil, aynı zamanda sosyal ve kurumsal sorumluluk gerektiren bir mesele olarak karşımıza çıkmaktadır. Çocukların güvenli bir ortamda büyüyebilmesi için istismar vakalarının erken tespit edilmesi, farkındalığın artırılması ve mağdur çocukların psikolojik, sosyal ve hukuki açıdan etkin şekilde desteklenmesi büyük önem taşımaktadır. Bu sorun doğrultusunda ilk gündem maddemiz "Çocuk istismarının önlenmesi, istismar vakalarının erken tespiti ve mağdur çocukların korunması için alınacak sosyal, hukuki ve kurumsal önlemler" olarak belirlenmiştir. Sosyal medya platformlarının yaygınlaşmasıyla birlikte şiddet, zorbalık ve suç içerikli paylaşımlar da daha görünür hale gelmiştir. Bu tür içeriklerin özellikle çocuklar ve gençler üzerinde olumsuz etkiler yaratabileceği ve bazı durumlarda suçu normalleştirebileceği tartışılmaktadır. Bu nedenle çocukların dijital ortamda karşılaşabilecekleri zararlı içeriklerden korunması için ailelerin, eğitim kurumlarının, sosyal medya platformlarının ve ilgili kurumların birlikte hareket etmesi; dijital farkındalık çalışmalarının ve koruyucu önlemlerin güçlendirilmesi büyük önem taşımaktadır. Bu sorun doğrultusunda ikici gündem maddemiz "Sosyal medyada yaygınlaşan suç içerikli paylaşımlar çocukları suça özendirme konusunda ne kadar etkilidir ve çocukları bu olumsuz etkilerden korumak için alınacak önlemler" olarak belirlenmiştir. 1.) Çocuk istismarının erken tespiti için okullar, sağlık kuruluşları ve sosyal hizmet kurumları arasında nasıl bir iş birliği mekanizması kurulmalıdır ve bu sistemin etkili işlemesi için hangi somut adımlar atılmalıdır? 2.) Sosyal medyada suç ve şiddet içeriklerinin çocukları olumsuz etkilemesini önlemek için aileler, eğitim kurumları ve sosyal medya platformları hangi ortak sorumlulukları üstlenmeli ve bu sorumluluklar nasıl uygulanabilir hale getirilebilir? 3.) İstismar mağduru çocukların korunması ve yeniden topluma kazandırılması için psikolojik, sosyal ve hukuki destek mekanizmaları nasıl güçlendirilmeli ve bu süreçte devlet kurumları ile sivil toplum kuruluşlarının rolü nasıl artırılmalıdır?</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-komisyon-ekonomi" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Ekonomi Komisyonu</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/ekonomibaskani.png" alt="Utku Kaçar" class="baskan-foto"></div>
+                        <span class="leader-role">Komisyon Başkanı</span>
+                        <p class="leader-name">Utku Kaçar</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/ekonomibaskany.png" alt="Akif Kağan Şimşek" class="baskan-foto"></div>
+                        <span class="leader-role">Başkan Yardımcısı</span>
+                        <p class="leader-name">Akif Kağan Şimşek</p>
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>Rekabet hukukunun temel sorunlarından biri, çoğu zaman önleyici bir mekanizma olarak değil, ihlal gerçekleştikten sonra devreye giren bir denetim aracı olarak işlemesidir. Bu durum piyasalarda tekelleşme eğilimlerinin erken aşamada tespit edilmesini zorlaştırmaktadır. Özellikle piyasa yapısını sürekli olarak izleyebilecek güçlü ve şeffaf denetim mekanizmalarının yeterince gelişmemiş olması, rekabet ihlallerinin ancak belirli bir büyüklüğe ulaştıktan sonra fark edilmesine neden olmaktadır. Sektörel raporlamalarda veri güvenliğinin tam olarak sağlanamaması da piyasa analizlerinin sağlıklı biçimde yapılmasını engelleyen önemli bir faktör olarak ortaya çıkmaktadır. Bunun yanında denetim kurullarının seçilme süreçlerinin yeterince şeffaf olmaması ve denetim faaliyetlerinin etkin biçimde denetlenmemesi, kurumsal güvenilirliği zayıflatabilmektedir. Ayrıca şirket devralmaları ve birleşmelerinin piyasa rekabeti üzerindeki etkilerinin her zaman yeterli kapsamda değerlendirilmemesi, bazı sektörlerde yoğunlaşmanın artmasına ve rekabet ortamının zayıflamasına yol açabilmektedir. Bu nedenle rekabet hukukunun daha etkin işlemesi için erken uyarı sistemlerinin geliştirilmesi, veri güvenliğinin güçlendirilmesi ve birleşme-devralma süreçlerinin daha kapsamlı analiz edilmesi büyük önem taşımaktadır. Türkiye ekonomisinin 1980’li yıllardan itibaren karşı karşıya kaldığı en önemli yapısal sorunlardan biri yüksek ve süreklilik gösteren enflasyon problemidir. Enflasyonun kalıcı hale gelmesinde para politikası kurumlarının yeterince bağımsız çalışamaması önemli bir etken olarak görülmektedir. Merkez bankasının bağımsızlığının tam olarak sağlanamaması, para politikalarının uzun vadeli ekonomik istikrar yerine kısa vadeli hedeflere göre şekillenmesine yol açabilmektedir. Bunun yanı sıra kamu harcamaları ile kamu gelirleri arasında sürdürülebilir bir denge kurulamaması da enflasyonist baskıları artıran faktörlerden biri olarak ortaya çıkmaktadır. Yüksek enflasyon özellikle asgari ücretle çalışanlar ve sabit gelirli vatandaşlar üzerinde ciddi bir ekonomik baskı oluşturmakta, satın alma gücünün hızla düşmesine ve toplumsal sınıf farklılıklarının daha belirgin hale gelmesine neden olmaktadır. Ayrıca enflasyon oranlarının belirlenmesi sürecinde kurumların doğru ve güvenilir veri üretme konusunda zaman zaman yetersiz kalması, ekonomik göstergelere olan toplumsal güveni de zedeleyebilmektedir. Bu nedenle enflasyonla mücadelede kurumsal bağımsızlığın güçlendirilmesi, kamu maliyesinde disiplin sağlanması ve ekonomik verilerin şeffaf şekilde paylaşılması kritik öneme sahiptir. Rekabet hukukunun çoğu zaman ihlal gerçekleştikten sonra devreye giren bir mekanizma olarak işlemesi piyasalarda hangi sorunların ortaya çıkmasına neden olmaktadır? Metne göre yüksek ve kalıcı enflasyonun oluşmasında para politikası kurumlarının bağımsızlığının yetersiz olması ekonomiyi nasıl etkilemektedir? Rekabet hukukunun daha etkin işlemesi ve enflasyonla mücadelede başarı sağlanabilmesi için metinde hangi kurumsal ve yapısal önlemler önerilmektedir?</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-komisyon-egitim" class="page-section">
+            <div class="detail-page">
+                <a class="back-btn" onclick="navigateBack()">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Geri Dön
+                </a>
+                <h1 class="detail-title">Eğitim Komisyonu</h1>
+                <div class="detail-title-line"></div>
+                <div class="detail-leaders">
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/egitimbaskani.png" alt="Onur Sarp Yaka" class="baskan-foto"></div>
+                        <span class="leader-role">Komisyon Başkanı</span>
+                        <p class="leader-name">Onur Sarp Yaka</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-photo"><img src="images/egitimbaskany.png" alt="Nil Deniz Hazar" class="baskan-foto"></div>
+                        <span class="leader-role">Başkan Yardımcısı</span>
+                        <p class="leader-name">Nil Deniz Hazar</p>
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <h3 class="detail-box-title">Komisyon Açıklaması</h3>
+                    <p>Eğitim sistemi, bireylerin bilgi ve beceri kazanmasının yanı sıra toplumsal eşitliğin sağlanmasında da önemli bir rol oynamaktadır. Ancak ekonomik koşullar, eğitim politikaları ve okullar arasındaki imkân farklılıkları, öğrencilerin eğitim süreçlerini doğrudan etkilemektedir. Bu durum, bazı öğrencilerin eğitim hayatında daha fazla zorluk yaşamasına neden olmaktadır. Ekonomik açıdan dezavantajlı öğrenciler, eğitim sürecinde çeşitli sorunlarla karşılaşabilmektedir. Maddi imkânların yetersizliği, öğrencilerin derslerine odaklanmasını ve akademik başarılarını olumsuz etkileyebilmektedir. Özellikle yoksul ailelerden gelen öğrenciler için okulda sağlıklı beslenme imkânına ulaşmak her zaman mümkün olmamaktadır. Öğle yemeği desteğinin bulunmaması, öğrencilerin gün içinde yeterli enerjiye sahip olamamasına ve derslerde dikkatlerini toplamakta zorlanmalarına yol açabilmektedir. Bunun yanında bazı öğrenciler, okula ulaşım konusunda da güçlük yaşamaktadır. Ulaşım imkânlarının sınırlı olması veya maliyetlerin yüksek olması, öğrencilerin okula düzenli devam etmesini zorlaştıran önemli bir unsur olarak görülmektedir. Eğitim sistemi içinde tartışılan bir diğer önemli konu, üniversite sayısının artmasıyla birlikte ara eleman ihtiyacının yeterince karşılanamamasıdır. Son yıllarda öğrencilerin büyük bir bölümünün üniversite eğitimine yönelmesi, mesleki eğitim alanlarına olan ilginin azalmasına neden olmuştur. Meslek liselerinin sayısının bazı bölgelerde yetersiz olması ve bazı okullarda verilen eğitimin verimlilik açısından yeterli olmaması bu durumu etkileyen faktörler arasında yer almaktadır. Bunun yanında Mesleki Eğitim Merkezlerinde (MESEM) öğrenciler için her zaman güvenli ve düzenli çalışma ortamlarının sağlanamaması, mesleki eğitime yönelik olumsuz algıların oluşmasına yol açabilmektedir. Ayrıca üniversiteye girişin zamanla daha erişilebilir hâle gelmesi, öğrencilerin büyük çoğunluğunun akademik eğitime yönelmesine neden olmaktadır. Ortaöğretimin zorunlu olması da bazı öğrencilerin ilgi ve yeteneklerine uygun mesleki alanlara daha erken yönelmesini güçleştirmektedir. Eğitimde fırsat eşitliği konusu da önemli sorunlardan biri olarak değerlendirilmektedir. Okullar arasında teknolojik imkânlar açısından belirgin farklılıklar bulunmaktadır. Bazı okullarda bilgisayar, internet ve dijital eğitim araçları yeterli düzeyde bulunmazken, bazı okullarda bu imkânlar daha gelişmiş durumdadır. Bunun yanında devlet okulları ile özel okullar arasındaki imkân farklarının fazla olması, öğrencilerin eğitim süreçlerinde farklı deneyimler yaşamalarına neden olmaktadır. Ayrıca birçok okulda öğrenci başına düşen öğretmen sayısının düşük olması, öğretmenlerin her öğrenciyle yeterince ilgilenmesini zorlaştırmaktadır. Bu durum, öğrencilerin akademik gelişimi üzerinde de etkili olabilmektedir. Bu sorunlar, eğitim sisteminde hem sosyal hem de yapısal eşitsizliklerin bulunduğunu göstermektedir. Eğitimde daha dengeli bir yapı oluşturulabilmesi için, bu farklılıkların dikkatle ele alınması ve eğitim politikalarının bu doğrultuda geliştirilmesi büyük önem taşımaktadır. Bu çerçevede, eğitim sisteminde ara eleman yetiştirilmesi için alınabilecek önlemler, okullar arasındaki fiziksel imkân farklılıklarının giderilmesi ve ekonomik açıdan dezavantajlı öğrencilerin eğitime devam edebilmeleri için sağlanabilecek destekler üzerinde durulacaktır. Ekonomik açıdan dezavantajlı öğrencilerin eğitim sürecinde yaşadığı beslenme ve ulaşım sorunlarının önüne geçilebilmesi için hangi politikalar uygulanabilir? Türkiye’de üniversiteleşmenin artması, meslek liselerinin verimliliğinin düşük olması, Mesleki Eğitim Merkezlerindeki (MESEM) çalışma koşulları ve üniversiteye girişin daha erişilebilir hâle gelmesi gibi faktörlerin ortaya çıkardığı ara eleman eksikliği nasıl giderilebilir? Okullarda teknolojik imkânların yetersiz olması, devlet ve özel okullar arasındaki imkân farklarının artması ve öğrenci başına düşen öğretmen sayısının düşük olması gibi durumların eğitim üzerindeki etkileri karşısında ne tür önlemler alınabilir?</p>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /shell -->
+
+<script>
+    let scrollPosition = 0;
+    let isNavigatingBack = false;
+
+    function handleRoute() {
+        const hash = window.location.hash.slice(1) || 'anasayfa';
+
+        document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+
+        const target = document.getElementById('page-' + hash);
+
+        if (target) {
+            target.classList.add('active');
+
+            if (hash === 'anasayfa') {
+                if (isNavigatingBack && scrollPosition > 0) {
+                    setTimeout(() => window.scrollTo({ top: scrollPosition, behavior: 'auto' }), 50);
+                } else {
+                    window.scrollTo(0, 0);
+                }
+                isNavigatingBack = false;
+            } else {
+                window.scrollTo(0, 0);
+            }
+        } else {
+            document.getElementById('page-anasayfa').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    }
+
+    function navigateTo(id) {
+        // Komisyon kilitli mi?
+        const card = document.querySelector(`[onclick="navigateTo('${id}')"]`);
+        if (card && card.classList.contains('committee-card')) {
+            const lockOverlay = card.querySelector('.committee-lock-overlay');
+            if (lockOverlay && !lockOverlay.classList.contains('hidden')) return;
+        }
+
+        isNavigatingBack = false;
+        scrollPosition = window.scrollY;
+        window.location.hash = id;
+    }
+
+    function navigateBack() {
+        isNavigatingBack = true;
+        // Go back to wherever we came from
+        const currentHash = window.location.hash.slice(1);
+        if (currentHash === 'program' || currentHash === 'sss') {
+            window.location.hash = 'anasayfa';
+        } else {
+            window.location.hash = 'anasayfa';
+        }
+    }
+
+    function handleNavClick(e, sectionId) {
+        e.preventDefault();
+        isNavigatingBack = true;
+        scrollPosition = 0;
+        window.location.hash = 'anasayfa';
+        setTimeout(() => {
+            const el = document.getElementById(sectionId);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    }
+
+    function handlePageNav(e, pageId) {
+        e.preventDefault();
+        isNavigatingBack = false;
+        scrollPosition = window.scrollY;
+        window.location.hash = pageId;
+    }
+
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('DOMContentLoaded', handleRoute);
+
+    function toggleDrawer() {
+        document.getElementById('mobileDrawer').classList.toggle('active');
+        document.getElementById('drawerOverlay').classList.toggle('active');
+        document.getElementById('hamburger').classList.toggle('active');
+    }
+
+    function scrollToId(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Fade-up observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+
+    // Komisyon kilit kontrolü
+    function checkCommitteeLocks() {
+        const today = new Date();
+        document.querySelectorAll('.committee-card').forEach(card => {
+            const unlockDate = card.getAttribute('data-unlock-date');
+            if (unlockDate) {
+                const unlock = new Date(unlockDate);
+                const lockOverlay = card.querySelector('.committee-lock-overlay');
+                if (today >= unlock) {
+                    if (lockOverlay) lockOverlay.classList.add('hidden');
+                } else {
+                    if (lockOverlay) lockOverlay.classList.remove('hidden');
+                }
+            }
+        });
+    }
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+        const item = btn.closest('.faq-item');
+        const isActive = item.classList.contains('active');
+
+        // Close all
+        document.querySelectorAll('.faq-item.active').forEach(el => el.classList.remove('active'));
+
+        // Open clicked if it wasn't active
+        if (!isActive) item.classList.add('active');
+    }
+
+    // Program day tab scroll
+    function scrollToDay(dayId, tabEl) {
+        document.querySelectorAll('.program-tab').forEach(t => t.classList.remove('active'));
+        tabEl.classList.add('active');
+        const el = document.getElementById(dayId);
+        if (el) {
+            const offset = 100;
+            const top = el.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+    }
+
+    // Fix back-btn SVGs
+    window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        document.querySelectorAll('.back-btn svg').forEach(svg => {
+            svg.setAttribute('fill', 'none');
+            svg.setAttribute('stroke', 'currentColor');
+            svg.setAttribute('stroke-width', '1.5');
+            svg.setAttribute('stroke-linecap', 'round');
+            svg.setAttribute('stroke-linejoin', 'round');
+        });
+
+        checkCommitteeLocks();
+    });
+</script>
+</body>
+</html>
