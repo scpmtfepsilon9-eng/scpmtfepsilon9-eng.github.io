@@ -1024,6 +1024,78 @@
             font-weight: 300;
         }
 
+        /* ═══════════════ SSS CTA ═══════════════ */
+        .sss-cta-section {
+            padding: 0 60px 80px;
+            max-width: 1200px;
+            margin: -40px auto 0;
+        }
+
+        .sss-program-cta {
+            padding: 45px 50px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            background: linear-gradient(135deg, rgba(18, 34, 54, 0.7) 0%, rgba(11, 24, 41, 0.5) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sss-program-cta::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--gold), var(--teal));
+        }
+
+        .sss-program-cta:hover {
+            border-color: rgba(201, 168, 76, 0.4);
+            background: rgba(18, 34, 54, 0.85);
+            transform: translateY(-2px);
+        }
+
+        .sss-program-cta-text h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: var(--gold-pale);
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .sss-program-cta-text p {
+            color: rgba(240, 236, 228, 0.55);
+            font-size: 0.9rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .sss-program-cta-arrow {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--gold);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+            transition: gap 0.3s ease;
+        }
+
+        .sss-program-cta:hover .sss-program-cta-arrow { gap: 22px; }
+
+        .sss-arrow-line {
+            width: 30px; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .sss-program-cta:hover .sss-arrow-line { width: 46px; }
+
         /* ═══════════════ PROGRAM PAGE ═══════════════ */
         .program-page {
             padding: 100px 60px 80px;
@@ -1367,71 +1439,18 @@
 
         .faq-category:first-child { margin-top: 0; }
 
-        /* Program CTA card */
-        .sss-program-cta {
-            padding: 45px 50px;
-            border: 1px solid rgba(201, 168, 76, 0.2);
-            background: linear-gradient(135deg, rgba(18, 34, 54, 0.7) 0%, rgba(11, 24, 41, 0.5) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 30px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sss-program-cta::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, var(--gold), var(--teal));
-        }
-
-        .sss-program-cta:hover {
-            border-color: rgba(201, 168, 76, 0.4);
-            background: rgba(18, 34, 54, 0.85);
-            transform: translateY(-2px);
-        }
-
-        .sss-program-cta-text h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
+        /* Study Paper Info */
+        .study-paper-info {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px dashed rgba(201, 168, 76, 0.3);
             color: var(--gold-pale);
-            margin-bottom: 10px;
-            font-weight: 400;
-        }
-
-        .sss-program-cta-text p {
-            color: rgba(240, 236, 228, 0.55);
-            font-size: 0.9rem;
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        .sss-program-cta-arrow {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: var(--gold);
-            font-size: 0.7rem;
-            letter-spacing: 3px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            flex-shrink: 0;
-            transition: gap 0.3s ease;
+            background: rgba(201, 168, 76, 0.05);
         }
-
-        .sss-program-cta:hover .sss-program-cta-arrow { gap: 22px; }
-
-        .sss-arrow-line {
-            width: 30px; height: 1px;
-            background: var(--gold);
-            transition: width 0.3s ease;
-        }
-
-        .sss-program-cta:hover .sss-arrow-line { width: 46px; }
 
         /* ═══════════════ ANIMATIONS ═══════════════ */
         .fade-up {
@@ -1457,7 +1476,7 @@
 
             section, .founder-section, .teams-section, .committees-section,
             .apply-section, .detail-page, .forum-info-section,
-            .program-page, .sss-page {
+            .program-page, .sss-page, .sss-cta-section {
                 padding-left: 24px;
                 padding-right: 24px;
             }
@@ -1667,6 +1686,20 @@
                         </svg>
                         <h3 class="forum-info-title">Neden KFLUF?</h3>
                         <p class="forum-info-text">Konferans kültürünü gerçekten bilen ve her sene bir öncekinden daha iyisini yapmaya çalışan bir ekibiz. Oturumlarımızda gündemlerimizi özenle seçiyor, sağlam bir araştırma altyapısıyla ilerliyoruz. KFLUF'u tercih etmek; kendine yatırım yapmak, güçlü dostluklar kurmak ve nitelikli bir konferans deneyimi yaşamak demektir.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SSS YÖNLENDİRME KARTI (YENİ) -->
+            <section class="sss-cta-section fade-up">
+                <div class="sss-program-cta" onclick="navigateTo('sss')">
+                    <div class="sss-program-cta-text">
+                        <h3>Sıkça Sorulan Soruları Görün</h3>
+                        <p>Konferans başvuru süreci, katılım koşulları, konaklama ve diğer tüm merak ettikleriniz hakkında detaylı bilgi almak için SSS sayfamızı ziyaret edin.</p>
+                    </div>
+                    <div class="sss-program-cta-arrow">
+                        <span class="sss-arrow-line"></span>
+                        SSS'e Git
                     </div>
                 </div>
             </section>
@@ -1904,54 +1937,41 @@
                         <div class="program-timeline">
                             <div class="program-item highlight">
                                 <div class="program-item-inner">
-                                    <span class="program-time">11:30</span>
+                                    <span class="program-time">13:00 – 14:00</span>
                                     <span class="program-event-title">Ön Kayıt</span>
                                     <span class="program-badge seremoni">Kayıt</span>
                                 </div>
                             </div>
                             <div class="program-item highlight">
                                 <div class="program-item-inner">
-                                    <span class="program-time">11:40 – 12:40</span>
+                                    <span class="program-time">14:00 – 15:00</span>
                                     <span class="program-event-title">Açılış Seremonisi</span>
                                     <span class="program-badge seremoni">Seremoni</span>
                                 </div>
                             </div>
-                            <div class="program-item lunch-item">
+                            <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">12:40 – 14:00</span>
-                                    <span class="program-event-title">Öğlen Arası</span>
+                                    <span class="program-time">15:00 – 15:10</span>
+                                    <span class="program-event-title">Ara</span>
                                 </div>
                             </div>
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">14:00 – 15:00</span>
+                                    <span class="program-time">15:10 – 16:10</span>
                                     <span class="program-event-title">1. Komisyon Oturumu</span>
                                     <span class="program-badge komisyon">Komisyon</span>
                                 </div>
                             </div>
                             <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">15:00 – 15:15</span>
+                                    <span class="program-time">16:10 – 16:35</span>
                                     <span class="program-event-title">Ara</span>
                                 </div>
                             </div>
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">15:15 – 16:15</span>
+                                    <span class="program-time">16:35 – 17:50</span>
                                     <span class="program-event-title">2. Komisyon Oturumu</span>
-                                    <span class="program-badge komisyon">Komisyon</span>
-                                </div>
-                            </div>
-                            <div class="program-item break-item">
-                                <div class="program-item-inner">
-                                    <span class="program-time">16:15 – 16:30</span>
-                                    <span class="program-event-title">Ara</span>
-                                </div>
-                            </div>
-                            <div class="program-item">
-                                <div class="program-item-inner">
-                                    <span class="program-time">16:30 – 17:30</span>
-                                    <span class="program-event-title">3. Komisyon Oturumu</span>
                                     <span class="program-badge komisyon">Komisyon</span>
                                 </div>
                             </div>
@@ -1971,73 +1991,86 @@
                         <div class="program-timeline">
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">09:45 – 10:45</span>
-                                    <span class="program-event-title">4. Komisyon Oturumu</span>
+                                    <span class="program-time">9:00 – 10:00</span>
+                                    <span class="program-event-title">3. Komisyon Oturumu</span>
                                     <span class="program-badge komisyon">Komisyon</span>
                                 </div>
                             </div>
                             <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">10:45 – 11:00</span>
+                                    <span class="program-time">10:00 – 10:20</span>
                                     <span class="program-event-title">Ara</span>
                                 </div>
                             </div>
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">11:00 – 12:00</span>
+                                    <span class="program-time">10:20 – 11:20</span>
+                                    <span class="program-event-title">Dış Oryantasyon</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">11:20 – 11:40</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">11:40 – 12:40</span>
+                                    <span class="program-event-title">4. Komisyon Oturumu</span>
+                                    <span class="program-badge komisyon">Komisyon</span>
+                                </div>
+                            </div>
+                            <div class="program-item lunch-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">12:40 – 14:00</span>
+                                    <span class="program-event-title">Öğlen Arası</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">14:00 – 15:00</span>
                                     <span class="program-event-title">5. Komisyon Oturumu</span>
                                     <span class="program-badge komisyon">Komisyon</span>
                                 </div>
                             </div>
                             <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">12:00 – 12:15</span>
+                                    <span class="program-time">15:00 – 15:20</span>
                                     <span class="program-event-title">Ara</span>
                                 </div>
                             </div>
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">12:15 – 13:15</span>
+                                    <span class="program-time">15:20 – 16:20</span>
                                     <span class="program-event-title">6. Komisyon Oturumu</span>
                                     <span class="program-badge komisyon">Komisyon</span>
                                 </div>
                             </div>
-                            <div class="program-item lunch-item">
+                            <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">13:15 – 14:15</span>
-                                    <span class="program-event-title">Öğlen Arası</span>
+                                    <span class="program-time">16:20 – 16:35</span>
+                                    <span class="program-event-title">Ara</span>
                                 </div>
                             </div>
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">14:15 – 15:15</span>
+                                    <span class="program-time">16:35 – 17:35</span>
                                     <span class="program-event-title">7. Komisyon Oturumu</span>
                                     <span class="program-badge komisyon">Komisyon</span>
                                 </div>
                             </div>
                             <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">15:15 – 15:30</span>
+                                    <span class="program-time">17:35 – 17:45</span>
                                     <span class="program-event-title">Ara</span>
                                 </div>
                             </div>
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">15:30 – 16:30</span>
+                                    <span class="program-time">17:45 – 18:45</span>
                                     <span class="program-event-title">8. Komisyon Oturumu</span>
-                                    <span class="program-badge komisyon">Komisyon</span>
-                                </div>
-                            </div>
-                            <div class="program-item break-item">
-                                <div class="program-item-inner">
-                                    <span class="program-time">16:30 – 16:45</span>
-                                    <span class="program-event-title">Ara</span>
-                                </div>
-                            </div>
-                            <div class="program-item">
-                                <div class="program-item-inner">
-                                    <span class="program-time">16:45 – 17:45</span>
-                                    <span class="program-event-title">9. Komisyon Oturumu</span>
                                     <span class="program-badge komisyon">Komisyon</span>
                                 </div>
                             </div>
@@ -2049,7 +2082,7 @@
                         <div class="program-day-header">
                             <div class="program-day-number">03</div>
                             <div class="program-day-meta">
-                                <div class="program-day-name">17 Mayıs 2026, Pazar</div>
+                                <div class="program-day-name">17 Mayıs 2025, Pazar</div>
                                 <div class="program-day-date">Meclis Oturumları &amp; Kapanış</div>
                             </div>
                         </div>
@@ -2064,28 +2097,21 @@
                             </div>
                             <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">11:00 – 11:15</span>
+                                    <span class="program-time">11:00 – 11:20</span>
                                     <span class="program-event-title">Ara</span>
                                 </div>
                             </div>
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">11:15 – 12:30</span>
+                                    <span class="program-time">11:20 – 12:20</span>
                                     <span class="program-event-title">2. Meclis Oturumu</span>
                                     <span class="program-badge meclis">Meclis</span>
                                 </div>
                             </div>
                             <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">12:30 – 12:45</span>
-                                    <span class="program-event-title">Ara</span>
-                                </div>
-                            </div>
-                            <div class="program-item">
-                                <div class="program-item-inner">
-                                    <span class="program-time">12:45 – 13:45</span>
-                                    <span class="program-event-title">3. Meclis Oturumu</span>
-                                    <span class="program-badge meclis">Meclis</span>
+                                    <span class="program-time">12:20 – 13:45</span>
+                                    <span class="program-event-title">Oryantasyon</span>
                                 </div>
                             </div>
                             <div class="program-item lunch-item">
@@ -2096,34 +2122,47 @@
                             </div>
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">14:45 – 15:45</span>
+                                    <span class="program-time">14:45 – 14:45</span>
+                                    <span class="program-event-title">3. Meclis Oturumu</span>
+                                    <span class="program-badge meclis">Meclis</span>
+                                </div>
+                            </div>
+                            <div class="program-item break-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">14:45 – 15:00</span>
+                                    <span class="program-event-title">Ara</span>
+                                </div>
+                            </div>
+                            <div class="program-item">
+                                <div class="program-item-inner">
+                                    <span class="program-time">15:00 – 16:00</span>
                                     <span class="program-event-title">4. Meclis Oturumu</span>
                                     <span class="program-badge meclis">Meclis</span>
                                 </div>
                             </div>
                             <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">15:45 – 16:00</span>
+                                    <span class="program-time">16:00 – 16:15</span>
                                     <span class="program-event-title">Ara</span>
                                 </div>
                             </div>
                             <div class="program-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">16:00 – 17:00</span>
+                                    <span class="program-time">16:15 – 17:15</span>
                                     <span class="program-event-title">5. Meclis Oturumu</span>
                                     <span class="program-badge meclis">Meclis</span>
                                 </div>
                             </div>
                             <div class="program-item break-item">
                                 <div class="program-item-inner">
-                                    <span class="program-time">17:00 – 17:15</span>
+                                    <span class="program-time">17:15 – 17:35</span>
                                     <span class="program-event-title">Ara</span>
                                 </div>
                             </div>
                             <div class="program-item highlight">
                                 <div class="program-item-inner">
-                                    <span class="program-time">17:15 – 18:15</span>
-                                    <span class="program-event-title">Kapanış Seremonisi</span>
+                                    <span class="program-time">17:35 – 18:35</span>
+                                    <span class="program-event-title">Kapanış Seramonisi</span>
                                     <span class="program-badge seremoni">Seremoni</span>
                                 </div>
                             </div>
@@ -2175,7 +2214,7 @@
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-content">
-                               Konferansımız 15-16-17 Mayıs tarihlerinde Kocaeli Fen Lisesinde düzenlenecektir.
+                               Konferansımız 15-16-17 Mayıs 2026 tarihlerinde Kocaeli Fen Lisesi kampüsünde yüz yüze olarak düzenlenecektir. Etkinlik üç tam gün sürecek olup, katılımcıların tüm oturumlara eksiksiz katılımı beklenmektedir.
                             </div>
                         </div>
                     </div>
@@ -2193,7 +2232,7 @@
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-content">
-                                Konferansımıza Hazırlık, 9., 10., 11., 12. Sınıfta okuyan öğrenciler katılabilir.
+                                Konferansımıza Türkiye genelindeki tüm liselerin Hazırlık, 9., 10., 11. ve 12. sınıf öğrencileri katılabilir. Forum deneyimi için herhangi bir ön bilgi şartı aranmamakta olup, kendini geliştirmek isteyen tüm öğrencilere açıktır.
                             </div>
                         </div>
                     </div>
@@ -2207,7 +2246,7 @@
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-content">
-                               Konferans katkı payı bedelimiz 0 TL olarak değiştirilmiştir.
+                               KFLUF 2026 bu yıl tamamen ücretsiz olarak düzenlenmektedir. Konferans katkı payı alınmayacak olup, tüm katılımcılar için öğle yemeği ve konferans materyalleri organizasyon tarafından karşılanacaktır.
                             </div>
                         </div>
                     </div>
@@ -2221,7 +2260,7 @@
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-content">
-                                Başvurularımız 1 Nisan-3 Mayıs tarihleri arasında açık olacak, başvuru yapmak isteyenler ise sitemiz üzerinden başvuru yapabileceklerdir.
+                                Başvurularımız 1 Nisan – 3 Mayıs 2026 tarihleri arasında açık olacaktır. Başvurmak isteyen katılımcılar, web sitemizdeki başvuru formunu eksiksiz doldurarak kayıtlarını tamamlayabilirler. Kontenjanlar sınırlı olduğu için erken başvuru yapmanızı öneririz.
                             </div>
                         </div>
                     </div>
@@ -2242,7 +2281,7 @@
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-content">
-                               Tüm katılımcılara katılım belgesi verilecektir.
+                               Konferansa tam katılım sağlayan tüm delegelere ve ekip üyelerine KFLUF 2026 resmi katılım belgesi takdim edilecektir. Sertifikalar, kapanış seremonisinin ardından dağıtılacak olup, bu belgeler öğrencilerin akademik portfolyolarına katkı sağlayacak niteliktedir.
                             </div>
                         </div>
                     </div>
@@ -2258,7 +2297,7 @@
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-content">
-                                Konaklama bulunmamaktadır.
+                                Konferansımız günübirlik bir etkinlik olarak planlandığı için konaklama hizmeti sunulmamaktadır. Şehir dışından gelecek katılımcıların kendi konaklamalarını ayarlamaları gerekmektedir. Dilerseniz okul çevresindeki oteller hakkında sosyal medya hesaplarımızdan bilgi talep edebilirsiniz.
                             </div>
                         </div>
                     </div>
@@ -2272,7 +2311,7 @@
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-content">
-                               Öğle yemeği desteği bulunmaktadır.
+                               Konferans süresince tüm katılımcılarımıza öğle yemeği desteği sağlanacaktır. Bunun yanı sıra, gün içindeki aralarda ikramlarımız da olacaktır. Özel bir beslenme gereksiniminiz varsa, lütfen başvuru sırasında belirtiniz.
                             </div>
                         </div>
                     </div>
@@ -2286,21 +2325,10 @@
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-content">
-                               Kıyafet prosedürü
-Erkekler: 
-kumaş pantolon;
-gömlek;
-ceket;
-yelek ( zorunlu değildir);
-kravat veya papyon;
-kundura veya köseli ayakkabı.  
-
-Kadınlar için : 
-kumaş pantolon;
-gömlek;
-yelek ( zorunlu değildir);
-ceket;
-topuklu, rugan veya babet ayakkabı.
+                               Konferansımızda resmi kıyafet zorunluluğu bulunmaktadır.<br><br>
+                               <strong>Erkek katılımcılar için:</strong> Kumaş pantolon, gömlek, ceket, kravat veya papyon, kundura veya kösele ayakkabı. Yelek kullanımı zorunlu değildir.<br><br>
+                               <strong>Kadın katılımcılar için:</strong> Kumaş pantolon veya etek, gömlek veya bluz, ceket, topuklu, rugan veya babet ayakkabı. Yelek kullanımı zorunlu değildir.<br><br>
+                               Resmi kıyafet kuralı, forumun ciddiyetini ve akademik atmosferini yansıtmak amacıyla istisnasız tüm katılımcılar için geçerlidir.
                             </div>
                         </div>
                     </div>
@@ -2314,7 +2342,7 @@ topuklu, rugan veya babet ayakkabı.
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-content">
-                                İletişim için sosyal medya hesaplarımıza veya kocaelifenlisesiulusalforumu@gmail.com üzerinden ulaşabilirsiniz.
+                                Bizimle iletişime geçmek için <strong>kocaelifenlisesiulusalforumu@gmail.com</strong> adresine e-posta gönderebilir ya da Instagram ve TikTok hesaplarımızdan (@kflulusalforumu) doğrudan mesaj yoluyla ulaşabilirsiniz. Sorularınızı en kısa sürede yanıtlamak için buradayız.
                             </div>
                         </div>
                     </div>
@@ -2560,6 +2588,9 @@ topuklu, rugan veya babet ayakkabı.
                     <h3 class="detail-box-title">Komisyon Açıklaması</h3>
                     <p>Ulaştırma ve altyapı, modern toplumların ekonomik gelişimi, toplumsal refahı ve günlük yaşamın sürdürülebilirliği açısından kritik öneme sahip alanlardan biridir. Gelişmiş ve güvenilir ulaşım sistemleri; insanların iş, eğitim ve sosyal hayatlarına erişimini kolaylaştırırken, güçlü iletişim ve altyapı ağları ise toplumun bilgiye erişimini ve kriz anlarında koordinasyonunu mümkün kılmaktadır. Türkiye gibi büyük nüfusa ve hızla büyüyen şehirleşmeye sahip ülkelerde ise bu alanlarda ortaya çıkan sorunlar yalnızca teknik meseleler olmaktan çıkarak sosyal, ekonomik ve çevresel boyutları olan kapsamlı tartışma konularına dönüşmektedir. Ulaştırma ve Altyapı Komisyonu, Türkiye’de ulaşım sistemleri ve iletişim altyapısı alanında karşılaşılan temel sorunları ele almayı ve bu sorunlara yönelik sürdürülebilir çözüm önerileri geliştirmeyi amaçlamaktadır. Günümüzde internet ve iletişim sistemleri yalnızca bireysel iletişim aracı değil; aynı zamanda ekonomi, eğitim, sağlık ve kamu hizmetlerinin işleyişi için vazgeçilmez bir altyapı haline gelmiştir. Ancak Türkiye’de özellikle afet anlarında şebeke yoğunluğu ve altyapı yetersizliği nedeniyle iletişim sistemlerinin zaman zaman kesintiye uğradığı görülmektedir. Bu durum arama-kurtarma faaliyetlerinin koordinasyonunu zorlaştırmakta ve yardım çalışmalarının etkinliğini azaltmaktadır. Bunun yanı sıra internet hızının gelişmiş ülkelerle kıyaslandığında daha düşük olması ve yeni nesil teknolojilere geçişin yavaş ilerlemesi, dijital dönüşüm sürecini de etkilemektedir. Özellikle 5G gibi modern iletişim teknolojilerine geçiş sürecinin hızlandırılması ve internet altyapısının güçlendirilmesi önemli bir noktadır. Trafik cezalarının gelir dağılımına göre yapılmaması da ulaşım konusundaki tartışma alanlarından biridir. Düşük ve orta gelirli bireyler için ağır bir ekonomik yük oluşturabilen bu cezalar, yüksek gelir grubundaki bireyler için aynı derecede caydırıcı olmayabilmektedir. Bu durum trafik kurallarına uyum konusunda eşitsizlik yaratabileceği gibi, kamuoyunda adalet tartışmalarına da yol açmaktadır. Günümüzde birçok şehir çevre dostu ve sürdürülebilir ulaşım modellerini teşvik etmek amacıyla bisiklet kullanımını artırmaya yönelik politikalar geliştirmektedir. Ancak Türkiye’de bisiklet yollarının sayısının sınırlı olması ve mevcut yolların zaman zaman yayalar veya motosikletler tarafından işgal edilmesi bisikletli bireyler için güvenlik sorunları yaratmaktadır. Bu durum bisiklet kullanımını azaltmaktadır. Büyükşehirlerde nüfus artışı ve yoğun trafik nedeniyle toplu taşıma araçları günlük yaşamın vazgeçilmez bir parçası haline gelmiştir. Buna rağmen bazı şehirlerde toplu taşıma araçlarının sayısının yetersiz olması, sefer sıklıklarının bazı hatlarda düşük kalması ve araçların aşırı yoğun kullanılması yolcular için ciddi zorluklar yaratmaktadır. Bunun yanı sıra toplu taşıma araçlarında klima kullanımının yeterince denetlenmemesi gibi hizmet kalitesini etkileyen sorunlar da vatandaşların rahatsız olduğu durumlardır. Toplu ulaşım sistemlerinde uygulanan indirimli ve ücretsiz seyahat kartları da ulaşımdaki tartışma konularındandır.. Öğrenciler, yaşlılar ve bazı sosyal gruplar için sağlanan bu uygulamalar sosyal devlet anlayışının önemli bir parçası olmakla birlikte, finansal sürdürülebilirlik ve ulaşım sisteminin dengesi açısından farklı görüşlerin ortaya çıkmasına neden olabilmektedir. Son yıllarda bazı taksi şoförlerinin kısa mesafe yolcu almaması, belirli saatlerde hizmet vermekten kaçınması veya yabancı turistlere öncelik tanıması gibi sorunlar kamuoyunda geniş yer bulmaktadır. Bu durum hem vatandaşların ulaşım hakkını olumsuz etkilemekte hem de şehir içi ulaşım sisteminin güvenilirliğini zedeleyebilmektedir. Trafik kültürü ve trafik bilinci de Türkiye’de ulaşım politikaları açısından önemli bir konudur. Trafik kurallarının yeterince bilinmemesi veya önemsenmemesi, trafik kazalarının artmasına ve şehir içi ulaşımın düzensiz hale gelmesine neden olabilmektedir. Okullarda verilen trafik eğitimi ve kamu spotları bu konuda önemli adımlar olsa da toplum genelinde daha güçlü bir trafik bilincinin oluşturulması gerektiği görülmektedir Türkiye’de afet anlarında yaşanan iletişim kesintilerinin önüne geçebilmek için mobil şebeke ve internet altyapısının güçlendirilmesi adına kamu ve özel sektör arasında nasıl bir iş birliği modeli oluşturulmalıdır? Trafik cezalarının gelir düzeyine göre düzenlenmesi uygulaması Türkiye’de hayata geçirilmeli midir? Eğer uygulanacaksa bu sistemin adil ve sürdürülebilir şekilde işlemesi nasıl sağlanabilir? Büyükşehirlerde toplu taşıma, bisiklet yolları ve taksi hizmetleri arasındaki dengeyi sağlayarak hem çevre dostu hem de erişilebilir bir şehir içi ulaşım sistemi oluşturmak için hangi düzenlemeler yapılmalıdır? </p>
                 </div>
+                <div class="study-paper-info">
+                    Çalışma Kağıtları 11 Mayıs'ta Yüklenecektir
+                </div>
             </div>
         </div>
 
@@ -2586,6 +2617,9 @@ topuklu, rugan veya babet ayakkabı.
                 <div class="detail-box">
                     <h3 class="detail-box-title">Komisyon Açıklaması</h3>
                     <p>Ruh Sağlığı Politikaları ve Hukuki Altyapının Güçlendirilmesi Türkiye’de ruh sağlığı hizmetlerinin yetkinliği; hâlâ yürürlüğe girmemiş çağdaş, bütüncül ve hak temelli bir Ruh Sağlığı Yasası eksikliği, fiziksel sağlık hizmetlerine kıyasla bütçe ve öncelik dengesizliği, veri analizi ve toplumla paylaşım noktasındaki şeffaflık eksiklikleri ile karar alma süreçlerinde alanında uzman mesleklerle çok disiplinli katılımın sınırlı olması gibi faktörlerle engellenmektedir. Söz konusu hususlarla ilgili problem tespitleri yapılmalı ve gerekli düzenlemelere gidilerek toplum düzeninin temelini oluşturan psikoloji ve ruh sağlığı alanı yetkinliğe kavuşturulmalıdır. Türkiye’de Artan Obezite Oranlarının Halk Sağlığı Krizine Dönüşmesinin Önlenmesi Çocuklar ve ergenler arasında artan obezite oranları hem bireysel hem de toplumsal sağlık açısından önemli bir risk oluşturmaktadır. Bu durumun önlenmesi için koruyucu ve önleyici politikaların geliştirilmesi, ailelerin sağlıklı beslenme ve yaşam tarzı konusunda bilinçlendirilmesi, okullarda müfredat, kantin politikaları ve fiziksel aktivite programlarının yeniden düzenlenmesi gerekmektedir. Bu iyileştirmeler, bireylerin sağlıklı alışkanlıklar kazanmasını ve obezitenin toplum sağlığı krizine dönüşmesinin önlenmesini sağlayacaktır. Pandemi ve Benzeri Küresel Sağlık Krizlerinde Etkin Yönetim Mekanizmaları Küresel sağlık krizlerinin yönetiminde bağımsız, bilim temelli ve hızlı karar alma süreçleri kritik öneme sahiptir. Etkili kriz yönetimi için kurumlar arası yetki ve sorumlulukların netleştirilmesi, en verimli yolların geliştirilmesi gerekmektedir. Söz konusu krizlerde uluslararası iş birliği ve yardımlaşma planları hazırlanmalı buna paralel olarak ise ulusal egemenlik ve küresel dayanışma arasında da bir denge sağlanmalıdır. Bu sayede kriz anlarında etkin müdahale, kaynakların doğru kullanımı ve halk sıhhatinin korunması en sağlıklı yoluna kavuşabilir. Ruh sağlığı politikaları ve hukuki altyapı nasıl güçlendirilebilir? Türkiye’de artan obezite oranlarının halk sağlığı problemine dönüşmesi nasıl önlenebilir? Küresel sağlık krizlerinde etkin yönetim mekanizmaları hangi yönde planlanmalıdır?</p>
+                </div>
+                <div class="study-paper-info">
+                    Çalışma Kağıtları 11 Mayıs'ta Yüklenecektir
                 </div>
             </div>
         </div>
@@ -2614,6 +2648,9 @@ topuklu, rugan veya babet ayakkabı.
                     <h3 class="detail-box-title">Komisyon Açıklaması</h3>
                     <p>Çocuk istismarı; fiziksel, psikolojik ve cinsel istismar gibi farklı biçimlerde ortaya çıkabilen ve çocukların sağlıklı gelişimini ciddi bir şekilde etkileyen önemli bir toplumsal sorundur. Bu durum yalnızca bireysel değil, aynı zamanda sosyal ve kurumsal sorumluluk gerektiren bir mesele olarak karşımıza çıkmaktadır. Çocukların güvenli bir ortamda büyüyebilmesi için istismar vakalarının erken tespit edilmesi, farkındalığın artırılması ve mağdur çocukların psikolojik, sosyal ve hukuki açıdan etkin şekilde desteklenmesi büyük önem taşımaktadır. Bu sorun doğrultusunda ilk gündem maddemiz "Çocuk istismarının önlenmesi, istismar vakalarının erken tespiti ve mağdur çocukların korunması için alınacak sosyal, hukuki ve kurumsal önlemler" olarak belirlenmiştir. Sosyal medya platformlarının yaygınlaşmasıyla birlikte şiddet, zorbalık ve suç içerikli paylaşımlar da daha görünür hale gelmiştir. Bu tür içeriklerin özellikle çocuklar ve gençler üzerinde olumsuz etkiler yaratabileceği ve bazı durumlarda suçu normalleştirebileceği tartışılmaktadır. Bu nedenle çocukların dijital ortamda karşılaşabilecekleri zararlı içeriklerden korunması için ailelerin, eğitim kurumlarının, sosyal medya platformlarının ve ilgili kurumların birlikte hareket etmesi; dijital farkındalık çalışmalarının ve koruyucu önlemlerin güçlendirilmesi büyük önem taşımaktadır. Bu sorun doğrultusunda ikici gündem maddemiz "Sosyal medyada yaygınlaşan suç içerikli paylaşımlar çocukları suça özendirme konusunda ne kadar etkilidir ve çocukları bu olumsuz etkilerden korumak için alınacak önlemler" olarak belirlenmiştir. 1.) Çocuk istismarının erken tespiti için okullar, sağlık kuruluşları ve sosyal hizmet kurumları arasında nasıl bir iş birliği mekanizması kurulmalıdır ve bu sistemin etkili işlemesi için hangi somut adımlar atılmalıdır? 2.) Sosyal medyada suç ve şiddet içeriklerinin çocukları olumsuz etkilemesini önlemek için aileler, eğitim kurumları ve sosyal medya platformları hangi ortak sorumlulukları üstlenmeli ve bu sorumluluklar nasıl uygulanabilir hale getirilebilir? 3.) İstismar mağduru çocukların korunması ve yeniden topluma kazandırılması için psikolojik, sosyal ve hukuki destek mekanizmaları nasıl güçlendirilmeli ve bu süreçte devlet kurumları ile sivil toplum kuruluşlarının rolü nasıl artırılmalıdır?</p>
                 </div>
+                <div class="study-paper-info">
+                    Çalışma Kağıtları 11 Mayıs'ta Yüklenecektir
+                </div>
             </div>
         </div>
 
@@ -2641,6 +2678,9 @@ topuklu, rugan veya babet ayakkabı.
                     <h3 class="detail-box-title">Komisyon Açıklaması</h3>
                     <p>Rekabet hukukunun temel sorunlarından biri, çoğu zaman önleyici bir mekanizma olarak değil, ihlal gerçekleştikten sonra devreye giren bir denetim aracı olarak işlemesidir. Bu durum piyasalarda tekelleşme eğilimlerinin erken aşamada tespit edilmesini zorlaştırmaktadır. Özellikle piyasa yapısını sürekli olarak izleyebilecek güçlü ve şeffaf denetim mekanizmalarının yeterince gelişmemiş olması, rekabet ihlallerinin ancak belirli bir büyüklüğe ulaştıktan sonra fark edilmesine neden olmaktadır. Sektörel raporlamalarda veri güvenliğinin tam olarak sağlanamaması da piyasa analizlerinin sağlıklı biçimde yapılmasını engelleyen önemli bir faktör olarak ortaya çıkmaktadır. Bunun yanında denetim kurullarının seçilme süreçlerinin yeterince şeffaf olmaması ve denetim faaliyetlerinin etkin biçimde denetlenmemesi, kurumsal güvenilirliği zayıflatabilmektedir. Ayrıca şirket devralmaları ve birleşmelerinin piyasa rekabeti üzerindeki etkilerinin her zaman yeterli kapsamda değerlendirilmemesi, bazı sektörlerde yoğunlaşmanın artmasına ve rekabet ortamının zayıflamasına yol açabilmektedir. Bu nedenle rekabet hukukunun daha etkin işlemesi için erken uyarı sistemlerinin geliştirilmesi, veri güvenliğinin güçlendirilmesi ve birleşme-devralma süreçlerinin daha kapsamlı analiz edilmesi büyük önem taşımaktadır. Türkiye ekonomisinin 1980’li yıllardan itibaren karşı karşıya kaldığı en önemli yapısal sorunlardan biri yüksek ve süreklilik gösteren enflasyon problemidir. Enflasyonun kalıcı hale gelmesinde para politikası kurumlarının yeterince bağımsız çalışamaması önemli bir etken olarak görülmektedir. Merkez bankasının bağımsızlığının tam olarak sağlanamaması, para politikalarının uzun vadeli ekonomik istikrar yerine kısa vadeli hedeflere göre şekillenmesine yol açabilmektedir. Bunun yanı sıra kamu harcamaları ile kamu gelirleri arasında sürdürülebilir bir denge kurulamaması da enflasyonist baskıları artıran faktörlerden biri olarak ortaya çıkmaktadır. Yüksek enflasyon özellikle asgari ücretle çalışanlar ve sabit gelirli vatandaşlar üzerinde ciddi bir ekonomik baskı oluşturmakta, satın alma gücünün hızla düşmesine ve toplumsal sınıf farklılıklarının daha belirgin hale gelmesine neden olmaktadır. Ayrıca enflasyon oranlarının belirlenmesi sürecinde kurumların doğru ve güvenilir veri üretme konusunda zaman zaman yetersiz kalması, ekonomik göstergelere olan toplumsal güveni de zedeleyebilmektedir. Bu nedenle enflasyonla mücadelede kurumsal bağımsızlığın güçlendirilmesi, kamu maliyesinde disiplin sağlanması ve ekonomik verilerin şeffaf şekilde paylaşılması kritik öneme sahiptir. Rekabet hukukunun çoğu zaman ihlal gerçekleştikten sonra devreye giren bir mekanizma olarak işlemesi piyasalarda hangi sorunların ortaya çıkmasına neden olmaktadır? Metne göre yüksek ve kalıcı enflasyonun oluşmasında para politikası kurumlarının bağımsızlığının yetersiz olması ekonomiyi nasıl etkilemektedir? Rekabet hukukunun daha etkin işlemesi ve enflasyonla mücadelede başarı sağlanabilmesi için metinde hangi kurumsal ve yapısal önlemler önerilmektedir?</p>
                 </div>
+                <div class="study-paper-info">
+                    Çalışma Kağıtları 11 Mayıs'ta Yüklenecektir
+                </div>
             </div>
         </div>
 
@@ -2667,6 +2707,9 @@ topuklu, rugan veya babet ayakkabı.
                 <div class="detail-box">
                     <h3 class="detail-box-title">Komisyon Açıklaması</h3>
                     <p>Eğitim sistemi, bireylerin bilgi ve beceri kazanmasının yanı sıra toplumsal eşitliğin sağlanmasında da önemli bir rol oynamaktadır. Ancak ekonomik koşullar, eğitim politikaları ve okullar arasındaki imkân farklılıkları, öğrencilerin eğitim süreçlerini doğrudan etkilemektedir. Bu durum, bazı öğrencilerin eğitim hayatında daha fazla zorluk yaşamasına neden olmaktadır. Ekonomik açıdan dezavantajlı öğrenciler, eğitim sürecinde çeşitli sorunlarla karşılaşabilmektedir. Maddi imkânların yetersizliği, öğrencilerin derslerine odaklanmasını ve akademik başarılarını olumsuz etkileyebilmektedir. Özellikle yoksul ailelerden gelen öğrenciler için okulda sağlıklı beslenme imkânına ulaşmak her zaman mümkün olmamaktadır. Öğle yemeği desteğinin bulunmaması, öğrencilerin gün içinde yeterli enerjiye sahip olamamasına ve derslerde dikkatlerini toplamakta zorlanmalarına yol açabilmektedir. Bunun yanında bazı öğrenciler, okula ulaşım konusunda da güçlük yaşamaktadır. Ulaşım imkânlarının sınırlı olması veya maliyetlerin yüksek olması, öğrencilerin okula düzenli devam etmesini zorlaştıran önemli bir unsur olarak görülmektedir. Eğitim sistemi içinde tartışılan bir diğer önemli konu, üniversite sayısının artmasıyla birlikte ara eleman ihtiyacının yeterince karşılanamamasıdır. Son yıllarda öğrencilerin büyük bir bölümünün üniversite eğitimine yönelmesi, mesleki eğitim alanlarına olan ilginin azalmasına neden olmuştur. Meslek liselerinin sayısının bazı bölgelerde yetersiz olması ve bazı okullarda verilen eğitimin verimlilik açısından yeterli olmaması bu durumu etkileyen faktörler arasında yer almaktadır. Bunun yanında Mesleki Eğitim Merkezlerinde (MESEM) öğrenciler için her zaman güvenli ve düzenli çalışma ortamlarının sağlanamaması, mesleki eğitime yönelik olumsuz algıların oluşmasına yol açabilmektedir. Ayrıca üniversiteye girişin zamanla daha erişilebilir hâle gelmesi, öğrencilerin büyük çoğunluğunun akademik eğitime yönelmesine neden olmaktadır. Ortaöğretimin zorunlu olması da bazı öğrencilerin ilgi ve yeteneklerine uygun mesleki alanlara daha erken yönelmesini güçleştirmektedir. Eğitimde fırsat eşitliği konusu da önemli sorunlardan biri olarak değerlendirilmektedir. Okullar arasında teknolojik imkânlar açısından belirgin farklılıklar bulunmaktadır. Bazı okullarda bilgisayar, internet ve dijital eğitim araçları yeterli düzeyde bulunmazken, bazı okullarda bu imkânlar daha gelişmiş durumdadır. Bunun yanında devlet okulları ile özel okullar arasındaki imkân farklarının fazla olması, öğrencilerin eğitim süreçlerinde farklı deneyimler yaşamalarına neden olmaktadır. Ayrıca birçok okulda öğrenci başına düşen öğretmen sayısının düşük olması, öğretmenlerin her öğrenciyle yeterince ilgilenmesini zorlaştırmaktadır. Bu durum, öğrencilerin akademik gelişimi üzerinde de etkili olabilmektedir. Bu sorunlar, eğitim sisteminde hem sosyal hem de yapısal eşitsizliklerin bulunduğunu göstermektedir. Eğitimde daha dengeli bir yapı oluşturulabilmesi için, bu farklılıkların dikkatle ele alınması ve eğitim politikalarının bu doğrultuda geliştirilmesi büyük önem taşımaktadır. Bu çerçevede, eğitim sisteminde ara eleman yetiştirilmesi için alınabilecek önlemler, okullar arasındaki fiziksel imkân farklılıklarının giderilmesi ve ekonomik açıdan dezavantajlı öğrencilerin eğitime devam edebilmeleri için sağlanabilecek destekler üzerinde durulacaktır. Ekonomik açıdan dezavantajlı öğrencilerin eğitim sürecinde yaşadığı beslenme ve ulaşım sorunlarının önüne geçilebilmesi için hangi politikalar uygulanabilir? Türkiye’de üniversiteleşmenin artması, meslek liselerinin verimliliğinin düşük olması, Mesleki Eğitim Merkezlerindeki (MESEM) çalışma koşulları ve üniversiteye girişin daha erişilebilir hâle gelmesi gibi faktörlerin ortaya çıkardığı ara eleman eksikliği nasıl giderilebilir? Okullarda teknolojik imkânların yetersiz olması, devlet ve özel okullar arasındaki imkân farklarının artması ve öğrenci başına düşen öğretmen sayısının düşük olması gibi durumların eğitim üzerindeki etkileri karşısında ne tür önlemler alınabilir?</p>
+                </div>
+                <div class="study-paper-info">
+                    Çalışma Kağıtları 11 Mayıs'ta Yüklenecektir
                 </div>
             </div>
         </div>
